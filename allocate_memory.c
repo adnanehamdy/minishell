@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 08:04:54 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/05/22 12:09:41 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/05/22 14:29:35 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,11 @@ int	count_each_arg(char *prompt_cmd,int skip_pipe, int reset)
 
 	tmp = 0;
 	number = 0;
-	//reset when EOl
+	if (reset)
+	{
+		index = 0;
+		return (0);
+	}
 	while (prompt_cmd[index] && (prompt_cmd[index] != '|' || skip_pipe))
 	{
 		if (prompt_cmd[index] == '<' || prompt_cmd[index] == '>')
@@ -191,6 +195,11 @@ char *fill_each_arg(char *cmd_arg, char *prompt_cmd, int skip_pipe, int reset)
 	int	i;
 
 	i = 0;
+	if (reset)
+	{
+		index = 0;
+		return (NULL);
+	}
 	while (prompt_cmd[index] && (prompt_cmd[index] != '|' || skip_pipe))
 	{
 		if (prompt_cmd[index] == '<' || prompt_cmd[index] == '>')
@@ -271,12 +280,11 @@ char	**initialize_cmd_line(char *prompt_cmd, int cmd_number)
 	int			i;
 
 	i = 0;
+	count_each_arg(prompt_cmd, 0, 1);
 	cmd = (t_cmd_line *)malloc(sizeof(t_cmd_line) * cmd_number);
 	cmd->command = allocate_cmd_arguments(prompt_cmd, cmd_number, cmd);
 	while (i < count_arg_number(prompt_cmd))
-	{
 		printf("%s\n", cmd->command[i++]);
-	}
 	return (cmd->command);
 	
 }
