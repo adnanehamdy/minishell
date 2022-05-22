@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/05/19 13:02:22 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/05/22 07:38:43 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ int	skip_white_spaces(char *prompt_cmd, int condition);
 
 /* 3-> allocate memory for struct */
 int	count_cmd_number(char *prompt_cmd);
-t_cmd_line *initialize_cmd_line(char *prompt_cmd, int cmd_number);
+/* t_cmd_line *initialize_cmd_line(char *prompt_cmd, int cmd_number);*/
+char   **initialize_cmd_line(char *prompt_cmd, int cmd_number);
 
 
 
@@ -66,4 +67,5 @@ t_cmd_line *initialize_cmd_line(char *prompt_cmd, int cmd_number);
 /* 0-> tmp */
 int	count_arg_number(char *prompt_cmd);
 int	count_io_redirection(char *prompt_cmd);
-int	count_each_arg(char *prompt_cmd);
+int	count_each_arg(char *prompt_cmd,int skip_pipe, int reset);
+ char **allocate_cmd_arguments(char *prompt_cmd, int cmd_number, t_cmd_line *cmd);

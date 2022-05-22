@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 07:19:08 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/05/18 08:23:23 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/05/20 17:51:50 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,22 @@ int	skip_white_spaces(char *prompt_cmd, int condition)
 	}
 	if (prompt_cmd[index] && condition)
 	{
-		if (prompt_cmd[index] == '<' || prompt_cmd[index] == '>' || prompt_cmd[index] == '|')
+		if ((prompt_cmd[index] == '<' || prompt_cmd[index] == '>' || prompt_cmd[index] == '|') && prompt_cmd[0] != '|')
 		{
- 			if (prompt_cmd[index + 1] != prompt_cmd[index])
+ 			if (prompt_cmd[index + 1] != prompt_cmd[index] || ((prompt_cmd[index + 1] == prompt_cmd[index]) && prompt_cmd[index] == '|'))
 				printf("\033[0;35mminishell> \033[0;37msyntax error near unexpected token '%c'\n", prompt_cmd[index]);
 			else
 				printf("\033[0;35mminishell> \033[0;37msyntax error near unexpected token '%c%c'\n", prompt_cmd[index], prompt_cmd[index]);
 			exit_code_handler(POSTEXIT, 258);
 			return (-1);
 		}
+		else
+			if (prompt_cmd[index] == '|' && prompt_cmd[0] == '|')
+			{
+				printf("\033[0;35mminishell> \033[0;37msyntax error near unexpected token '%c'\n", prompt_cmd[index]);
+				exit_code_handler(POSTEXIT, 258);
+				return (-1);
+			}
 	}
 	if (!prompt_cmd[index] && condition)
 	{
@@ -110,7 +117,7 @@ void	check_separators(char *prompt_cmd)
 			index = index + check_second_quote(&prompt_cmd[index], '\'');
 		if (prompt_cmd[index] == '<' || prompt_cmd[index] == '>' || prompt_cmd[index] == '|')
 		{
-			if (prompt_cmd[index + 1] && prompt_cmd[index + 1] == prompt_cmd[index] && prompt_cmd[index] != '|')
+			if (prompt_cmd[index + 1] && prompt_cmd[index + 1] == prompt_cmd[index])
 				index = index + 1;
  			if (skip_white_spaces(&prompt_cmd[index], 1) < 0)
 				break ;

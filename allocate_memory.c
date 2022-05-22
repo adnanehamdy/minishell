@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 08:04:54 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/05/20 07:47:14 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/05/22 12:09:41 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,16 @@ int	count_arg_number(char *prompt_cmd)
 	}
 	return (number);
 }
-
-int	count_each_arg(char *prompt_cmd)
+ 
+/* int	fill_each_arg(char *prompt_cmd)
 {
 	int	index;
 	int	number;
+	int	quote_index;
 	int	tmp;
 
 	tmp = 0;
+	quote_index = 0;
 	number = 0;
 	index = 0;
 	while (prompt_cmd[index] && prompt_cmd[index] != '|')
@@ -108,7 +110,56 @@ int	count_each_arg(char *prompt_cmd)
 		}
 		else if ((prompt_cmd[index] < 9 || prompt_cmd[index] > 13) && prompt_cmd[index] != ' ' && prompt_cmd[index] != '<' && prompt_cmd[index] != '>')
 		{
+			tmp = index;
 			while (prompt_cmd[index] && ((prompt_cmd[index] < 9 && prompt_cmd[index] > 13) || prompt_cmd[index] != ' ') && prompt_cmd[index] != '<' && prompt_cmd[index] != '>')
+			{
+				if (prompt_cmd[index] == '"')
+				{
+					quote_index = check_second_quote(&prompt_cmd[index], '"');
+					number = number + quote_index - 2;
+					index = index + quote_index;
+					
+				}
+				else if (prompt_cmd[index] == '\'')
+				{
+					quote_index = check_second_quote(&prompt_cmd[index], '\'');
+					number = number + quote_index - 2;
+					index = index + quote_index;
+				}
+				else
+					number++;
+				index++;
+			}
+		}
+		else
+			index++;
+	}
+	return (number);
+} */
+
+int	count_each_arg(char *prompt_cmd,int skip_pipe, int reset)
+{
+	static int	index;
+	int	number;
+	int	tmp;
+
+	tmp = 0;
+	number = 0;
+	//reset when EOl
+	while (prompt_cmd[index] && (prompt_cmd[index] != '|' || skip_pipe))
+	{
+		if (prompt_cmd[index] == '<' || prompt_cmd[index] == '>')
+		{
+			if (prompt_cmd[index + 1] == prompt_cmd[index])
+				index = index + 1;
+			index++;
+			if ((prompt_cmd[index] >= 9 && prompt_cmd[index] <= 13) || prompt_cmd[index] == ' ')
+				index = index + skip_white_spaces(&prompt_cmd[index],0);
+			index = index + skip_io_redirection(&prompt_cmd[index]);
+		}
+		else if ((prompt_cmd[index] < 9 || prompt_cmd[index] > 13) && prompt_cmd[index] != ' ' && prompt_cmd[index] != '<' && prompt_cmd[index] != '>' && prompt_cmd[index] != '|')
+		{
+			while (prompt_cmd[index] && ((prompt_cmd[index] < 9 || prompt_cmd[index] > 13) && prompt_cmd[index] != ' ') && prompt_cmd[index] != '<' && prompt_cmd[index] != '>')
 			{
 				if (prompt_cmd[index] == '"')
 				{
@@ -126,6 +177,7 @@ int	count_each_arg(char *prompt_cmd)
 					number++;
 				index++;
 			}
+			break ;
 		}
 		else
 			index++;
@@ -133,16 +185,13 @@ int	count_each_arg(char *prompt_cmd)
 	return (number);
 }
 
-char	*fill_each_arg(char *cmd_arg, char *prompt_cmd)
+char *fill_each_arg(char *cmd_arg, char *prompt_cmd, int skip_pipe, int reset)
 {
-	int	index;
-	int	number;
-	int	count;
+	static int	index;
+	int	i;
 
-	count = 0;
-	number = 0;
-	index = 0;
-	while (prompt_cmd[index] && prompt_cmd[index] != '|')
+	i = 0;
+	while (prompt_cmd[index] && (prompt_cmd[index] != '|' || skip_pipe))
 	{
 		if (prompt_cmd[index] == '<' || prompt_cmd[index] == '>')
 		{
@@ -153,15 +202,39 @@ char	*fill_each_arg(char *cmd_arg, char *prompt_cmd)
 				index = index + skip_white_spaces(&prompt_cmd[index],0);
 			index = index + skip_io_redirection(&prompt_cmd[index]);
 		}
-		else if ((prompt_cmd[index] < 9 || prompt_cmd[index] > 13) && prompt_cmd[index] != ' ' && prompt_cmd[index] != '<' && prompt_cmd[index] != '>')
+		else if ((prompt_cmd[index] < 9 || prompt_cmd[index] > 13) && prompt_cmd[index] != ' ' && prompt_cmd[index] != '<' && prompt_cmd[index] != '>' && prompt_cmd[index] != '|')
 		{
-			while (prompt_cmd[index] && ((prompt_cmd[index] < 9 && prompt_cmd[index] > 13) || prompt_cmd[index] != ' ') && prompt_cmd[index] != '<' && prompt_cmd[index] != '>')
+			while (prompt_cmd[index] && ((prompt_cmd[index] < 9 || prompt_cmd[index] > 13) && prompt_cmd[index] != ' ') && prompt_cmd[index] != '<' && prompt_cmd[index] != '>')
 			{
-				if (prompt_cmd[index] == '"' || prompt_cmd[index] == '\'')
+				if (prompt_cmd[index] == '"')
+				{
 					index++;
-				cmd_arg[count] = prompt_cmd[index];
-				count++;
+					while (prompt_cmd[index] != '"')
+					{
+						cmd_arg[i] = prompt_cmd[index];
+						i++;
+						index++;
+					}
+				}
+				else if (prompt_cmd[index] == '\'')
+				{
+					index++;
+					while (prompt_cmd[index] != '\'')
+					{
+						cmd_arg[i] = prompt_cmd[index];
+						i++;
+						index++;
+					}
+				}
+				else
+				{
+					cmd_arg[i] = prompt_cmd[index];
+					i++;
+				}
+				index++;
 			}
+			cmd_arg[i] = 0;
+			break ;
 		}
 		else
 			index++;
@@ -169,28 +242,41 @@ char	*fill_each_arg(char *cmd_arg, char *prompt_cmd)
 	return (cmd_arg);
 }
 
-char **allocate_cmd_arguments(char *prompt_cmd, int cmd_number, t_cmd_line *cmd)
+ char **allocate_cmd_arguments(char *prompt_cmd, int cmd_number, t_cmd_line *cmd)
 {
 	int	number_of_arg;
-	int	number_of_io_redirection;
 	char	**cmd_arg;
 	int		i;
 
 	i = 0;
-	cmd_arg = (char **)malloc(count_arg_number(prompt_cmd));
+	number_of_arg = count_arg_number(prompt_cmd);
+	cmd_arg = (char **)malloc(sizeof(char *) * number_of_arg + 1);
+	cmd_arg[i] = (char *)malloc(sizeof(char) *count_each_arg(prompt_cmd, 1, 0));
+	cmd_arg[i] = fill_each_arg(cmd_arg[i], prompt_cmd, 1, 0);
+	i++;
 	while (i < number_of_arg)
 	{
-		cmd_arg = (char *)malloc(count_each_arg(prompt_cmd));
-		cmd_arg[i] = fill_each_arg(cmd_arg[i], prompt_cmd);
-		printf("cmd[%d] = '%s'\n");
+		cmd_arg[i] = (char *)malloc(sizeof(char) * count_each_arg(prompt_cmd, 0, 0));
+		cmd_arg[i] = fill_each_arg(cmd_arg[i], prompt_cmd, 0, 0);
 		i++;
 	}
+	cmd_arg[i] = (char *)malloc(1);
+	cmd_arg[i] = 0;
+	return (cmd_arg);
 }
 
-t_cmd_line *initialize_cmd_line(char *prompt_cmd, int cmd_number)
+char	**initialize_cmd_line(char *prompt_cmd, int cmd_number)
 {
 	t_cmd_line	*cmd;
+	int			i;
 
+	i = 0;
 	cmd = (t_cmd_line *)malloc(sizeof(t_cmd_line) * cmd_number);
 	cmd->command = allocate_cmd_arguments(prompt_cmd, cmd_number, cmd);
+	while (i < count_arg_number(prompt_cmd))
+	{
+		printf("%s\n", cmd->command[i++]);
+	}
+	return (cmd->command);
+	
 }
