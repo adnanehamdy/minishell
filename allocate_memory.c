@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 08:04:54 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/05/22 14:29:35 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/05/22 18:39:45 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,20 @@ int	count_io_redirection(char *prompt_cmd)
 	return (number);
 }
 
-int	count_arg_number(char *prompt_cmd)
+int	count_arg_number(char *prompt_cmd, int skip_pipe, int reset)
 {
-	int	index;
+	static int	index;
 	int	number;
 
 	number = 0;
-	index = 0;
-	while (prompt_cmd[index] && prompt_cmd[index] != '|')
+	if (reset)
+	{
+		index = 0;
+		return (0);
+	}
+	if (index != 0)
+		skip_pipe = 1;
+	while (prompt_cmd[index] && (prompt_cmd[index] != '|' || skip_pipe))
 	{
 		if (prompt_cmd[index] == '<' || prompt_cmd[index] == '>')
 		{
@@ -68,9 +74,9 @@ int	count_arg_number(char *prompt_cmd)
 				index = index + skip_white_spaces(&prompt_cmd[index],0);
 			index = index + skip_io_redirection(&prompt_cmd[index]);
 		}
-		else if ((prompt_cmd[index] < 9 || prompt_cmd[index] > 13) && prompt_cmd[index] != ' ' && prompt_cmd[index] != '<' && prompt_cmd[index] != '>')
+		else if ((prompt_cmd[index] < 9 || prompt_cmd[index] > 13) && prompt_cmd[index] != ' ' && prompt_cmd[index] != '<' && prompt_cmd[index] != '>' && prompt_cmd[index] != '|')
 		{
-			while (prompt_cmd[index] && ((prompt_cmd[index] < 9 && prompt_cmd[index] > 13) || prompt_cmd[index] != ' ') && prompt_cmd[index] != '<' && prompt_cmd[index] != '>')
+			while (prompt_cmd[index] && ((prompt_cmd[index] < 9 && prompt_cmd[index] > 13) || prompt_cmd[index] != ' ') && prompt_cmd[index] != '<' && prompt_cmd[index] != '>' && prompt_cmd[index] != '|')
 			{
 				if (prompt_cmd[index] == '"')
 					index = index + check_second_quote(&prompt_cmd[index], '"');
@@ -85,57 +91,6 @@ int	count_arg_number(char *prompt_cmd)
 	}
 	return (number);
 }
- 
-/* int	fill_each_arg(char *prompt_cmd)
-{
-	int	index;
-	int	number;
-	int	quote_index;
-	int	tmp;
-
-	tmp = 0;
-	quote_index = 0;
-	number = 0;
-	index = 0;
-	while (prompt_cmd[index] && prompt_cmd[index] != '|')
-	{
-		if (prompt_cmd[index] == '<' || prompt_cmd[index] == '>')
-		{
-			if (prompt_cmd[index + 1] == prompt_cmd[index])
-				index = index + 1;
-			index++;
-			if ((prompt_cmd[index] >= 9 && prompt_cmd[index] <= 13) || prompt_cmd[index] == ' ')
-				index = index + skip_white_spaces(&prompt_cmd[index],0);
-			index = index + skip_io_redirection(&prompt_cmd[index]);
-		}
-		else if ((prompt_cmd[index] < 9 || prompt_cmd[index] > 13) && prompt_cmd[index] != ' ' && prompt_cmd[index] != '<' && prompt_cmd[index] != '>')
-		{
-			tmp = index;
-			while (prompt_cmd[index] && ((prompt_cmd[index] < 9 && prompt_cmd[index] > 13) || prompt_cmd[index] != ' ') && prompt_cmd[index] != '<' && prompt_cmd[index] != '>')
-			{
-				if (prompt_cmd[index] == '"')
-				{
-					quote_index = check_second_quote(&prompt_cmd[index], '"');
-					number = number + quote_index - 2;
-					index = index + quote_index;
-					
-				}
-				else if (prompt_cmd[index] == '\'')
-				{
-					quote_index = check_second_quote(&prompt_cmd[index], '\'');
-					number = number + quote_index - 2;
-					index = index + quote_index;
-				}
-				else
-					number++;
-				index++;
-			}
-		}
-		else
-			index++;
-	}
-	return (number);
-} */
 
 int	count_each_arg(char *prompt_cmd,int skip_pipe, int reset)
 {
@@ -163,7 +118,7 @@ int	count_each_arg(char *prompt_cmd,int skip_pipe, int reset)
 		}
 		else if ((prompt_cmd[index] < 9 || prompt_cmd[index] > 13) && prompt_cmd[index] != ' ' && prompt_cmd[index] != '<' && prompt_cmd[index] != '>' && prompt_cmd[index] != '|')
 		{
-			while (prompt_cmd[index] && ((prompt_cmd[index] < 9 || prompt_cmd[index] > 13) && prompt_cmd[index] != ' ') && prompt_cmd[index] != '<' && prompt_cmd[index] != '>')
+			while (prompt_cmd[index] && ((prompt_cmd[index] < 9 || prompt_cmd[index] > 13) && prompt_cmd[index] != ' ') && prompt_cmd[index] != '<' && prompt_cmd[index] != '>' && prompt_cmd[index] != '|')
 			{
 				if (prompt_cmd[index] == '"')
 				{
@@ -213,7 +168,7 @@ char *fill_each_arg(char *cmd_arg, char *prompt_cmd, int skip_pipe, int reset)
 		}
 		else if ((prompt_cmd[index] < 9 || prompt_cmd[index] > 13) && prompt_cmd[index] != ' ' && prompt_cmd[index] != '<' && prompt_cmd[index] != '>' && prompt_cmd[index] != '|')
 		{
-			while (prompt_cmd[index] && ((prompt_cmd[index] < 9 || prompt_cmd[index] > 13) && prompt_cmd[index] != ' ') && prompt_cmd[index] != '<' && prompt_cmd[index] != '>')
+			while (prompt_cmd[index] && ((prompt_cmd[index] < 9 || prompt_cmd[index] > 13) && prompt_cmd[index] != ' ') && prompt_cmd[index] != '<' && prompt_cmd[index] != '>' && prompt_cmd[index] != '|')
 			{
 				if (prompt_cmd[index] == '"')
 				{
@@ -258,15 +213,18 @@ char *fill_each_arg(char *cmd_arg, char *prompt_cmd, int skip_pipe, int reset)
 	int		i;
 
 	i = 0;
-	number_of_arg = count_arg_number(prompt_cmd);
+	number_of_arg = count_arg_number(prompt_cmd, 0, 0);
+	printf("number = %d\n", number_of_arg);
 	cmd_arg = (char **)malloc(sizeof(char *) * number_of_arg + 1);
 	cmd_arg[i] = (char *)malloc(sizeof(char) *count_each_arg(prompt_cmd, 1, 0));
 	cmd_arg[i] = fill_each_arg(cmd_arg[i], prompt_cmd, 1, 0);
+	printf("%s\n", cmd_arg[i]);
 	i++;
 	while (i < number_of_arg)
 	{
 		cmd_arg[i] = (char *)malloc(sizeof(char) * count_each_arg(prompt_cmd, 0, 0));
 		cmd_arg[i] = fill_each_arg(cmd_arg[i], prompt_cmd, 0, 0);
+		printf("%s\n", cmd_arg[i]);
 		i++;
 	}
 	cmd_arg[i] = (char *)malloc(1);
@@ -280,11 +238,9 @@ char	**initialize_cmd_line(char *prompt_cmd, int cmd_number)
 	int			i;
 
 	i = 0;
-	count_each_arg(prompt_cmd, 0, 1);
 	cmd = (t_cmd_line *)malloc(sizeof(t_cmd_line) * cmd_number);
+
 	cmd->command = allocate_cmd_arguments(prompt_cmd, cmd_number, cmd);
-	while (i < count_arg_number(prompt_cmd))
-		printf("%s\n", cmd->command[i++]);
 	return (cmd->command);
 	
 }

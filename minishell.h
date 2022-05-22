@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/05/22 14:30:16 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/05/22 18:26:28 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char   **initialize_cmd_line(char *prompt_cmd, int cmd_number);
 
 
 /* 0-> tmp */
-int	count_arg_number(char *prompt_cmd);
+int	count_arg_number(char *prompt_cmd, int skip_pipe, int reset);
 int	count_io_redirection(char *prompt_cmd);
 int	count_each_arg(char *prompt_cmd,int skip_pipe, int reset);
  char **allocate_cmd_arguments(char *prompt_cmd, int cmd_number, t_cmd_line *cmd);
