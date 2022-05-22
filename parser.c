@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:28 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/05/22 18:40:51 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/05/22 19:33:14 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ void	parse_data(char *prompt_cmd)
 	count_each_arg(NULL, 0, 1);
 	fill_each_arg(NULL, NULL, 0, 1);
 	count_arg_number(NULL, 0, 1);
+	cmd_number = count_cmd_number(prompt_cmd);
 	while (i++ < cmd_number)
 	{
-		cmd = initialize_cmd_line(prompt_cmd, cmd_number);
+	cmd = initialize_cmd_line(prompt_cmd, cmd_number);
 	}
 }
 
