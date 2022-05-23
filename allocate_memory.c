@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 08:04:54 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/05/22 19:40:19 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/05/23 11:45:32 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,14 @@ int	count_io_redirection(char *prompt_cmd)
 	return (number);
 }
 
-int	count_arg_number(char *prompt_cmd, int skip_pipe, int reset)
+int	count_arg_number(char *prompt_cmd)
 {
-	static int	index;
+	int	index;
 	int	number;
 
+	index = 0;
 	number = 0;
-	if (reset)
-	{
-		index = 0;
-		return (0);
-	}
-	if (index != 0)
-		skip_pipe = 1;
-	printf("start = '%c''%c'\n", prompt_cmd[index], prompt_cmd[index + 1]);
-	while (prompt_cmd[index] && (prompt_cmd[index] != '|' || skip_pipe))
+	while (prompt_cmd[index] && prompt_cmd[index] != '|')
 	{
 		if (prompt_cmd[index] == '<' || prompt_cmd[index] == '>')
 		{
@@ -89,12 +82,10 @@ int	count_arg_number(char *prompt_cmd, int skip_pipe, int reset)
 		}
 		else
 			index++;
-	}
-	printf("end = %c\n", prompt_cmd[index]);
-	return (number);
+	}	return (number);
 }
 
-int	count_each_arg(char *prompt_cmd,int skip_pipe, int reset)
+int	count_each_arg(char *prompt_cmd, int reset)
 {
 	static int	index;
 	int	number;
@@ -107,7 +98,7 @@ int	count_each_arg(char *prompt_cmd,int skip_pipe, int reset)
 		index = 0;
 		return (0);
 	}
-	while (prompt_cmd[index] && (prompt_cmd[index] != '|' || skip_pipe))
+	while (prompt_cmd[index] && prompt_cmd[index] != '|')
 	{
 		if (prompt_cmd[index] == '<' || prompt_cmd[index] == '>')
 		{
@@ -146,7 +137,7 @@ int	count_each_arg(char *prompt_cmd,int skip_pipe, int reset)
 	return (number);
 }
 
-char *fill_each_arg(char *cmd_arg, char *prompt_cmd, int skip_pipe, int reset)
+char *fill_each_arg(char *cmd_arg, char *prompt_cmd, int reset)
 {
 	static int	index;
 	int	i;
@@ -155,9 +146,9 @@ char *fill_each_arg(char *cmd_arg, char *prompt_cmd, int skip_pipe, int reset)
 	if (reset)
 	{
 		index = 0;
-		return (NULL);
+		return (0);
 	}
-	while (prompt_cmd[index] && (prompt_cmd[index] != '|' || skip_pipe))
+	while (prompt_cmd[index] && prompt_cmd[index] != '|')
 	{
 		if (prompt_cmd[index] == '<' || prompt_cmd[index] == '>')
 		{
@@ -215,18 +206,17 @@ char *fill_each_arg(char *cmd_arg, char *prompt_cmd, int skip_pipe, int reset)
 	int		i;
 
 	i = 0;
-	number_of_arg = count_arg_number(prompt_cmd, 1, 0);
-	printf("number = %d\n", number_of_arg);
+	number_of_arg = count_arg_number(prompt_cmd);
 	cmd_arg = (char **)malloc(sizeof(char *) * number_of_arg + 1);
-	cmd_arg[i] = (char *)malloc(sizeof(char) *count_each_arg(prompt_cmd, 1, 0));
-	cmd_arg[i] = fill_each_arg(cmd_arg[i], prompt_cmd, 1, 0);
-	printf("%s\n", cmd_arg[i]);
+	cmd_arg[i] = (char *)malloc(sizeof(char) *count_each_arg(prompt_cmd, 0));
+	cmd_arg[i] = fill_each_arg(cmd_arg[i], prompt_cmd, 0);
+	printf("arg = %s\n", cmd_arg[i]);
 	i++;
 	while (i < number_of_arg)
 	{
-		cmd_arg[i] = (char *)malloc(sizeof(char) * count_each_arg(prompt_cmd, 0, 0));
-		cmd_arg[i] = fill_each_arg(cmd_arg[i], prompt_cmd, 0, 0);
-		printf("%s\n", cmd_arg[i]);
+		cmd_arg[i] = (char *)malloc(sizeof(char) * count_each_arg(prompt_cmd, 0));
+		cmd_arg[i] = fill_each_arg(cmd_arg[i], prompt_cmd, 0);
+		printf("arg = %s\n", cmd_arg[i]);
 		i++;
 	}
 	cmd_arg[i] = (char *)malloc(1);

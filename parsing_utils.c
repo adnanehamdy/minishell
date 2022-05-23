@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 08:10:16 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/05/20 10:34:33 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/05/23 09:24:58 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,3 +76,4 @@ char *sub_cmd(char *prompt_cmd, int start, int len)
 	cmd[i] = 0;
 	return (cmd);
 }
+

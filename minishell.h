@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/05/22 18:26:28 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/05/23 11:18:19 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,14 @@ int	skip_white_spaces(char *prompt_cmd, int condition);
 int	count_cmd_number(char *prompt_cmd);
 /* t_cmd_line *initialize_cmd_line(char *prompt_cmd, int cmd_number);*/
 char   **initialize_cmd_line(char *prompt_cmd, int cmd_number);
-
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 
 
 /* 0-> tmp */
-int	count_arg_number(char *prompt_cmd, int skip_pipe, int reset);
+int	count_arg_number(char *prompt_cmd);
 int	count_io_redirection(char *prompt_cmd);
-int	count_each_arg(char *prompt_cmd,int skip_pipe, int reset);
+int	count_each_arg(char *prompt_cmd,int reset);
  char **allocate_cmd_arguments(char *prompt_cmd, int cmd_number, t_cmd_line *cmd);
- char *fill_each_arg(char *cmd_arg, char *prompt_cmd, int skip_pipe, int reset);
+ char *fill_each_arg(char *cmd_arg, char *prompt_cmd, int reset);
+ char	**ft_split(char const *s, char c);
