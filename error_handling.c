@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 07:19:08 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/05/23 11:29:32 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/05/24 16:43:55 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,23 @@ int	skip_white_spaces(char *prompt_cmd, int condition)
 				return (-1);
 			}
 	}
-	//check if there is pipe 
 	return (index);
+}
+
+int		check_pipe(char *prompt_cmd)
+{
+	int	index;
+
+	index = 0;
+	while (prompt_cmd[index] && ((prompt_cmd[index] >= 9 && prompt_cmd[index] <= 13) || (prompt_cmd[index] == ' ')))
+			index++;
+	if (prompt_cmd[index] == '|')
+	{
+		printf("\033[0;35mminishell> \033[0;37msyntax error near unexpected token '%c'\n", prompt_cmd[index]);
+		exit_code_handler(POSTEXIT, 258);
+		return (-1);
+	}
+	return (0);
 }
 
 void	check_separators(char *prompt_cmd)
@@ -118,13 +133,14 @@ void	check_separators(char *prompt_cmd)
 			index = index + check_second_quote(&prompt_cmd[index], '\'');
 		if (prompt_cmd[index] == '<' || prompt_cmd[index] == '>' || prompt_cmd[index] == '|')
 		{
-			if (prompt_cmd[index + 1] && prompt_cmd[index + 1] == prompt_cmd[index])
+			if (prompt_cmd[index + 1] && prompt_cmd[index + 1] == prompt_cmd[index] && prompt_cmd[index] != '|')
 				index = index + 1;
  			if (skip_white_spaces(&prompt_cmd[index], 1) < 0)
 				break ;
 		}
 		index++;
 	}
+	check_pipe(prompt_cmd);
 }
 
 void	invalid_special_character(char *prompt_cmd)

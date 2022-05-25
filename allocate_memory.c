@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 08:04:54 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/05/23 11:45:32 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/05/23 17:54:59 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,24 +199,20 @@ char *fill_each_arg(char *cmd_arg, char *prompt_cmd, int reset)
 	return (cmd_arg);
 }
 
- char **allocate_cmd_arguments(char *prompt_cmd, int cmd_number, t_cmd_line *cmd)
+ char **allocate_cmd_arguments(char *prompt_cmd)
 {
 	int	number_of_arg;
 	char	**cmd_arg;
 	int		i;
+	int		number;
 
 	i = 0;
 	number_of_arg = count_arg_number(prompt_cmd);
 	cmd_arg = (char **)malloc(sizeof(char *) * number_of_arg + 1);
-	cmd_arg[i] = (char *)malloc(sizeof(char) *count_each_arg(prompt_cmd, 0));
-	cmd_arg[i] = fill_each_arg(cmd_arg[i], prompt_cmd, 0);
-	printf("arg = %s\n", cmd_arg[i]);
-	i++;
 	while (i < number_of_arg)
 	{
-		cmd_arg[i] = (char *)malloc(sizeof(char) * count_each_arg(prompt_cmd, 0));
+		cmd_arg[i] = (char *)malloc(sizeof(char) *  count_each_arg(prompt_cmd, 0) + 1);
 		cmd_arg[i] = fill_each_arg(cmd_arg[i], prompt_cmd, 0);
-		printf("arg = %s\n", cmd_arg[i]);
 		i++;
 	}
 	cmd_arg[i] = (char *)malloc(1);
@@ -228,10 +224,23 @@ char	**initialize_cmd_line(char *prompt_cmd, int cmd_number)
 {
 	t_cmd_line	*cmd;
 	int			i;
+	char		**cmd_after_split;
 
 	i = 0;
+	cmd_after_split = ft_split(prompt_cmd, '|');
+	count_each_arg(NULL, 1);
+	fill_each_arg(NULL, NULL, 1);
+	cmd_after_split = ft_split(prompt_cmd, '|');
 	cmd = (t_cmd_line *)malloc(sizeof(t_cmd_line) * cmd_number);
-	cmd->command = allocate_cmd_arguments(prompt_cmd, cmd_number, cmd);
+	while (i < cmd_number)
+	{
+		cmd[i].command = allocate_cmd_arguments(cmd_after_split[i]);
+		count_each_arg(NULL, 1);
+		fill_each_arg(NULL, NULL, 1);
+		cmd[i].in = open_in_files(cmd_after_split[i]);
+		cmd[i].out = open_out_files(cmd_after_split[i]);
+		cmd[i].is_executable = add_cmd_path(cmd_after_split[i]);
+		i++;
+	}
 	return (cmd->command);
-	
 }
