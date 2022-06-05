@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/14 13:37:28 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/05/27 12:20:02 by ahamdy           ###   ########.fr       */
+/*   Created: 2021/11/05 17:40:34 by ahamdy            #+#    #+#             */
+/*   Updated: 2021/11/12 12:28:03 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	parse_data(char *prompt_cmd)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int	cmd_number;
+	size_t	i;
+	char	*s;
+	size_t	j;
 
-	cmd_number = count_cmd_number(prompt_cmd);
-	initialize_cmd_line(prompt_cmd, cmd_number);
-}
-	
-void	parsing_functions(char *prompt_cmd)
-{
-	if (prompt_cmd)
-		error_checker(prompt_cmd);
-	if (!exit_code_handler(GETEXIT, 1) && prompt_cmd[0])
-		parse_data(prompt_cmd);
-	else
-		printf("exit code = %d\n", exit_code_handler(GETEXIT, 1));
+	if (!s1 || !s2)
+		return (0);
+	j = 0;
+	i = ft_strlen(s1) + ft_strlen(s2);
+	s = (char *)malloc(i + 1);
+	i = 0;
+	if (!s)
+		return (0);
+	while (s1[j])
+		s[i++] = s1[j++];
+	j = 0;
+	while (s2[j])
+		s[i++] = s2[j++];
+	s[i] = 0;
+	return (s);
 }

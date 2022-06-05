@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 08:04:54 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/05/23 17:54:59 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/05/31 12:09:39 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,7 @@ char *fill_each_arg(char *cmd_arg, char *prompt_cmd, int reset)
 	int	number_of_arg;
 	char	**cmd_arg;
 	int		i;
-	int		number;
+	// int		number;
 
 	i = 0;
 	number_of_arg = count_arg_number(prompt_cmd);
@@ -227,8 +227,8 @@ char	**initialize_cmd_line(char *prompt_cmd, int cmd_number)
 	char		**cmd_after_split;
 
 	i = 0;
-	cmd_after_split = ft_split(prompt_cmd, '|');
-	count_each_arg(NULL, 1);
+/* 	cmd_after_split = ft_split(prompt_cmd, '|');
+ */	count_each_arg(NULL, 1);
 	fill_each_arg(NULL, NULL, 1);
 	cmd_after_split = ft_split(prompt_cmd, '|');
 	cmd = (t_cmd_line *)malloc(sizeof(t_cmd_line) * cmd_number);
@@ -237,10 +237,11 @@ char	**initialize_cmd_line(char *prompt_cmd, int cmd_number)
 		cmd[i].command = allocate_cmd_arguments(cmd_after_split[i]);
 		count_each_arg(NULL, 1);
 		fill_each_arg(NULL, NULL, 1);
-		cmd[i].in = open_in_files(cmd_after_split[i]);
-		cmd[i].out = open_out_files(cmd_after_split[i]);
-		cmd[i].is_executable = add_cmd_path(cmd_after_split[i]);
+		cmd[i].in = open_here_doc(cmd_after_split[i]);
+		printf("struct number %d adn the fd == %d\n",i, cmd[i].in);
+	//	cmd[i].is_executable = add_cmd_path(cmd_after_split[i]);
 		i++;
 	}
+	open_io_redirections(cmd_after_split, cmd);
 	return (cmd->command);
 }

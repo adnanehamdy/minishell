@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   ft_.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/14 13:37:28 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/05/27 12:20:02 by ahamdy           ###   ########.fr       */
+/*   Created: 2021/11/02 18:42:40 by ahamdy            #+#    #+#             */
+/*   Updated: 2021/11/04 17:32:26 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	parse_data(char *prompt_cmd)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	int	cmd_number;
+	unsigned char	*ptr;
 
-	cmd_number = count_cmd_number(prompt_cmd);
-	initialize_cmd_line(prompt_cmd, cmd_number);
-}
-	
-void	parsing_functions(char *prompt_cmd)
-{
-	if (prompt_cmd)
-		error_checker(prompt_cmd);
-	if (!exit_code_handler(GETEXIT, 1) && prompt_cmd[0])
-		parse_data(prompt_cmd);
-	else
-		printf("exit code = %d\n", exit_code_handler(GETEXIT, 1));
+	ptr = (unsigned char *)s;
+	while (n--)
+	{
+		if (*ptr == (unsigned char)c)
+			return (ptr);
+		ptr++;
+	}
+	return (NULL);
 }

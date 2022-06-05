@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   ft_lstmap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/14 13:37:28 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/05/27 12:20:02 by ahamdy           ###   ########.fr       */
+/*   Created: 2021/11/09 18:01:09 by ahamdy            #+#    #+#             */
+/*   Updated: 2021/11/12 10:52:00 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	parse_data(char *prompt_cmd)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	int	cmd_number;
+	t_list	*list;
+	t_list	*new;
 
-	cmd_number = count_cmd_number(prompt_cmd);
-	initialize_cmd_line(prompt_cmd, cmd_number);
-}
-	
-void	parsing_functions(char *prompt_cmd)
-{
-	if (prompt_cmd)
-		error_checker(prompt_cmd);
-	if (!exit_code_handler(GETEXIT, 1) && prompt_cmd[0])
-		parse_data(prompt_cmd);
-	else
-		printf("exit code = %d\n", exit_code_handler(GETEXIT, 1));
+	if (!lst || !f)
+		return (0);
+	list = 0;
+	while (lst)
+	{
+		new = ft_lstnew(f(lst->content));
+		if (!new)
+		{
+			ft_lstclear(&list, del);
+			return (0);
+		}
+		ft_lstadd_back(&list, new);
+		lst = lst->next;
+	}
+	return (list);
 }

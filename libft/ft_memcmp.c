@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/14 13:37:28 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/05/27 12:20:02 by ahamdy           ###   ########.fr       */
+/*   Created: 2021/11/02 20:00:57 by ahamdy            #+#    #+#             */
+/*   Updated: 2021/11/12 12:27:44 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	parse_data(char *prompt_cmd)
+int	ft_memcmp(const void *str1, const void *str2, size_t n)
 {
-	int	cmd_number;
+	unsigned char	*s1;
+	unsigned char	*s2;
+	size_t			i;
 
-	cmd_number = count_cmd_number(prompt_cmd);
-	initialize_cmd_line(prompt_cmd, cmd_number);
-}
-	
-void	parsing_functions(char *prompt_cmd)
-{
-	if (prompt_cmd)
-		error_checker(prompt_cmd);
-	if (!exit_code_handler(GETEXIT, 1) && prompt_cmd[0])
-		parse_data(prompt_cmd);
-	else
-		printf("exit code = %d\n", exit_code_handler(GETEXIT, 1));
+	i = 0;
+	s1 = (unsigned char *)str1;
+	s2 = (unsigned char *)str2;
+	if (n == 0)
+		return (0);
+	while (s1[i] == s2[i] && i + 1 < n)
+	{
+		i++;
+	}
+	return (s1[i] - s2[i]);
 }

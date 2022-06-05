@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 09:25:47 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/05/23 10:40:12 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/05/26 15:53:13 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static size_t	arr_count(char const *s, char c)
 {
 	size_t	i;
 	size_t	count;
-	int		tmp;
 
 	i = 0;
 	count = 0;
