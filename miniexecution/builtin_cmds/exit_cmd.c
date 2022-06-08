@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:57:35 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/06 19:52:57 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/07 13:02:04 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 
 void	exit_command( void )
 {
-	
 	exit(exit_code_handler(GETEXIT, 0));
 }
 

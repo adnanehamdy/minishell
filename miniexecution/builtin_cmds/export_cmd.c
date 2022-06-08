@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:28:43 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/07 12:30:35 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:59:36 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,18 @@ static size_t	env_realloc(char ***envp, size_t n)
 int	export_friendly(char *var)
 {
 	char	*end_of_name;
+	size_t	i;
 
 	end_of_name = ft_strchr(var, '=');
 	if (!end_of_name)
 		return (0);
+	i = 0;
+	while (&var[i] < end_of_name)
+	{
+		if (!ft_isalpha(var[i]) && var[i] != '_')
+			return (0);
+		i++;
+	}
 	return (1);
 }
 
