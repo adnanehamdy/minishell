@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/05 17:40:34 by ahamdy            #+#    #+#             */
-/*   Updated: 2021/11/12 12:28:03 by ahamdy           ###   ########.fr       */
+/*   Created: 2021/11/05 16:11:57 by nelidris          #+#    #+#             */
+/*   Updated: 2021/11/12 15:09:50 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,26 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
+	size_t	s1len;
+	size_t	s2len;
 	size_t	i;
-	char	*s;
-	size_t	j;
+	size_t	k;
+	char	*nstr;
 
 	if (!s1 || !s2)
 		return (0);
-	j = 0;
-	i = ft_strlen(s1) + ft_strlen(s2);
-	s = (char *)malloc(i + 1);
+	s1len = ft_strlen(s1);
+	s2len = ft_strlen(s2);
 	i = 0;
-	if (!s)
-		return (0);
-	while (s1[j])
-		s[i++] = s1[j++];
-	j = 0;
-	while (s2[j])
-		s[i++] = s2[j++];
-	s[i] = 0;
-	return (s);
+	k = 0;
+	nstr = (char *)malloc(s1len + s2len + 1);
+	if (!nstr)
+		return (NULL);
+	while (s1[k])
+		nstr[i++] = s1[k++];
+	k = 0;
+	while (s2[k])
+		nstr[i++] = s2[k++];
+	nstr[i] = '\0';
+	return (nstr);
 }

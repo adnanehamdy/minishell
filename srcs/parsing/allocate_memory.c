@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 08:04:54 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/13 15:50:27 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/13 18:03:11 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	count_each_arg(char *prompt_cmd, int reset)
 			skip_non_arg(prompt_cmd, &index);
 		else if ((prompt_cmd[index] < 9 || prompt_cmd[index] > 13)
 			&& prompt_cmd[index] != ' ' && prompt_cmd[index] != '<'
-			&&prompt_cmd[index] != '>' && prompt_cmd[index] != '|')
+			&& prompt_cmd[index] != '>' && prompt_cmd[index] != '|')
 			{
 				number = sub_count_each_arg(prompt_cmd, &index, &number);
 				break;
@@ -101,39 +101,45 @@ char	**allocate_cmd_arguments(char *prompt_cmd)
 
 	i = 0;
 	number_of_arg = count_arg_number(prompt_cmd);
-	cmd_arg = (char **)malloc(sizeof(char *) * number_of_arg + 1);
+	cmd_arg = (char **)malloc(sizeof(char *) * (number_of_arg + 1));
 	while (i < number_of_arg)
 	{
 		cmd_arg[i] = (char *)malloc(sizeof(char)
-				* count_each_arg(prompt_cmd, 0) + 1);
+				* (count_each_arg(prompt_cmd, 0) + 1));
 		cmd_arg[i] = fill_each_arg(cmd_arg[i], prompt_cmd, 0);
 		i++;
 	}
-	cmd_arg[i] = (char *)malloc(1);
+	// cmd_arg[i] = (char *)malloc(1);
 	cmd_arg[i] = 0;
 	return (cmd_arg);
 }
 
-char	**initialize_cmd_line(char *prompt_cmd, int cmd_number)
+t_cmd_line	**initialize_cmd_line(char *prompt_cmd, int cmd_number)
 {
-	t_cmd_line	*cmd;
+	t_cmd_line	**cmd;
 	int			i;
 	char		**cmd_after_split;
 
-	i = 0;
 	count_each_arg(NULL, 1);
 	fill_each_arg(NULL, NULL, 1);
 	cmd_after_split = parsing_split(prompt_cmd, '|');
-	cmd = (t_cmd_line *)malloc(sizeof(t_cmd_line) * cmd_number);
+	cmd = (t_cmd_line **)malloc(sizeof(t_cmd_line*) * (cmd_number + 1));
+	i = 0;
+	while (i < cmd_number)
+		cmd[i++] = (t_cmd_line *)malloc(sizeof(t_cmd_line));
 	here_doc_handler(cmd_after_split, cmd);
+	i = 0;
 	while (i < cmd_number)
 	{
-		cmd[i].command = allocate_cmd_arguments(cmd_after_split[i]);
-		//cmd[i].cmd_path = allocate_cmd_path(cmd[i].command);
+		cmd[i]->command = allocate_cmd_arguments(cmd_after_split[i]);
+		if (cmd[i]->command)
+			cmd[i]->cmd_path = allocate_cmd_path(envp_handler(GETENV, NULL), cmd[i]->command[0]);
 		count_each_arg(NULL, 1);
 		fill_each_arg(NULL, NULL, 1);
 		i++;
 	}
+	cmd[i] = 0;
 	open_io_redirections(cmd_after_split, cmd);
-	return (cmd->command);
+	/* ------> cmd_after_split should be freed */
+	return (cmd);
 }

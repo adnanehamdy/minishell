@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 15:12:49 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/13 15:50:44 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/13 17:24:23 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void open_io_files(char *cmd, int *in, int *out)
 		*out = fd[1];
 }
 
-void open_io_redirections(char **cmd_after_split, t_cmd_line *cmd)
+void open_io_redirections(char **cmd_after_split, t_cmd_line **cmd)
 {
 	int	index;
 	int	index_y;
@@ -148,9 +148,9 @@ void open_io_redirections(char **cmd_after_split, t_cmd_line *cmd)
 	index = 0;
 	while (cmd_after_split[index])
 	{
-		cmd[index].out = STANDARD_OUTPUT;
-		open_io_files(cmd_after_split[index], &cmd[index].in, &cmd[index].out);
-		printf("the in fd == %d && the out fd == %d\n", cmd[index].in, cmd[index].out);
+		cmd[index]->out = STANDARD_OUTPUT;
+		open_io_files(cmd_after_split[index], &cmd[index]->in, &cmd[index]->out);
+		// printf("the in fd == %d && the out fd == %d\n", cmd[index]->in, cmd[index]->out);
 		index++;
 	}
 }

@@ -3,36 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/05 13:40:50 by ahamdy            #+#    #+#             */
-/*   Updated: 2021/11/12 12:28:28 by ahamdy           ###   ########.fr       */
+/*   Created: 2021/11/05 11:04:24 by nelidris          #+#    #+#             */
+/*   Updated: 2021/11/09 14:36:00 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+static	size_t	mlenf(size_t slen, unsigned int start, size_t len)
+{
+	if (slen - start < len)
+		return (slen - start);
+	return (len);
+}
+
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*c;
 	size_t	i;
-	size_t	count;
+	size_t	mlen;
+	size_t	slen;
+	char	*sub;
 
-	i = 0;
-	count = 0;
 	if (!s)
-		return (0);
-	if (start > ft_strlen(s))
-		count = 1;
-	else if (ft_strlen(s) > (len + start))
-		count = len + 1;
-	else if (ft_strlen(s) <= (len + start))
-		count = ft_strlen(s) - (start) + 1;
-	c = (char *)malloc(count);
-	if (!c)
-		return (0);
-	while (count > 1 && len-- && s[start])
-		c[i++] = s[start++];
-	c[i] = 0;
-	return (c);
+		return (NULL);
+	slen = ft_strlen(s);
+	i = 0;
+	if (start >= slen)
+	{
+		sub = (char *)malloc(1);
+		if (!sub)
+			return (NULL);
+		sub[i] = 0;
+		return (sub);
+	}
+	mlen = mlenf(slen, start, len);
+	sub = (char *)malloc(mlen + 1);
+	if (!sub)
+		return (NULL);
+	ft_memcpy(sub, &s[start], mlen);
+	sub[mlen] = '\0';
+	return (sub);
 }

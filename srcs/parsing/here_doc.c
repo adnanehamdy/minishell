@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 10:25:24 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/13 15:50:39 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/13 17:11:15 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,14 +109,14 @@ int	get_last_heredoc(char *cmd)
 	return (fd);
 }
 
-void	here_doc_handler(char **cmd_after_split, t_cmd_line *cmd)
+void	here_doc_handler(char **cmd_after_split, t_cmd_line **cmd)
 {
 	int	i;
 
 	i = 0;
 	while (cmd_after_split[i])
 	{
-		cmd[i].in = get_last_heredoc(cmd_after_split[i]);
+		cmd[i]->in = get_last_heredoc(cmd_after_split[i]);
 		i++;
 	}
 }

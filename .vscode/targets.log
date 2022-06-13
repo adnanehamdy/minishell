@@ -8,14 +8,14 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Mon Jun 13 15:50:13 2022
+# Make data base, printed on Mon Jun 13 18:32:44 2022
 
 # Variables
 
- 
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
+ 
 ?F = $(notdir $?)
 # environment
 VSCODE_LOG_NATIVE = false
@@ -34,17 +34,19 @@ VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupp
 # environment
 _ = /usr/bin/make
 # makefile (from `Makefile', line 15)
-CFLAGS = -Wall -Wextra -Werror -lreadline
+CFLAGS = -Wall -Wextra -Werror -lreadline -fsanitize=address -g
 # makefile (from `Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
+# makefile (from `Makefile', line 39)
+BONUS = 
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n0000hx4000479/T/vscode-ipc-476db15d-db65-4c7b-837e-14e78b675410.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n0000hx4000479/T/vscode-ipc-17b7dff0-5efe-40d6-8dbe-f2ecc41a75e6.sock
 # environment
 VSCODE_CWD = /
 # environment
-Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.Pv6T1URksH/Render
+Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.TgDKIlklhI/Render
 # environment
 PATH = /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Applications/Visual Studio Code.app/Contents/Resources/app/bin:/Users/nelidris/n/bin
 # environment
@@ -55,10 +57,10 @@ VSCODE_LOG_STACK = false
 ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
-# makefile (from `Makefile', line 21)
-PARS_SRCS = $(PARS_PATH)/allocate_memory.c $(PARS_PATH)/error_handling.c $(PARS_PATH)/here_doc.c $(PARS_PATH)/io_redirections.c $(PARS_PATH)/io_utils.c $(PARS_PATH)/parser.c $(PARS_PATH)/parsing_split.c $(PARS_PATH)/parsing_utils.c $(PARS_PATH)/skip_alloc_utils.c $(PARS_PATH)/sub_alloc_mem.c
+# makefile (from `Makefile', line 23)
+PARS_SRCS = $(PARS_PATH)/allocate_memory.c $(PARS_PATH)/error_handling.c $(PARS_PATH)/find_path.c $(PARS_PATH)/here_doc.c $(PARS_PATH)/io_redirections.c $(PARS_PATH)/io_utils.c $(PARS_PATH)/parser.c $(PARS_PATH)/parsing_split.c $(PARS_PATH)/parsing_utils.c $(PARS_PATH)/skip_alloc_utils.c $(PARS_PATH)/sub_alloc_mem.c
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.aXkuRlmvTY/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.eL0BjLLqko/Listeners
 # automatic
 %F = $(notdir $%)
 # makefile (from `Makefile', line 17)
@@ -80,7 +82,7 @@ VSCODE_CODE_CACHE_PATH = /Users/nelidris/Library/Application Support/Code/Cached
 # environment
 LOGNAME = nelidris
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 ZSH = /Users/nelidris/.oh-my-zsh
 # environment
@@ -95,7 +97,7 @@ MAKE = $(MAKE_COMMAND)
 MAKECMDGOALS := all
 # environment
 SHLVL = 1
-# makefile (from `Makefile', line 36)
+# makefile (from `Makefile', line 41)
 LIBFT = libft/libft.a
 # makefile (from `Makefile', line 13)
 CC = gcc
@@ -107,7 +109,7 @@ USER = nelidris
 .DEFAULT_GOAL := all
 # environment
 N_PREFIX = /Users/nelidris/n
-# makefile (from `Makefile', line 34)
+# makefile (from `Makefile', line 37)
 NAME = minishell
 # environment
 LESS = -R
@@ -139,11 +141,13 @@ XPC_SERVICE_NAME = com.microsoft.VSCode.1184
 __CF_USER_TEXT_ENCODING = 0x10E9:0:0
 # default
 MAKEFILES := 
+# makefile (from `Makefile', line 21)
+GNL = get_next_line/get_next_line.c
 # automatic
 <F = $(notdir $<)
 # environment
 PAGER = less
-# makefile (from `Makefile', line 27)
+# makefile (from `Makefile', line 30)
 EXEC_SRCS = $(EXEC_PATH)/builtin_cmds/cd_cmd.c $(EXEC_PATH)/builtin_cmds/echo_cmd.c $(EXEC_PATH)/builtin_cmds/env_cmd.c $(EXEC_PATH)/builtin_cmds/exit_cmd.c $(EXEC_PATH)/builtin_cmds/export_cmd.c $(EXEC_PATH)/builtin_cmds/pwd_cmd.c $(EXEC_PATH)/env_handler.c $(EXEC_PATH)/exec_proc.c $(EXEC_PATH)/ptrlen.c
 # environment
 LC_ALL = C
@@ -153,19 +157,18 @@ EXEC_PATH = srcs/executing
 ^F = $(notdir $^)
 # default
 SUFFIXES := 
- 
 # default
 .INCLUDE_DIRS = /usr/local/include
 # environment
 MAKELEVEL := 0
-# makefile (from `Makefile', line 32)
+# makefile (from `Makefile', line 35)
 MAIN_SRCS = main.c
 # environment
 LANG = C
 # environment
-VSCODE_PID = 6361
+VSCODE_PID = 50124
 # variable set hash-table stats:
-# Load=75/1024=7%, Rehash=0, Collisions=1/153=1%
+# Load=77/1024=8%, Rehash=0, Collisions=4/159=3%
 
 # Pattern-specific Variable Values
 
@@ -186,7 +189,8 @@ VSCODE_PID = 6361
 # Not a target:
 srcs/parsing/skip_alloc_utils.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-13 15:39:09
+ 
+#  Last modified 2022-06-13 15:50:56
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -200,7 +204,7 @@ all: minishell
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/27=0%
+# Load=0/32=0%, Rehash=0, Collisions=0/29=0%
 
 # Not a target:
 srcs/executing/ptrlen.c:
@@ -219,7 +223,7 @@ srcs/executing/ptrlen.c:
 # Not a target:
 srcs/executing/exec_proc.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-13 15:10:16
+#  Last modified 2022-06-13 17:06:00
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -228,7 +232,7 @@ srcs/executing/exec_proc.c:
 # Not a target:
 main.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-13 15:37:21
+#  Last modified 2022-06-13 18:18:55
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -237,7 +241,7 @@ main.c:
 # Not a target:
 srcs/parsing/sub_alloc_mem.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-13 15:39:09
+#  Last modified 2022-06-13 15:50:59
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -252,7 +256,7 @@ srcs/parsing/sub_alloc_mem.c:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-13 15:49:38
+#  Last modified 2022-06-13 18:32:38
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -261,13 +265,13 @@ Makefile:
 # Not a target:
 srcs/executing/env_handler.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-13 14:54:48
+#  Last modified 2022-06-13 16:28:34
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-minishell: srcs/parsing/allocate_memory.c srcs/parsing/error_handling.c srcs/parsing/here_doc.c srcs/parsing/io_redirections.c srcs/parsing/io_utils.c srcs/parsing/parser.c srcs/parsing/parsing_split.c srcs/parsing/parsing_utils.c srcs/parsing/skip_alloc_utils.c srcs/parsing/sub_alloc_mem.c srcs/executing/builtin_cmds/cd_cmd.c srcs/executing/builtin_cmds/echo_cmd.c srcs/executing/builtin_cmds/env_cmd.c srcs/executing/builtin_cmds/exit_cmd.c srcs/executing/builtin_cmds/export_cmd.c srcs/executing/builtin_cmds/pwd_cmd.c srcs/executing/env_handler.c srcs/executing/exec_proc.c srcs/executing/ptrlen.c main.c libft/libft.a
+minishell: srcs/parsing/allocate_memory.c srcs/parsing/error_handling.c srcs/parsing/find_path.c srcs/parsing/here_doc.c srcs/parsing/io_redirections.c srcs/parsing/io_utils.c srcs/parsing/parser.c srcs/parsing/parsing_split.c srcs/parsing/parsing_utils.c srcs/parsing/skip_alloc_utils.c srcs/parsing/sub_alloc_mem.c srcs/executing/builtin_cmds/cd_cmd.c srcs/executing/builtin_cmds/echo_cmd.c srcs/executing/builtin_cmds/env_cmd.c srcs/executing/builtin_cmds/exit_cmd.c srcs/executing/builtin_cmds/export_cmd.c srcs/executing/builtin_cmds/pwd_cmd.c srcs/executing/env_handler.c srcs/executing/exec_proc.c srcs/executing/ptrlen.c main.c libft/libft.a get_next_line/get_next_line.c
 #  Implicit rule search has not been done.
 #  Implicit/static pattern stem: `'
 #  File does not exist.
@@ -280,27 +284,27 @@ minishell: srcs/parsing/allocate_memory.c srcs/parsing/error_handling.c srcs/par
 # automatic
 # * := 
 # automatic
-# + := srcs/parsing/allocate_memory.c srcs/parsing/error_handling.c srcs/parsing/here_doc.c srcs/parsing/io_redirections.c srcs/parsing/io_utils.c srcs/parsing/parser.c srcs/parsing/parsing_split.c srcs/parsing/parsing_utils.c srcs/parsing/skip_alloc_utils.c srcs/parsing/sub_alloc_mem.c srcs/executing/builtin_cmds/cd_cmd.c srcs/executing/builtin_cmds/echo_cmd.c srcs/executing/builtin_cmds/env_cmd.c srcs/executing/builtin_cmds/exit_cmd.c srcs/executing/builtin_cmds/export_cmd.c srcs/executing/builtin_cmds/pwd_cmd.c srcs/executing/env_handler.c srcs/executing/exec_proc.c srcs/executing/ptrlen.c main.c libft/libft.a
+# + := srcs/parsing/allocate_memory.c srcs/parsing/error_handling.c srcs/parsing/find_path.c srcs/parsing/here_doc.c srcs/parsing/io_redirections.c srcs/parsing/io_utils.c srcs/parsing/parser.c srcs/parsing/parsing_split.c srcs/parsing/parsing_utils.c srcs/parsing/skip_alloc_utils.c srcs/parsing/sub_alloc_mem.c srcs/executing/builtin_cmds/cd_cmd.c srcs/executing/builtin_cmds/echo_cmd.c srcs/executing/builtin_cmds/env_cmd.c srcs/executing/builtin_cmds/exit_cmd.c srcs/executing/builtin_cmds/export_cmd.c srcs/executing/builtin_cmds/pwd_cmd.c srcs/executing/env_handler.c srcs/executing/exec_proc.c srcs/executing/ptrlen.c main.c libft/libft.a get_next_line/get_next_line.c
 # automatic
 # | := 
 # automatic
 # < := srcs/parsing/allocate_memory.c
 # automatic
-# ^ := srcs/parsing/allocate_memory.c srcs/parsing/error_handling.c srcs/parsing/here_doc.c srcs/parsing/io_redirections.c srcs/parsing/io_utils.c srcs/parsing/parser.c srcs/parsing/parsing_split.c srcs/parsing/parsing_utils.c srcs/parsing/skip_alloc_utils.c srcs/parsing/sub_alloc_mem.c srcs/executing/builtin_cmds/cd_cmd.c srcs/executing/builtin_cmds/echo_cmd.c srcs/executing/builtin_cmds/env_cmd.c srcs/executing/builtin_cmds/exit_cmd.c srcs/executing/builtin_cmds/export_cmd.c srcs/executing/builtin_cmds/pwd_cmd.c srcs/executing/env_handler.c srcs/executing/exec_proc.c srcs/executing/ptrlen.c main.c libft/libft.a
+# ^ := srcs/parsing/allocate_memory.c srcs/parsing/error_handling.c srcs/parsing/find_path.c srcs/parsing/here_doc.c srcs/parsing/io_redirections.c srcs/parsing/io_utils.c srcs/parsing/parser.c srcs/parsing/parsing_split.c srcs/parsing/parsing_utils.c srcs/parsing/skip_alloc_utils.c srcs/parsing/sub_alloc_mem.c srcs/executing/builtin_cmds/cd_cmd.c srcs/executing/builtin_cmds/echo_cmd.c srcs/executing/builtin_cmds/env_cmd.c srcs/executing/builtin_cmds/exit_cmd.c srcs/executing/builtin_cmds/export_cmd.c srcs/executing/builtin_cmds/pwd_cmd.c srcs/executing/env_handler.c srcs/executing/exec_proc.c srcs/executing/ptrlen.c main.c libft/libft.a get_next_line/get_next_line.c
 # automatic
-# ? := srcs/parsing/allocate_memory.c srcs/parsing/error_handling.c srcs/parsing/here_doc.c srcs/parsing/io_redirections.c srcs/parsing/io_utils.c srcs/parsing/parser.c srcs/parsing/parsing_split.c srcs/parsing/parsing_utils.c srcs/parsing/skip_alloc_utils.c srcs/parsing/sub_alloc_mem.c srcs/executing/builtin_cmds/cd_cmd.c srcs/executing/builtin_cmds/echo_cmd.c srcs/executing/builtin_cmds/env_cmd.c srcs/executing/builtin_cmds/exit_cmd.c srcs/executing/builtin_cmds/export_cmd.c srcs/executing/builtin_cmds/pwd_cmd.c srcs/executing/env_handler.c srcs/executing/exec_proc.c srcs/executing/ptrlen.c main.c libft/libft.a
+# ? := srcs/parsing/allocate_memory.c srcs/parsing/error_handling.c srcs/parsing/find_path.c srcs/parsing/here_doc.c srcs/parsing/io_redirections.c srcs/parsing/io_utils.c srcs/parsing/parser.c srcs/parsing/parsing_split.c srcs/parsing/parsing_utils.c srcs/parsing/skip_alloc_utils.c srcs/parsing/sub_alloc_mem.c srcs/executing/builtin_cmds/cd_cmd.c srcs/executing/builtin_cmds/echo_cmd.c srcs/executing/builtin_cmds/env_cmd.c srcs/executing/builtin_cmds/exit_cmd.c srcs/executing/builtin_cmds/export_cmd.c srcs/executing/builtin_cmds/pwd_cmd.c srcs/executing/env_handler.c srcs/executing/exec_proc.c srcs/executing/ptrlen.c main.c libft/libft.a get_next_line/get_next_line.c
 # variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=31/35=89%
-#  commands to execute (from `Makefile', line 43):
-	$(CC) $(CFLAGS) $(PARS_SRCS) $(EXEC_SRCS) $(MAIN_SRCS) $(LIBFT)  -o minishell
+# Load=8/32=25%, Rehash=0, Collisions=33/37=89%
+#  commands to execute (from `Makefile', line 48):
+	$(CC) $(CFLAGS) $(PARS_SRCS) $(EXEC_SRCS) $(MAIN_SRCS) $(GNL) $(LIBFT) -o minishell
 	
 
 libft/libft.a:
 #  Implicit rule search has not been done.
-#  Last modified 2022-06-13 15:37:25
+#  Last modified 2022-06-13 18:32:41
 #  File has been updated.
 #  Successfully updated.
-#  commands to execute (from `Makefile', line 46):
+#  commands to execute (from `Makefile', line 51):
 	make -C libft
 	
 
@@ -315,14 +319,14 @@ fclean: clean
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 52):
+#  commands to execute (from `Makefile', line 57):
 	rm -f $(NAME)
 	
 
 # Not a target:
 srcs/parsing/allocate_memory.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-13 15:47:32
+#  Last modified 2022-06-13 18:03:11
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -331,7 +335,7 @@ srcs/parsing/allocate_memory.c:
 # Not a target:
 srcs/parsing/io_utils.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-13 15:39:09
+#  Last modified 2022-06-13 15:50:46
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -349,7 +353,7 @@ srcs/executing/builtin_cmds/pwd_cmd.c:
 # Not a target:
 srcs/parsing/error_handling.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-13 15:39:09
+#  Last modified 2022-06-13 15:50:37
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -367,7 +371,7 @@ srcs/executing/builtin_cmds/cd_cmd.c:
 # Not a target:
 srcs/parsing/io_redirections.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-13 15:39:09
+#  Last modified 2022-06-13 17:24:23
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -382,7 +386,6 @@ srcs/parsing/io_redirections.c:
 # Not a target:
 srcs/executing/builtin_cmds/echo_cmd.c:
 #  Implicit rule search has been done.
- 
 #  Last modified 2022-06-13 14:54:30
 #  File has been updated.
 #  Successfully updated.
@@ -392,10 +395,11 @@ srcs/executing/builtin_cmds/echo_cmd.c:
 # Not a target:
 srcs/parsing/parsing_split.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-13 15:42:54
+#  Last modified 2022-06-13 15:50:52
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
+ 
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
@@ -416,7 +420,7 @@ re: fclean all
 # Not a target:
 srcs/parsing/here_doc.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-13 15:39:09
+#  Last modified 2022-06-13 17:11:15
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -427,14 +431,23 @@ clean:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 49):
+#  commands to execute (from `Makefile', line 54):
 	make fclean -C libft/
 	
 
 # Not a target:
 srcs/parsing/parsing_utils.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-13 15:39:09
+#  Last modified 2022-06-13 15:50:54
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+srcs/parsing/find_path.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-13 17:56:32
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -443,7 +456,16 @@ srcs/parsing/parsing_utils.c:
 # Not a target:
 srcs/parsing/parser.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-13 15:39:09
+#  Last modified 2022-06-13 18:32:34
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+get_next_line/get_next_line.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-06-13 17:47:23
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -452,7 +474,7 @@ srcs/parsing/parser.c:
 # Not a target:
 srcs/executing/builtin_cmds/env_cmd.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-13 14:54:32
+#  Last modified 2022-06-13 16:01:00
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -468,7 +490,7 @@ srcs/executing/builtin_cmds/exit_cmd.c:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # files hash-table stats:
-# Load=31/1024=3%, Rehash=0, Collisions=0/75=0%
+# Load=33/1024=3%, Rehash=0, Collisions=0/79=0%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -480,6 +502,6 @@ srcs/executing/builtin_cmds/exit_cmd.c:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Mon Jun 13 15:50:13 2022
+# Finished Make data base on Mon Jun 13 18:32:44 2022
 
  

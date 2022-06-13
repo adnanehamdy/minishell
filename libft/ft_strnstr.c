@@ -3,36 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 10:33:15 by ahamdy            #+#    #+#             */
-/*   Updated: 2021/11/06 15:34:41 by ahamdy           ###   ########.fr       */
+/*   Created: 2021/11/02 09:56:02 by nelidris          #+#    #+#             */
+/*   Updated: 2021/11/09 12:42:38 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *hay, const char *ndle, size_t len)
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	unsigned char	*h;
-	size_t			i;
+	size_t	i;
+	char	*n;
+	char	*h;
 
-	h = (unsigned char *)hay;
+	n = (char *)needle;
+	h = (char *)haystack;
+	if (!*n)
+		return (h);
 	i = 0;
-	if (*ndle == 0)
-		return ((char *)h);
-	else
+	while (h[i] && i < len)
 	{
-		while (*h && i < len)
+		if (h[i] == n[0])
 		{
-			if (len - i++ < ft_strlen(ndle))
-				return (0);
-			if (!(ft_strncmp((char *)h, ndle, ft_strlen(ndle))))
-			{
-				return ((char *)h);
-			}
-			h++;
+			if (len < ft_strlen(n) + i)
+				break ;
+			if (!ft_strncmp(&h[i], n, ft_strlen(needle)))
+				return (&h[i]);
 		}
+		i++;
 	}
-	return (0);
+	return (NULL);
 }

@@ -6,25 +6,26 @@
 #    By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/26 14:06:32 by ahamdy            #+#    #+#              #
-#    Updated: 2022/06/13 16:02:47 by nelidris         ###   ########.fr        #
+#    Updated: 2022/06/13 18:32:38 by nelidris         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -lreadline
+CFLAGS = -Wall -Wextra -Werror -lreadline -fsanitize=address -g
 
 PARS_PATH = srcs/parsing
 
 EXEC_PATH = srcs/executing
 
-GNL = get_next_line/get_next_line_utils.c get_next_line/get_next_line.c
+GNL = get_next_line/get_next_line.c
 
 PARS_SRCS = $(PARS_PATH)/allocate_memory.c $(PARS_PATH)/error_handling.c \
-			$(PARS_PATH)/here_doc.c $(PARS_PATH)/io_redirections.c \
-			$(PARS_PATH)/io_utils.c $(PARS_PATH)/parser.c \
-			$(PARS_PATH)/parsing_split.c $(PARS_PATH)/parsing_utils.c \
-			$(PARS_PATH)/skip_alloc_utils.c $(PARS_PATH)/sub_alloc_mem.c
+			$(PARS_PATH)/find_path.c $(PARS_PATH)/here_doc.c \
+			$(PARS_PATH)/io_redirections.c $(PARS_PATH)/io_utils.c \
+			$(PARS_PATH)/parser.c $(PARS_PATH)/parsing_split.c \
+			$(PARS_PATH)/parsing_utils.c $(PARS_PATH)/skip_alloc_utils.c \
+			 $(PARS_PATH)/sub_alloc_mem.c
 
 EXEC_SRCS = $(EXEC_PATH)/builtin_cmds/cd_cmd.c $(EXEC_PATH)/builtin_cmds/echo_cmd.c \
 			$(EXEC_PATH)/builtin_cmds/env_cmd.c $(EXEC_PATH)/builtin_cmds/exit_cmd.c \
@@ -34,6 +35,8 @@ EXEC_SRCS = $(EXEC_PATH)/builtin_cmds/cd_cmd.c $(EXEC_PATH)/builtin_cmds/echo_cm
 MAIN_SRCS = main.c
 
 NAME = minishell
+
+BONUS =
 
 LIBFT = libft/libft.a
 
