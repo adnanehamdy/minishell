@@ -1,26 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   env_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/15 06:41:02 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/13 15:37:21 by nelidris         ###   ########.fr       */
+/*   Created: 2022/06/07 09:11:52 by nelidris          #+#    #+#             */
+/*   Updated: 2022/06/13 14:54:48 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../../includes/minishell.h"
 
-int main(void)
+char	**envp_handler(int mod, char **old_envp)
 {
-	char	*prompt_cmd;
+	static char	**envp;
 
-	while (1)
+	if (mod)
+		envp = old_envp;
+	return (envp);
+}
+
+char	**env_dup(char	**envp)
+{
+	char	**new_envp;
+	size_t	len;
+
+	len = ptrlen(envp);
+	new_envp = (char **)malloc(sizeof(char*) * (len + 1));
+	len = 0;
+	while (envp[len])
 	{
-		prompt_cmd = readline("\033[0;35mminishell> \033[0;37m");
-		add_history(prompt_cmd);
-		exit_code_handler(POSTEXIT, 0);
-		parsing_functions(prompt_cmd);
+		new_envp[len] = ft_strdup(envp[len]);
+		len++;
 	}
+	new_envp[len] = 0;
+	return (new_envp);
 }

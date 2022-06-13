@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   pwd_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/15 06:41:02 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/13 15:37:21 by nelidris         ###   ########.fr       */
+/*   Created: 2022/06/06 15:46:22 by nelidris          #+#    #+#             */
+/*   Updated: 2022/06/13 14:54:42 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../../../includes/minishell.h"
 
-int main(void)
+void	pwd_command(void)
 {
-	char	*prompt_cmd;
-
-	while (1)
-	{
-		prompt_cmd = readline("\033[0;35mminishell> \033[0;37m");
-		add_history(prompt_cmd);
-		exit_code_handler(POSTEXIT, 0);
-		parsing_functions(prompt_cmd);
-	}
+	char	*pwd;
+	
+	pwd = getcwd(NULL, 0);
+	ft_putendl_fd(pwd, STANDARD_OUTPUT);
+	free(pwd);
 }
+
+// int main(void)
+// {
+// 	pwd_command();
+// 	return (0);
+// }

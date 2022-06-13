@@ -3,19 +3,35 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+         #
+#    By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/26 14:06:32 by ahamdy            #+#    #+#              #
-#    Updated: 2022/06/02 11:40:14 by ahamdy           ###   ########.fr        #
+#    Updated: 2022/06/13 16:02:47 by nelidris         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-AR = ar rc
+
 CFLAGS = -Wall -Wextra -Werror -lreadline
 
-SRCS = parser.c error_handling.c allocate_memory.c ft_strncmp.c here_doc.c io_utils.c main.c \
-		parsing_utils.c split.c  get_next_line/get_next_line.c get_next_line/get_next_line_utils.c io_redirections.c
+PARS_PATH = srcs/parsing
+
+EXEC_PATH = srcs/executing
+
+GNL = get_next_line/get_next_line_utils.c get_next_line/get_next_line.c
+
+PARS_SRCS = $(PARS_PATH)/allocate_memory.c $(PARS_PATH)/error_handling.c \
+			$(PARS_PATH)/here_doc.c $(PARS_PATH)/io_redirections.c \
+			$(PARS_PATH)/io_utils.c $(PARS_PATH)/parser.c \
+			$(PARS_PATH)/parsing_split.c $(PARS_PATH)/parsing_utils.c \
+			$(PARS_PATH)/skip_alloc_utils.c $(PARS_PATH)/sub_alloc_mem.c
+
+EXEC_SRCS = $(EXEC_PATH)/builtin_cmds/cd_cmd.c $(EXEC_PATH)/builtin_cmds/echo_cmd.c \
+			$(EXEC_PATH)/builtin_cmds/env_cmd.c $(EXEC_PATH)/builtin_cmds/exit_cmd.c \
+			$(EXEC_PATH)/builtin_cmds/export_cmd.c $(EXEC_PATH)/builtin_cmds/pwd_cmd.c \
+			$(EXEC_PATH)/env_handler.c $(EXEC_PATH)/exec_proc.c $(EXEC_PATH)/ptrlen.c
+
+MAIN_SRCS = main.c
 
 NAME = minishell
 
@@ -25,18 +41,17 @@ all : $(NAME)
 
 bonus : $(BONUS)
 
-$(NAME) : $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS)  $(SRCS)  libft/libft.a  -o minishell
+$(NAME) : $(PARS_SRCS) $(EXEC_SRCS) $(MAIN_SRCS) $(LIBFT) $(GNL)
+	$(CC) $(CFLAGS) $(PARS_SRCS) $(EXEC_SRCS) $(MAIN_SRCS) $(GNL) $(LIBFT) -o minishell
 
 $(LIBFT):
-	make -C libft/
+	make -C libft
 
 clean :
-	make clean -C libft/
+	make fclean -C libft/
 
 fclean : clean
 	rm -f $(NAME)
-	rm -rf libft/libft.a
 
 re : fclean all
 

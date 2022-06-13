@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   exit_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/15 06:41:02 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/13 15:37:21 by nelidris         ###   ########.fr       */
+/*   Created: 2022/06/06 15:57:35 by nelidris          #+#    #+#             */
+/*   Updated: 2022/06/13 14:54:34 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../../../includes/minishell.h"
 
-int main(void)
+// int	exit_code_handler(int mod, int value)
+// {
+// 	static int exit_code;
+	
+// 	if (mod == GETEXIT)
+// 		return exit_code;
+// 	else if (mod == POSTEXIT)
+// 		exit_code = value;
+// 	return (0);
+// }
+
+void	exit_command( void )
 {
-	char	*prompt_cmd;
-
-	while (1)
-	{
-		prompt_cmd = readline("\033[0;35mminishell> \033[0;37m");
-		add_history(prompt_cmd);
-		exit_code_handler(POSTEXIT, 0);
-		parsing_functions(prompt_cmd);
-	}
+	exit(exit_code_handler(GETEXIT, 0));
 }
+
+// int main(void)
+// {
+// 	exit_command();
+// 	return (0);
+// }
