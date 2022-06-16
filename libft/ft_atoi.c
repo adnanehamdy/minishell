@@ -3,49 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/03 12:00:03 by ahamdy            #+#    #+#             */
-/*   Updated: 2021/11/11 19:58:55 by ahamdy           ###   ########.fr       */
+/*   Created: 2021/11/02 14:53:51 by nelidris          #+#    #+#             */
+/*   Updated: 2021/11/07 11:32:34 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	store(const char *str, int sign)
+static int	_convert(const	char *str, int sign)
 {
-	size_t	res;
+	size_t	i;
+	size_t	rslt;
 
-	res = 0;
-	while (ft_isdigit(*str) && *str)
+	i = 0;
+	rslt = 0;
+	while (str[i] && ft_isdigit(str[i]))
 	{
-		if ((unsigned long)(res * 10 + (*str - '0'))
-		> 9223372036854775807 && sign == 1)
+		if ((unsigned long)rslt * 10 + (str[i] - 48)
+			> 9223372036854775807 && sign == 1)
 			return (-1);
-		else if ((unsigned long)(res * 10 + (*str - '0'))
-		> (unsigned long)9223372036854775807 + 1 && sign == -1)
+		else if ((unsigned long)rslt * 10 + (str[i] - 48)
+			> (unsigned long)9223372036854775807 + 1 && sign == -1)
 			return (0);
-		res *= 10;
-		res += *str - '0';
-		str++;
+		rslt = (rslt * 10) + (str[i] - 48);
+		i++;
 	}
-	return (sign * (long)res);
+	return ((long)rslt * sign);
 }
 
 int	ft_atoi(const char *str)
 {
-	size_t	sign;
-	size_t	res;
+	size_t			i;
+	int				sign;
 
+	i = 0;
 	sign = 1;
-	res = 0;
-	while ((*str >= 9 && *str <= 13) || (*str == ' '))
-		str++;
-	if (*str == '+' || *str == '-')
+	while ((str[i] >= '\t' && str[i] <= '\r') || str[i] == ' ')
+		i++;
+	if (str[i] == '+' || str[i] == '-')
 	{
-		if (*str == '-')
-			sign *= -1;
-		str++;
+		if (str[i] == '-')
+			sign = -1;
+		i++;
 	}
-	return (store(str, sign));
+	return (_convert(&str[i], sign));
 }

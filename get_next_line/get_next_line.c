@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 15:43:12 by ahamdy            #+#    #+#             */
-/*   Updated: 2021/11/22 16:01:16 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/06/13 17:47:23 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<unistd.h>
-#include "get_next_line.h"
-#include<fcntl.h>
-#include<stdlib.h>
-#include<stdio.h>
+#include "../includes/minishell.h"
 
 static void	_freemem(char **ptr)
 {

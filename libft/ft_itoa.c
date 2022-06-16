@@ -3,80 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/07 18:56:31 by ahamdy            #+#    #+#             */
-/*   Updated: 2021/11/12 14:21:05 by ahamdy           ###   ########.fr       */
+/*   Created: 2021/11/07 15:23:52 by nelidris          #+#    #+#             */
+/*   Updated: 2021/11/08 11:28:32 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_count(int c)
-{
-	size_t	count;
-
-	count = 0;
-	if (c < 0)
-	{
-		count = 1;
-		c *= -1;
-	}
-	while (c > 0)
-	{
-		c /= 10;
-		count++;
-	}
-	return (count);
-}
-
-static char	*ft_convert(char *num, int n, int count)
+char	*_fill_buff_itoa(int n, char *number, int cc)
 {
 	if (n < 0)
 	{
-		num[0] = '-';
-		ft_convert(num, n * -1, count--);
+		if (n == -2147483648)
+			return (ft_memcpy(number, "-2147483648", 11));
+		number[0] = '-';
+		return (_fill_buff_itoa((n * -1), number, cc));
 	}
-	else if (n >= 10)
+	else if (n > 9)
 	{
-		num[count--] = n % 10 + 48;
-		ft_convert(num, n / 10, count);
+		_fill_buff_itoa((n / 10), number, cc - 1);
+		number[cc] = (n % 10) + 48;
+		return (number);
 	}
 	else
-		num[count] = n + 48;
-	return (num);
+		number[cc] = n + 48;
+	return (number);
+}
+
+static	size_t	_num_count(int n)
+{
+	size_t	cc;
+
+	cc = 0;
+	while (n)
+	{
+		n /= 10;
+		cc++;
+	}
+	return (cc);
 }
 
 char	*ft_itoa(int n)
 {
-	int		count;
-	char	*num;
+	size_t	cc;
+	char	*number;
 
-	num = 0;
-	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
-	else if (n == 0)
-	{
-		num = (char *)malloc(2);
-		num[0] = '0';
-		num[1] = 0;
-		return (num);
-	}
-	count = (int)ft_count(n);
-	num = (char *)malloc(count + 1);
-	if (!num)
-		return (0);
-	num[count] = '\0';
-	return (ft_convert(num, n, --count));
+	cc = _num_count(n);
+	if (n <= 0)
+		cc++;
+	number = (char *)malloc(cc + 1);
+	if (!number)
+		return (NULL);
+	number = _fill_buff_itoa(n, number, cc - 1);
+	number[cc] = '\0';
+	return (number);
 }
-
-/*#include<stdio.h>
-
-int	main(void)
-{
-	int	c;
-
-	c = -2147483648LL;
-	//c = -83648;
-	printf("%s", ft_itoa(c));
-}*/
