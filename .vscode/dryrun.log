@@ -1,5 +1,0 @@
-make --dry-run --keep-going --print-directory
-make: Entering directory `/Users/nelidris/Desktop/minishell'
-gcc -Wall -Wextra -Werror -lreadline -fsanitize=address -g srcs/parsing/allocate_memory.c srcs/parsing/error_handling.c srcs/parsing/find_path.c srcs/parsing/here_doc.c srcs/parsing/io_redirections.c srcs/parsing/io_utils.c srcs/parsing/parser.c srcs/parsing/parsing_split.c srcs/parsing/parsing_utils.c srcs/parsing/skip_alloc_utils.c srcs/parsing/sub_alloc_mem.c srcs/executing/builtin_cmds/cd_cmd.c srcs/executing/builtin_cmds/echo_cmd.c srcs/executing/builtin_cmds/env_cmd.c srcs/executing/builtin_cmds/exit_cmd.c srcs/executing/builtin_cmds/export_cmd.c srcs/executing/builtin_cmds/pwd_cmd.c srcs/executing/env_handler.c srcs/executing/exec_proc.c srcs/executing/ptrlen.c main.c get_next_line/get_next_line.c libft/libft.a -o minishell
-make: Leaving directory `/Users/nelidris/Desktop/minishell'
- 

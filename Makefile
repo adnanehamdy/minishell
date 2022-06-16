@@ -6,13 +6,13 @@
 #    By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/26 14:06:32 by ahamdy            #+#    #+#              #
-#    Updated: 2022/06/13 18:32:38 by nelidris         ###   ########.fr        #
+#    Updated: 2022/06/16 16:47:48 by nelidris         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -lreadline -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror -lreadline #-fsanitize=address -g
 
 PARS_PATH = srcs/parsing
 
@@ -40,21 +40,53 @@ BONUS =
 
 LIBFT = libft/libft.a
 
+GREEN = "\033[0;32m"
+
+YELLOW = "\033[0;33m"
+
+BLUE = "\033[0;34m"
+
+PURPLE = "\033[0;35m"
+
+ENDCOLOR = "\033[0;37m"
+
 all : $(NAME)
 
 bonus : $(BONUS)
 
-$(NAME) : $(PARS_SRCS) $(EXEC_SRCS) $(MAIN_SRCS) $(LIBFT) $(GNL)
-	$(CC) $(CFLAGS) $(PARS_SRCS) $(EXEC_SRCS) $(MAIN_SRCS) $(GNL) $(LIBFT) -o minishell
+header :
+	@echo
+	@echo $(PURPLE)"███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     "$(ENDCOLOR)
+	@echo $(PURPLE)"████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     "$(ENDCOLOR)
+	@echo $(PURPLE)"██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║     "$(ENDCOLOR)
+	@echo $(PURPLE)"██║╚██╔╝██║██║██║╚██╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║     "$(ENDCOLOR)
+	@echo $(PURPLE)"██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗"$(ENDCOLOR)
+	@echo $(PURPLE)"╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝"$(ENDCOLOR)
+	@echo
+	
+$(NAME) : header $(PARS_SRCS) $(EXEC_SRCS) $(MAIN_SRCS) $(LIBFT) $(GNL)
+	@echo $(BLUE)"--------------------------- $(NAME) ---------------------------"$(ENDCOLOR)
+	@echo $(YELLOW)"---> Compiling src files..."$(ENDCOLOR)
+	@$(CC) $(CFLAGS) $(PARS_SRCS) $(EXEC_SRCS) $(MAIN_SRCS) $(GNL) $(LIBFT) -o minishell
+	@echo $(GREEN)"---> All files have been compiled successfully!"$(ENDCOLOR)
 
-$(LIBFT):
-	make -C libft
+$(LIBFT): header
+	@echo $(BLUE)"--------------------------- $(LIBFT) ---------------------------"$(ENDCOLOR)
+	@echo $(YELLOW)"---> Compiling Libft files..."$(ENDCOLOR)
+	@make -C libft > /dev/null
+	@echo $(GREEN)"---> Libft has been compiled successfully!"$(ENDCOLOR)
 
-clean :
-	make fclean -C libft/
-
-fclean : clean
-	rm -f $(NAME)
+clean : header
+	@echo $(BLUE)"--------------------------- clean ---------------------------"$(ENDCOLOR)
+	@echo $(YELLOW)"---> Cleaning libft..."$(ENDCOLOR)
+	@make fclean -C libft/ > /dev/null
+	@echo $(GREEN)"---> Libft has been cleaned successfully!"$(ENDCOLOR)
+	
+fclean : header clean
+	@echo $(BLUE)"--------------------------- fclean ---------------------------"$(ENDCOLOR)
+	@echo $(YELLOW)"---> Cleaning minishell..."$(ENDCOLOR)
+	@rm -f $(NAME) > /dev/null
+	@echo $(GREEN)"---> minishell has been cleaned successfully!"$(ENDCOLOR)
 
 re : fclean all
 
