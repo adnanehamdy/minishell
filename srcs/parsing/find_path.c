@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 17:32:35 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/13 17:56:32 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/16 17:33:16 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,32 @@ static char	**setup_path(char **envp)
 	return (ft_split(&envp[i][5], ':'));
 }
 
-char	*allocate_cmd_path(char	**envp, char *cmd)
+char	*allocate_cmd_path(t_cmd_line *command, char	**envp, char *cmd)
 {
 	char	**path;
 	char	*tmp;
 	char	*tmp2;
 	int		i;
 
-	i = 0;
+	if (ft_strchr(cmd, '/'))
+		return (ft_strdup(cmd));
 	path = setup_path(envp);
+	if (!path)
+		return (0);
+	i = 0;
 	while (path[i])
 	{
 		tmp = ft_strjoin(path[i], "/");
 		tmp2 = ft_strjoin(tmp, cmd);
 		free(tmp);
-		if (!(access(tmp2, X_OK)))
+		if (!(access(tmp2, F_OK)))
+		{
+			if (access(tmp2, X_OK) < 0)
+				command->is_executable = 1;
+			else
+				command->is_executable = -1;
 			return (cmd_path(tmp2, path));
+		}
 		else
 			free(tmp2);
 		i++;

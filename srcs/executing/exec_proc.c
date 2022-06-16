@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:56:16 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/13 18:46:19 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/16 17:31:06 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,22 @@ size_t	structlen(t_cmd_line **cmd_line)
 	while (cmd_line[len])
 		len++;
 	return (len);
+}
+
+static void	exec_error_handler(t_cmd_line *cmd_line)
+{
+	if (cmd_line->is_executable < 0)
+	{
+		ft_putstr_fd("minishell: permission denied: ", 2);
+		ft_putendl_fd(cmd_line->command[0], 2);
+		exit(126);
+	}
+	if (cmd_line->cmd_path)
+		ft_putstr_fd("minishell: no such file or directory: ", 2);
+	else
+		ft_putstr_fd("minishell: command not found: ", 2);
+	ft_putendl_fd(cmd_line->command[0], 2);
+	exit(127);
 }
 
 static void	run_command(t_cmd_line *cmd_line)
@@ -42,7 +58,7 @@ static void	run_command(t_cmd_line *cmd_line)
 		if (cmd_line->out != 1)
 			close(cmd_line->out);
 		if (execve(cmd_line->cmd_path, cmd_line->command, envp_handler(GETENV, NULL)) < 0)
-			perror("Error");
+			exec_error_handler(cmd_line);
 	}
 	if (cmd_line->in != 0)
 		close(cmd_line->in);

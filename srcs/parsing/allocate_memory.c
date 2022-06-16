@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 08:04:54 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/13 18:03:11 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/16 17:36:33 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,9 @@ t_cmd_line	**initialize_cmd_line(char *prompt_cmd, int cmd_number)
 	while (i < cmd_number)
 	{
 		cmd[i]->command = allocate_cmd_arguments(cmd_after_split[i]);
+		cmd[i]->is_executable = 0;
 		if (cmd[i]->command)
-			cmd[i]->cmd_path = allocate_cmd_path(envp_handler(GETENV, NULL), cmd[i]->command[0]);
+			cmd[i]->cmd_path = allocate_cmd_path(cmd[i], envp_handler(GETENV, NULL), cmd[i]->command[0]);
 		count_each_arg(NULL, 1);
 		fill_each_arg(NULL, NULL, 1);
 		i++;
