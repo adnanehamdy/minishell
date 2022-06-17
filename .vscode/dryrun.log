@@ -1,0 +1,22 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/nelidris/Desktop/minishell'
+echo
+ 
+echo "\033[0;35m""███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     ""\033[0;37m"
+echo "\033[0;35m""████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     ""\033[0;37m"
+echo "\033[0;35m""██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║     ""\033[0;37m"
+echo "\033[0;35m""██║╚██╔╝██║██║██║╚██╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║     ""\033[0;37m"
+echo "\033[0;35m""██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗""\033[0;37m"
+echo "\033[0;35m""╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝""\033[0;37m"
+echo
+ 
+echo "\033[0;34m""--------------------------- libft/libft.a ---------------------------""\033[0;37m"
+echo "\033[0;33m""---> Compiling Libft files...""\033[0;37m"
+make -C libft > /dev/null
+echo "\033[0;32m""---> Libft has been compiled successfully!""\033[0;37m"
+echo "\033[0;34m""--------------------------- minishell ---------------------------""\033[0;37m"
+echo "\033[0;33m""---> Compiling src files...""\033[0;37m"
+gcc -Wall -Wextra -Werror -lreadline  srcs/parsing/allocate_memory.c srcs/parsing/error_handling.c srcs/parsing/find_path.c srcs/parsing/here_doc.c srcs/parsing/io_redirections.c srcs/parsing/io_utils.c srcs/parsing/parser.c srcs/parsing/parsing_split.c srcs/parsing/parsing_utils.c srcs/parsing/skip_alloc_utils.c srcs/parsing/sub_alloc_mem.c srcs/executing/builtin_cmds/cd_cmd.c srcs/executing/builtin_cmds/echo_cmd.c srcs/executing/builtin_cmds/env_cmd.c srcs/executing/builtin_cmds/exit_cmd.c srcs/executing/builtin_cmds/export_cmd.c srcs/executing/builtin_cmds/pwd_cmd.c srcs/executing/env_handler.c srcs/executing/builtin_exec.c srcs/executing/exec_proc.c srcs/executing/ptrlen.c main.c get_next_line/get_next_line.c libft/libft.a -o minishell
+echo "\033[0;32m""---> All files have been compiled successfully!""\033[0;37m"
+make: Leaving directory `/Users/nelidris/Desktop/minishell'
+ 

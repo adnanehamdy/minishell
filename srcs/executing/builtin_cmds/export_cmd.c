@@ -6,19 +6,19 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:28:43 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/13 15:09:12 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/17 15:51:35 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-static size_t	env_realloc(char ***envp, size_t n)
+static size_t	export_env_realloc(char ***envp, size_t n)
 {
 	char	**tmp_envp;
 	size_t	len;
 
 	len = ptrlen(*envp);
-	tmp_envp = (char **)malloc(sizeof(char*) * (len + n + 1));
+	tmp_envp = (char **)malloc(sizeof(char *) * (len + n + 1));
 	len = 0;
 	while ((*envp)[len])
 	{
@@ -31,7 +31,7 @@ static size_t	env_realloc(char ***envp, size_t n)
 	return (len + n);
 }
 
-int	export_friendly(char *var)
+static int	export_friendly(char *var)
 {
 	char	*end_of_name;
 	size_t	i;
@@ -51,7 +51,7 @@ int	export_friendly(char *var)
 	return (1);
 }
 
-static int valid_varname(char	*varname)
+static int	valid_varname(char *varname)
 {
 	char	*end_of_var;
 	size_t	i;
@@ -85,16 +85,16 @@ size_t	valid_export_args(char **args)
 	return (valid_args);
 }
 
-void	export_command(t_cmd_line *cmd)
+int	export_command(t_cmd_line *cmd)
 {
 	size_t	len;
 	size_t	val_args;
 	char	**envp;
-	
+
 	val_args = valid_export_args(cmd->command);
 	envp = envp_handler(GETENV, NULL);
 	len = ptrlen(envp);
-	env_realloc(&envp, val_args);
+	export_env_realloc(&envp, val_args);
 	val_args = 1;
 	while (cmd->command[val_args])
 	{
@@ -107,6 +107,7 @@ void	export_command(t_cmd_line *cmd)
 	}
 	envp[len] = 0;
 	envp_handler(POSTENV, envp);
+	return (0);
 }
 
 // int main(int c, char **v, char **envp)

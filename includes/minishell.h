@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/16 17:28:18 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/17 16:11:06 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,23 +93,29 @@ char    *fill_each_arg(char *cmd_arg, char *prompt_cmd, int reset);
 
 /*  ---------    built-in commands   ---------   */
 
+/* runs built-in commands */
+int run_builtin(t_cmd_line *command);
+
 /* changes directory */
-void	cd_command(t_cmd_line *cmd);
+int cd_command(t_cmd_line *cmd);
 
 /* exports variable to the environment */
-void	export_command(t_cmd_line *cmd);
+int export_command(t_cmd_line *cmd);
+
+/* unsets variable from the environment */
+int	unset_command(t_cmd_line *cmd);
 
 /* echoes arguments to stdout */
-void	echo_command(t_cmd_line *cmd);
+int echo_command(t_cmd_line *cmd);
 
 /* prints all environment variables*/
-void	env_command(t_cmd_line *command);
+int env_command(t_cmd_line *cmd);
 
 /* exits program */
-void	exit_command( void );
+int exit_command(t_cmd_line *cmd);
 
 /* prints working directory */
-void	pwd_command(void);
+int pwd_command(t_cmd_line *cmd);
 
 /*  ---------    tools   ---------   */
 

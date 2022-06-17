@@ -6,22 +6,23 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:52:49 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/13 16:01:00 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/16 19:12:43 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	env_command(t_cmd_line *command)
+int	env_command(t_cmd_line *cmd)
 {
-	int	i;
+	int		i;
 	char	**envp;
 
-	(void)command;
+	(void)cmd;
 	envp = envp_handler(GETENV, NULL);
 	i = 0;
 	while (envp[i])
 		ft_putendl_fd(envp[i++], STANDARD_OUTPUT);
+	return (0);
 }
 
 // int main(int ac, char **av, char **envp)
