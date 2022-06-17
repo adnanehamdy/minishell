@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   io_redirections.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 15:12:49 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/13 17:24:23 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/17 11:57:12 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	open_input(char *cmd)
+int	open_infile(char *cmd)
 {
 	char	*filename;
 	int		fd;
@@ -29,7 +29,7 @@ int	open_input(char *cmd)
 	return (fd);
 }
 
-int	open_output(char *cmd, int mod)
+int	open_outfile(char *cmd, int mod)
 {
 	char	*filename;
 	int		fd;
@@ -49,18 +49,43 @@ int	open_output(char *cmd, int mod)
 	return (fd);
 }
 
-void open_io_files(char *cmd, int *in, int *out)
+void	is_last_fd(int *fd, int *out, int last_out, int fd_type)
+{
+	if (*fd == -1)
+	{
+		*out =  PIPE_FAIL;
+		*fd = -1;
+		return ;
+	}
+	else if (last_out != fd_type)
+	{
+		close(*fd);
+		*fd = 0;
+	}
+}
+
+int	check_infile(char *cmd, int *in, int *index,  int last_in)
+{
+	int	fd;
+
+	fd = 0;
+	*index +=skip_white_spaces(&cmd[*index], 0);
+	printf(" first %c\n ", cmd[*index]);
+	fd = open_infile(&cmd[*index]);
+		printf("after %c\n ", cmd[*index]);
+	is_last_fd(&fd, in, last_in, INFILE);
+	return (fd);
+}
+
+int	infiles_handler(char *cmd, int *in)
 {
 	int	index;
 	int	*last_in;
-	int	*last_out;
-	int	fd[2];
+	int	fd;
 
-	last_in = check_last_io(cmd, 0);
-	last_out = check_last_io(cmd, 1);
+	fd = 0;
 	index = 0;
-	fd[0] = 0;
-	fd[1] = 1;
+	last_in = check_last_io(cmd, 0);
 	while (cmd[index])
 	{
 		if (cmd[index] == '"')
@@ -68,89 +93,93 @@ void open_io_files(char *cmd, int *in, int *out)
 		else if (cmd[index] == '\'')
 			index = index + check_second_quote(&cmd[index], '\'');
 		if (cmd[index] == '<' && cmd[index] != cmd[index + 1])
-		{
-			if (fd[0])
-			{
-				printf("the fd == %d\n has been closed\n", fd[0]);
-				close(fd[0]);
-			}
-			index +=skip_white_spaces(&cmd[index], 0);
-			fd[0] = open_input(&cmd[index]);
-			if (last_in[1] != INFILE && fd[0] != -1)
-			{
-				close(fd[0]);
-				fd[0] = 0;
-			}
-			else
-				if (fd[0] == -1)
-				{
-					*in =  PIPE_FAIL;
-					printf("it works\n");
-					return ;
-				}
-			else
-				printf("fd has been opened  == %d\n", fd[0]);
-		}
-		else if (cmd[index] == '>')
-		{
-			if (cmd[index + 1] == '>')
-			{
-				index++;
-				index +=skip_white_spaces(&cmd[index], 0);
-				fd[1] = open_output(&cmd[index], 2);
-				if (last_out[1] != OUTFILE_APPEND)
-				{
-					close(fd[1]);
-					fd[1] = 0;
-				}
-				else if (fd[1] == -1)
-				{
-					*out =  PIPE_FAIL;
-					return ;
-				}
-				else
-					printf("fd == %d\n", fd[0]);
-			}
-			else
-			{
-				index +=skip_white_spaces(&cmd[index], 0);
-				fd[1] = open_output(&cmd[index], 1);
-				if (last_out[1] != OUTFILE_WRITE)
-				{
-					close(fd[1]);
-					fd[1] = 0;
-				}
-				else if (fd[1] == -1)
-				{
-					*out = PIPE_FAIL;
-					return ;
-				}
-			}
-		}
+			fd = check_infile(cmd, in, &index, last_in[1]);
 		else if (cmd[index] == '<' && cmd[index + 1] == cmd[index])
 			index++;
 		index++;
 	}
 	if (last_in[1] == INFILE)
-		*in = fd[0];
-	else if (!last_in[0])
-		*in = STANDARD_INPUT;
-	if ((last_out[1] == OUTFILE_APPEND || last_out[1] == OUTFILE_WRITE) && last_out[0])
-		*out = fd[1];
+		*in = fd;
+	// else if (!last_in[0])
+	// 	*in = STANDARD_INPUT;
+	return (fd);
 }
 
-void open_io_redirections(char **cmd_after_split, t_cmd_line **cmd)
+
+int check_outfile(char *cmd, int *out, int *index, int last_out)
+{
+	int	fd;
+
+	fd = 0;
+	if (cmd[*index + 1] == '>')
+	{
+		*index = *index + 1;
+		*index +=skip_white_spaces(&cmd[*index], 0);
+		fd = open_outfile(&cmd[*index], 2);
+		is_last_fd(&fd, out, last_out, OUTFILE_APPEND);
+	}
+	else
+	{
+		*index +=skip_white_spaces(&cmd[*index], 0);
+		fd = open_outfile(&cmd[*index], 1);
+		is_last_fd(&fd, out, last_out, OUTFILE_WRITE);
+	}
+	return (fd);
+}
+
+void	outfiles_handler(char *cmd, int *out)
 {
 	int	index;
-	int	index_y;
+	int	*last_out;
+	int	fd;
 
-	index_y = 0;
+	fd = 1;
+	index = 0;
+	last_out = check_last_io(cmd, 1);
+	while (cmd[index])
+	{
+		if (cmd[index] == '"')
+			index = index + check_second_quote(&cmd[index], '"');
+		else if (cmd[index] == '\'')
+			index = index + check_second_quote(&cmd[index], '\'');
+		else if (cmd[index] == '>')
+			fd = check_outfile(cmd, out, &index, last_out[1]);
+		if (fd == -1)
+			return ;
+		index++;
+	}
+	if ((last_out[1] == OUTFILE_APPEND || last_out[1] == OUTFILE_WRITE) && last_out[0])
+		*out = fd;
+}
+
+
+void redirections_handler(char **cmd_after_split, t_cmd_line **cmd)
+{
+	int	index;
+	int	*last_in;
+	int	*last_out;
+	int	fd[2];
+
 	index = 0;
 	while (cmd_after_split[index])
 	{
-		cmd[index]->out = STANDARD_OUTPUT;
-		open_io_files(cmd_after_split[index], &cmd[index]->in, &cmd[index]->out);
-		// printf("the in fd == %d && the out fd == %d\n", cmd[index]->in, cmd[index]->out);
+		check_redirections(cmd_after_split[index], cmd)
+		pipe(fd);
+		last_in = check_last_io(cmd_after_split[index], 0);
+		last_out = check_last_io(cmd_after_split[index], 1);
+		if (last_in[0] && !close(fd[0]))
+			infiles_handler(cmd_after_split[index], &cmd[index]->in);
+		else if (!last_in[0] && index)
+			cmd[index]->in = fd[0];
+		else
+			cmd[index]->in = close(fd[0]);
+		if (last_out[1] && !close(fd[1]))
+			outfiles_handler(cmd_after_split[index], &cmd[index]->out);
+		else if (!last_out[1] && cmd[index + 1])
+			cmd[index]->out = fd[1];
+		else if (close(fd[1]))
+			cmd[index]->out = 1;
+		printf("the in fd == %d && the out fd == %d\n", cmd[index]->in, cmd[index]->out);
 		index++;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:59:10 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/13 15:50:46 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/16 19:30:21 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,10 @@ int	*check_last_io(char *cmd, int mod)
 			if (cmd[index] == cmd[index + 1])
 			{	
 				index += 1;
-				last_io = sub_check_last_in(last_io, mod, 1);	
+				/* last_io[1] =  */ sub_check_last_in(last_io, mod, 1);
 			}
 			else
-				last_io = sub_check_last_in(last_io, mod, 0);
+				/* last_io[1] = */ sub_check_last_in (last_io, mod, 0);
 			last_io[0]++;
 		}
 	}

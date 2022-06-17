@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 10:25:24 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/13 17:11:15 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/16 12:11:01 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	read_from_stdin(char *buff, int *fd, char *file_name)
 int	ft_limiter(char *cmd)
 {
 	char	*buff;
-	int		*fd;
+	int		fd[2];
 	char	*file_name;
 
-	fd = (int *)malloc(2 * sizeof(int));
+	//fd = (int *)malloc(2 * sizeof(int));
 	file_name = open_file(cmd);
 	if (pipe(fd) == -1)
 	{
@@ -48,7 +48,7 @@ int	ft_limiter(char *cmd)
 	read_from_stdin(buff, fd, file_name);
 	free(buff);
 	free(file_name);
-	close(fd[0]);
+	close(fd[1]);
 	return (fd[1]);
 }
 

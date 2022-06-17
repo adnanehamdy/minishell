@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+         #
+#    By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/26 14:06:32 by ahamdy            #+#    #+#              #
-#    Updated: 2022/06/13 18:32:38 by nelidris         ###   ########.fr        #
+#    Updated: 2022/06/16 14:38:05 by ahamdy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -lreadline -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror -lreadline #-fsanitize=address -g
 
 PARS_PATH = srcs/parsing
 
