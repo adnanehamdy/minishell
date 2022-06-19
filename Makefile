@@ -6,7 +6,7 @@
 #    By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/26 14:06:32 by ahamdy            #+#    #+#              #
-#    Updated: 2022/06/17 16:13:04 by nelidris         ###   ########.fr        #
+#    Updated: 2022/06/19 17:14:27 by nelidris         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,11 +52,11 @@ PURPLE = "\033[0;35m"
 
 ENDCOLOR = "\033[0;37m"
 
-all : $(NAME)
+all : | $(NAME) footer
 
 bonus : $(BONUS)
 
-header :
+header:
 	@echo
 	@echo $(PURPLE)"███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     "$(ENDCOLOR)
 	@echo $(PURPLE)"████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     "$(ENDCOLOR)
@@ -65,26 +65,30 @@ header :
 	@echo $(PURPLE)"██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗"$(ENDCOLOR)
 	@echo $(PURPLE)"╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝"$(ENDCOLOR)
 	@echo
-	
-$(NAME) : header $(PARS_SRCS) $(EXEC_SRCS) $(MAIN_SRCS) $(LIBFT) $(GNL)
+
+footer:
+	@echo $(BLUE)"---> type "$(PURPLE)"./minishell"$(BLUE)" to start the program."$(ENDCOLOR)
+
+$(NAME) : | $(PARS_SRCS) $(EXEC_SRCS) $(MAIN_SRCS) $(LIBFT) $(GNL) header
 	@echo $(BLUE)"--------------------------- $(NAME) ---------------------------"$(ENDCOLOR)
 	@echo $(YELLOW)"---> Compiling src files..."$(ENDCOLOR)
 	@$(CC) $(CFLAGS) $(PARS_SRCS) $(EXEC_SRCS) $(MAIN_SRCS) $(GNL) $(LIBFT) -o minishell
-	@echo $(GREEN)"---> All files have been compiled successfully!"$(ENDCOLOR)
+	@echo $(GREEN)"---> All files have been compiled successfully!"$(ENDCOLOR)							
+	
 
-$(LIBFT): header
+$(LIBFT): | header
 	@echo $(BLUE)"--------------------------- $(LIBFT) ---------------------------"$(ENDCOLOR)
 	@echo $(YELLOW)"---> Compiling Libft files..."$(ENDCOLOR)
 	@make -C libft > /dev/null
 	@echo $(GREEN)"---> Libft has been compiled successfully!"$(ENDCOLOR)
 
-clean : header
+clean : | header
 	@echo $(BLUE)"--------------------------- clean ---------------------------"$(ENDCOLOR)
 	@echo $(YELLOW)"---> Cleaning libft..."$(ENDCOLOR)
 	@make fclean -C libft/ > /dev/null
 	@echo $(GREEN)"---> Libft has been cleaned successfully!"$(ENDCOLOR)
 	
-fclean : header clean
+fclean :  | header clean
 	@echo $(BLUE)"--------------------------- fclean ---------------------------"$(ENDCOLOR)
 	@echo $(YELLOW)"---> Cleaning minishell..."$(ENDCOLOR)
 	@rm -f $(NAME) > /dev/null
@@ -92,4 +96,4 @@ fclean : header clean
 
 re : fclean all
 
-.PHONY : all header clean fclean bonus re
+.PHONY : all clean fclean bonus re
