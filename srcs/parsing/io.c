@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -5,8 +6,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/18 12:41:11 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/21 20:34:16 by ahamdy           ###   ########.fr       */
+/*   Created: 2022/05/27 15:12:49 by ahamdy            #+#    #+#             */
+/*   Updated: 2022/06/17 11:57:12 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +71,41 @@ int	check_infile(char *cmd, int *in, int *index,  int last_in)
 
 	fd = 0;
 	*index +=skip_white_spaces(&cmd[*index], 0);
+	printf(" first %c\n ", cmd[*index]);
 	fd = open_infile(&cmd[*index]);
+		printf("after %c\n ", cmd[*index]);
 	is_last_fd(&fd, in, last_in, INFILE);
 	return (fd);
 }
+
+int	infiles_handler(char *cmd, int *in)
+{
+	int	index;
+	int	*last_in;
+	int	fd;
+
+	fd = 0;
+	index = 0;
+	last_in = check_last_io(cmd, 0);
+	while (cmd[index])
+	{
+		if (cmd[index] == '"')
+			index = index + check_second_quote(&cmd[index], '"');
+		else if (cmd[index] == '\'')
+			index = index + check_second_quote(&cmd[index], '\'');
+		if (cmd[index] == '<' && cmd[index] != cmd[index + 1])
+			fd = check_infile(cmd, in, &index, last_in[1]);
+		else if (cmd[index] == '<' && cmd[index + 1] == cmd[index])
+			index++;
+		index++;
+	}
+	if (last_in[1] == INFILE)
+		*in = fd;
+	// else if (!last_in[0])
+	// 	*in = STANDARD_INPUT;
+	return (fd);
+}
+
 
 int check_outfile(char *cmd, int *out, int *index, int last_out)
 {
@@ -96,15 +128,14 @@ int check_outfile(char *cmd, int *out, int *index, int last_out)
 	return (fd);
 }
 
-void find_io_redirections(char *cmd, int *in, int *out)
+void	outfiles_handler(char *cmd, int *out)
 {
 	int	index;
-	int	fd[2];
-	int	*last_in;
 	int	*last_out;
+	int	fd;
 
+	fd = 1;
 	index = 0;
-	last_in = check_last_io(cmd, 0);
 	last_out = check_last_io(cmd, 1);
 	while (cmd[index])
 	{
@@ -112,67 +143,44 @@ void find_io_redirections(char *cmd, int *in, int *out)
 			index = index + check_second_quote(&cmd[index], '"');
 		else if (cmd[index] == '\'')
 			index = index + check_second_quote(&cmd[index], '\'');
-		if (cmd[index] == '<' && cmd[index] != cmd[index + 1])
-		{
-			if (fd[0])
-				close(fd[0]);
-			fd[0] = check_infile(cmd, in, &index, last_in[1]);
-		}
 		else if (cmd[index] == '>')
-		{
-			if (fd[1])
-				close(fd[1]);
-			fd[1] = check_outfile(cmd, out, &index, last_out[1]);
-		}
-		else if (cmd[index] == '<' && cmd[index + 1] == cmd[index])
-			index++;
+			fd = check_outfile(cmd, out, &index, last_out[1]);
+		if (fd == -1)
+			return ;
 		index++;
-		if (fd[0] == -1)
-		{
-			*in = -1;
-			return ;
-		}
-		else if (fd[1] == -1)
-		{
-			*out = -1;
-			return ;
-		}
 	}
 	if ((last_out[1] == OUTFILE_APPEND || last_out[1] == OUTFILE_WRITE) && last_out[0])
-		*out = fd[1];
-	else if (!fd[1])
-		close(fd[1]);
-	if (last_in[1] == INFILE)
-		*in = fd[0];
-	else if (!fd[0])
-		close(fd[0]);
+		*out = fd;
 }
+
 
 void redirections_handler(char **cmd_after_split, t_cmd_line **cmd)
 {
 	int	index;
-	int	fd[2];
 	int	*last_in;
-	int	*last_out = NULL;
+	int	*last_out;
+	int	fd[2];
 
 	index = 0;
 	while (cmd_after_split[index])
 	{
-		last_in = check_last_io(cmd_after_split[index + 1], 0);
-		last_out = check_last_io(cmd_after_split[index], 1);
+		// check_redirections(cmd_after_split[index], cmd)
 		pipe(fd);
-		if (cmd[index + 1])
-			cmd[index + 1]->in = STANDARD_INPUT;
-		cmd[index]->out = STANDARD_OUTPUT;
-		find_io_redirections(cmd_after_split[index], &cmd[index]->in, &cmd[index]->out);
-		if (!last_in[0] && cmd_after_split[index + 1])
-			cmd[index + 1]->in = fd[0];
-		// else if (cmd[index]->in == STANDARD_INPUT)
-		// 	cmd[index]->in = close(fd[0]);
-		if (!last_out[1] &&  cmd[index + 1] && (cmd[index]->out == STANDARD_OUTPUT))
+		last_in = check_last_io(cmd_after_split[index], 0);
+		last_out = check_last_io(cmd_after_split[index], 1);
+		if (last_in[0] && !close(fd[0]))
+			infiles_handler(cmd_after_split[index], &cmd[index]->in);
+		else if (!last_in[0] && index)
+			cmd[index]->in = fd[0];
+		else
+			cmd[index]->in = close(fd[0]);
+		if (last_out[1] && !close(fd[1]))
+			outfiles_handler(cmd_after_split[index], &cmd[index]->out);
+		else if (!last_out[1] && cmd[index + 1])
 			cmd[index]->out = fd[1];
-		else if (!close(fd[1]) && (cmd[index]->out == STANDARD_OUTPUT))
+		else if (close(fd[1]))
 			cmd[index]->out = 1;
+		printf("the in fd == %d && the out fd == %d\n", cmd[index]->in, cmd[index]->out);
 		index++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/16 14:37:56 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/06/20 15:13:03 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_cmd_line	**initialize_cmd_line(char *prompt_cmd, int cmd_number); // char    *
 void	open_here_doc(char *cmd, int *fd, int last_io_type, int *index);
 int     *check_last_io(char *cmd, int mod);
 char    *open_file(char *file);
-void    open_io_redirections(char **cmd_after_split, t_cmd_line **cmd);
+void    redirections_handler(char **cmd_after_split, t_cmd_line **cmd);
 
 /* ********* parsing_utils.c ********* */
 void	sub_count_arg_number(char *prompt_cmd, int *index);

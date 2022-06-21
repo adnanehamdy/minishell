@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+         #
+#    By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/09 10:17:55 by nelidris          #+#    #+#              #
-#    Updated: 2021/11/12 16:24:34 by nelidris         ###   ########.fr        #
+#    Updated: 2022/06/20 15:16:58 by ahamdy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ OBJS_BONUS = $(BONUS_F:.c=.o)
 all:	$(NAME)
 
 $(NAME):	$(OBJS)
-	$(AR) $(NAME) $(OBJS)
+	@$(AR) $(NAME) $(OBJS)
 
 bonus:	$(NAME) $(OBJS_BONUS)
 	$(AR) $(NAME) $(OBJS_BONUS)

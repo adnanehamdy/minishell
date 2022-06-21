@@ -6,7 +6,7 @@
 #    By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/26 14:06:32 by ahamdy            #+#    #+#              #
-#    Updated: 2022/06/16 14:38:05 by ahamdy           ###   ########.fr        #
+#    Updated: 2022/06/20 15:18:37 by ahamdy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,11 +44,11 @@ all : $(NAME)
 
 bonus : $(BONUS)
 
-$(NAME) : $(PARS_SRCS) $(EXEC_SRCS) $(MAIN_SRCS) $(LIBFT) $(GNL)
-	$(CC) $(CFLAGS) $(PARS_SRCS) $(EXEC_SRCS) $(MAIN_SRCS) $(GNL) $(LIBFT) -o minishell
+$(NAME) :  $(PARS_SRCS) $(EXEC_SRCS) $(MAIN_SRCS) $(LIBFT) $(GNL)
+	@$(CC) $(CFLAGS) $(PARS_SRCS) $(EXEC_SRCS) $(MAIN_SRCS) $(GNL) $(LIBFT) -o minishell
 
 $(LIBFT):
-	make -C libft
+	@make -C libft
 
 clean :
 	make fclean -C libft/

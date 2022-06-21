@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:59:10 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/16 19:30:21 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/06/21 13:03:42 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,9 @@ int	*check_last_io(char *cmd, int mod)
 	index = -1;
 	last_io = (int *)malloc(sizeof(int) * 2);
 	last_io[0] = 0;
+	last_io[1] = 0;
+	if (!cmd)
+		return (last_io);
 	while (cmd[++index])
 	{
 		if (cmd[index] == '"')
