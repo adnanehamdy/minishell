@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   allocate_memory.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 08:04:54 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/22 00:25:29 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/22 11:51:59 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	count_arg_number(char *prompt_cmd)
 	while (prompt_cmd[index] && prompt_cmd[index] != '|')
 	{
 		if (prompt_cmd[index] == '<' || prompt_cmd[index] == '>')
-			skip_non_arg(&prompt_cmd[index], &index);
+			skip_non_arg(prompt_cmd, &index);
 		else if ((prompt_cmd[index] < 9 || prompt_cmd[index] > 13) 
 			&& prompt_cmd[index] != ' ' && prompt_cmd[index] != '<'
 			&& prompt_cmd[index] != '>' && prompt_cmd[index] != '|')
@@ -30,7 +30,7 @@ int	count_arg_number(char *prompt_cmd)
 			sub_count_arg_number(prompt_cmd, &index);
 			number++;
 		}
-		else
+		else 
 			index++;
 	}
 	return (number);
