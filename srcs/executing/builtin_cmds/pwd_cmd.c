@@ -6,19 +6,21 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:46:22 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/13 14:54:42 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/16 19:14:01 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	pwd_command(void)
+int	pwd_command(t_cmd_line *cmd)
 {
 	char	*pwd;
-	
+
+	(void)cmd;
 	pwd = getcwd(NULL, 0);
 	ft_putendl_fd(pwd, STANDARD_OUTPUT);
 	free(pwd);
+	return (0);
 }
 
 // int main(void)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/20 15:13:03 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/06/22 02:27:23 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 # include "../libft/libft.h"
 # include <fcntl.h>
 
@@ -77,7 +78,7 @@ int	    sub_count_each_arg(char *prompt_cmd, int *index, int *number);
 int	    skip_io_redirection(char *sub_prompt_cmd);
 char	*sub_fill_each_arg(char *cmd_arg, char *prompt_cmd, int *index);
 void	here_doc_handler(char **cmd_after_split, t_cmd_line **cmd);
-char	*allocate_cmd_path(char	**envp, char *cmd);
+char	*allocate_cmd_path(t_cmd_line *command, char	**envp, char *cmd);
 
 /* split with modification */
 char	**parsing_split(char const *s, char c);
@@ -93,23 +94,29 @@ char    *fill_each_arg(char *cmd_arg, char *prompt_cmd, int reset);
 
 /*  ---------    built-in commands   ---------   */
 
+/* runs built-in commands */
+int run_builtin(t_cmd_line *command);
+
 /* changes directory */
-void	cd_command(t_cmd_line *cmd);
+int cd_command(t_cmd_line *cmd);
 
 /* exports variable to the environment */
-void	export_command(t_cmd_line *cmd);
+int export_command(t_cmd_line *cmd);
+
+/* unsets variable from the environment */
+int	unset_command(t_cmd_line *cmd);
 
 /* echoes arguments to stdout */
-void	echo_command(t_cmd_line *cmd);
+int echo_command(t_cmd_line *cmd);
 
 /* prints all environment variables*/
-void	env_command(t_cmd_line *command);
+int env_command(t_cmd_line *cmd);
 
 /* exits program */
-void	exit_command( void );
+int exit_command(t_cmd_line *cmd);
 
 /* prints working directory */
-void	pwd_command(void);
+int pwd_command(t_cmd_line *cmd);
 
 /*  ---------    tools   ---------   */
 

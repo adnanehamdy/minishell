@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:11:52 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/13 16:28:34 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/16 19:09:48 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	**env_dup(char	**envp)
 	size_t	len;
 
 	len = ptrlen(envp);
-	new_envp = (char **)malloc(sizeof(char*) * (len + 1));
+	new_envp = (char **)malloc(sizeof(char *) * (len + 1));
 	len = 0;
 	while (envp[len])
 	{

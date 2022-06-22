@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 07:19:08 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/13 15:50:37 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/22 02:37:29 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@ int	exit_code_handler(int mod, int value)
 {
 	static int exit_code;
 	
-	if (mod == GETEXIT)
-		return exit_code;
-	else if (mod == POSTEXIT)
+	if (mod == POSTEXIT)
 		exit_code = value;
-	return (0);
+	return (exit_code);
 }
 
 int	check_second_quote(char *sub_prompt_cmd, char quote)
@@ -181,6 +179,7 @@ void	invalid_special_character(char *prompt_cmd)
 
 void	error_checker(char *prompt_cmd)
 {
+	exit_code_handler(POSTEXIT, 0);
 	check_quotes(prompt_cmd);
 	if (!exit_code_handler(GETEXIT, 1))
  		invalid_special_character(prompt_cmd);

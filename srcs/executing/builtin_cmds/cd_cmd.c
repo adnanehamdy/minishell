@@ -6,13 +6,13 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:12:05 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/13 14:54:14 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/16 18:45:23 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	cd_command(t_cmd_line *cmd)
+int	cd_command(t_cmd_line *cmd)
 {
 	char	*home;
 
@@ -20,13 +20,14 @@ void	cd_command(t_cmd_line *cmd)
 	if (cmd->command[1])
 	{
 		if (chdir(cmd->command[1]) < 0)
-			return ;
+			return (0);
 	}
 	else
 	{
 		if (chdir(home) < 0)
-			return ;
+			return (0);
 	}
+	return (0);
 }
 
 // int main(int ac, char **av, char **envp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:28 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/16 14:29:01 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/06/22 02:03:48 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,9 @@ t_cmd_line	**parsing_functions(char *prompt_cmd)
 	if (!prompt_cmd)
 		return (0);
 	error_checker(prompt_cmd);
-	/* error handling need to be fixed, when an error is occured, no more command can execute*/
+	/* error handling need to be fixed, when an error is occured, no more command can execute.
+		edit: fixed ! */
 	if (!exit_code_handler(GETEXIT, 0) && prompt_cmd[0])
 		return (parse_data(prompt_cmd));
-	else
-		printf("exit code = %d\n", exit_code_handler(GETEXIT, 0));
 	return (0);
 }

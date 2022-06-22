@@ -6,16 +6,16 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:23:52 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/13 14:54:30 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/16 19:12:27 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	echo_command(t_cmd_line *cmd)
+int	echo_command(t_cmd_line *cmd)
 {
 	int	new_line;
-	int i;
+	int	i;
 	int	j;
 
 	new_line = 0;
@@ -26,7 +26,7 @@ void	echo_command(t_cmd_line *cmd)
 		while (cmd->command[i][j] && cmd->command[i][j] == 'n')
 			j++;
 		if (cmd->command[i][j])
-			break;
+			break ;
 		new_line++;
 		i++;
 	}
@@ -39,6 +39,7 @@ void	echo_command(t_cmd_line *cmd)
 	}
 	if (!new_line)
 		ft_putstr_fd("\n", STANDARD_OUTPUT);
+	return (0);
 }
 
 // int main(void)

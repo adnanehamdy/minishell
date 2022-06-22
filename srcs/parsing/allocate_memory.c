@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   allocate_memory.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 08:04:54 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/20 15:13:16 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/06/22 00:25:29 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ t_cmd_line	**initialize_cmd_line(char *prompt_cmd, int cmd_number)
 	{
 		cmd[i]->command = allocate_cmd_arguments(cmd_after_split[i]);
 		if (cmd[i]->command)
-			cmd[i]->cmd_path = allocate_cmd_path(envp_handler(GETENV, NULL), cmd[i]->command[0]);
+			cmd[i]->cmd_path = allocate_cmd_path(cmd[i], envp_handler(GETENV, NULL), cmd[i]->command[0]);
 		count_each_arg(NULL, 1);
 		fill_each_arg(NULL, NULL, 1);
 		i++;
