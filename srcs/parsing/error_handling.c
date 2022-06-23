@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 07:19:08 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/22 02:37:29 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/23 01:23:51 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	check_second_quote(char *sub_prompt_cmd, char quote)
 			return (index);
 		index++;
 	}
-	printf("unclosed quote\n");
+	ft_fprintf(STANDARD_ERROR, "unclosed quote\n");
 	exit_code_handler(POSTEXIT, 1);
 	return (-1);
 }
@@ -65,16 +65,16 @@ int	check_unexpected_token(char *prompt_cmd, int *index)
 	if ((prompt_cmd[*index] == '<' || prompt_cmd[*index] == '>' || prompt_cmd[*index] == '|') && prompt_cmd[0] != '|')
 	{
 		if (prompt_cmd[(*index) + 1] != prompt_cmd[*index] || ((prompt_cmd[(*index) + 1] == prompt_cmd[*index]) && prompt_cmd[*index] == '|'))
-			printf("\033[0;35mminishell> \033[0;37msyntax error near unexpected token '%c'\n", prompt_cmd[*index]);
+			ft_fprintf(STANDARD_ERROR, "minishell: syntax error near unexpected token '%c'\n", prompt_cmd[*index]);
 		else
-			printf("\033[0;35mminishell> \033[0;37msyntax error near unexpected token '%c%c'\n", prompt_cmd[*index], prompt_cmd[*index]);
+			ft_fprintf(STANDARD_ERROR, "minishell: syntax error near unexpected token '%c%c'\n", prompt_cmd[*index], prompt_cmd[*index]);
 		exit_code_handler(POSTEXIT, 258);
 		return (0);
 	}
 	else
 		if ((prompt_cmd[*index] == '|' && prompt_cmd[0] == '|'))
 		{
-			printf("\033[0;35mminishell> \033[0;37msyntax error near unexpected token '%c'\n", prompt_cmd[*index]);
+			ft_fprintf(STANDARD_ERROR, "minishell: syntax error near unexpected token '%c'\n", prompt_cmd[*index]);
 			exit_code_handler(POSTEXIT, 258);
 			return (0);
 		}
@@ -85,7 +85,7 @@ int	check_unexpected_newline(char *prompt_cmd, int *index)
 {
 	if (prompt_cmd[(*index) - 1] == '<' || prompt_cmd[(*index) - 1] == '>' || prompt_cmd[(*index) - 1] == '|')
 	{
-		printf("\033[0;35mminishell> \033[0;37msyntax error near unexpected token 'newline'\n");
+		ft_fprintf(STANDARD_ERROR, "minishell: syntax error near unexpected token 'newline'\n");
 		exit_code_handler(POSTEXIT, 258);
 		return (0);
 	}
@@ -127,7 +127,7 @@ int		check_pipe(char *prompt_cmd)
 			index++;
 	if (prompt_cmd[index] == '|')
 	{
-		printf("\033[0;35mminishell> \033[0;37msyntax error near unexpected token '%c'\n", prompt_cmd[index]);
+		ft_fprintf(STANDARD_ERROR, "minishell: syntax error near unexpected token '%c'\n", prompt_cmd[index]);
 		exit_code_handler(POSTEXIT, 258);
 		return (-1);
 	}
@@ -170,7 +170,7 @@ void	invalid_special_character(char *prompt_cmd)
 			index = index + check_second_quote(&prompt_cmd[index], '\'');
 		if (prompt_cmd[index] == ';' || prompt_cmd[index] == '&' || prompt_cmd[index] == '\\')
 		{
-			printf("\033[0;35mminishell> \033[0;37msyntax error near unexpected token '%c'\n", prompt_cmd[index]);
+			ft_fprintf(STANDARD_ERROR, "minishell: syntax error near unexpected token '%c'\n", prompt_cmd[index]);
 			exit_code_handler(POSTEXIT, 258);
 		}
 		index++;

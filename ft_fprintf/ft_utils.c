@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd_cmd.c                                          :+:      :+:    :+:   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/06 15:46:22 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/23 01:09:49 by nelidris         ###   ########.fr       */
+/*   Created: 2021/11/23 15:29:25 by nelidris          #+#    #+#             */
+/*   Updated: 2022/06/23 00:26:09 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "ft_fprintf.h"
 
-int	pwd_command(t_cmd_line *cmd)
+int	ft_fputchar(int fd, char c)
 {
-	char	*pwd;
-
-	pwd = getcwd(NULL, 0);
-	ft_fprintf(cmd->out, "%s\n", pwd);
-	free(pwd);
-	return (0);
+	return (write(fd, &c, 1));
 }
 
-// int main(void)
-// {
-// 	pwd_command();
-// 	return (0);
-// }
+int	ft_fputstr(int fd, char *str)
+{
+	size_t	i;
+
+	if (!str)
+		return (write(fd, "(null)", 6));
+	i = ft_strlen(str);
+	return (write(fd, str, i));
+}

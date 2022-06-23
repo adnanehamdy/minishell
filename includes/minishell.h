@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/22 02:27:23 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/23 18:43:02 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,17 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdio.h>
+# include <dirent.h>
+# include <signal.h>
+# include <termios.h>
+# include <errno.h>
+# include <fcntl.h>
+# include <sys/ioctl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <signal.h>
+# include "../ft_fprintf/ft_fprintf.h"
 # include "../libft/libft.h"
-# include <fcntl.h>
 
 # define STANDARD_INPUT 0
 # define STANDARD_OUTPUT 1
@@ -51,7 +57,7 @@ typedef struct s_cmd_line
 /* ****************** parcer_functions ****************** */
 
 /* 1 -> function that call all parsing part functions */
-t_cmd_line	**parsing_functions(char *prompt_cmd); //void    parsing_functions(char *prompt_cmd);
+t_cmd_line	**parsing_functions(char *prompt_cmd);
 
 /* 2 -> error_handling_functions */
 void    error_checker(char *prompt_cmd);
@@ -61,7 +67,7 @@ int     skip_white_spaces(char *prompt_cmd, int condition);
 
 /* 3 -> allocate memory for struct */
 int         count_cmd_number(char *prompt_cmd);
-t_cmd_line	**initialize_cmd_line(char *prompt_cmd, int cmd_number); // char    **initialize_cmd_line(char *prompt_cmd, int cmd_number);
+t_cmd_line	**initialize_cmd_line(char *prompt_cmd, int cmd_number);
 
 /* sub 3 io_redirection */
 void	open_here_doc(char *cmd, int *fd, int last_io_type, int *index);

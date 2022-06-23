@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+         #
+#    By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/09 10:17:55 by nelidris          #+#    #+#              #
-#    Updated: 2022/06/20 15:16:58 by ahamdy           ###   ########.fr        #
+#    Updated: 2022/06/23 00:03:16 by nelidris         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
-AR = ar rs
+AR = ar rcs
 
 NAME = libft.a
 

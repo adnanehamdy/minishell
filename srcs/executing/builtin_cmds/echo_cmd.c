@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:23:52 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/16 19:12:27 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/23 00:23:58 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ int	echo_command(t_cmd_line *cmd)
 	i = new_line + 1;
 	while (cmd->command[i])
 	{
-		ft_putstr_fd(cmd->command[i++], STANDARD_OUTPUT);
+		ft_fprintf(cmd->out, "%s", cmd->command[i++]);
 		if (cmd->command[i])
-			ft_putstr_fd(" ", STANDARD_OUTPUT);
+			ft_fprintf(cmd->out, " ");
 	}
 	if (!new_line)
-		ft_putstr_fd("\n", STANDARD_OUTPUT);
+		ft_fprintf(cmd->out, "\n");
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:56:16 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/21 22:03:25 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/23 00:21:58 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,16 @@ static void	exec_error_handler(t_cmd_line *cmd_line)
 {
 	if (cmd_line->is_executable < 0)
 	{
-		ft_putstr_fd("minishell: permission denied: ", 2);
-		ft_putendl_fd(cmd_line->command[0], 2);
+		ft_fprintf(STANDARD_ERROR,
+			"minishell: permission denied: %s\n", cmd_line->command[0]);
 		exit(126);
 	}
 	if (cmd_line->cmd_path)
-		ft_putstr_fd("minishell: no such file or directory: ", 2);
+		ft_fprintf(STANDARD_ERROR,
+			"minishell: no such file or directory: %s\n", cmd_line->command[0]);
 	else
-		ft_putstr_fd("minishell: command not found: ", 2);
-	ft_putendl_fd(cmd_line->command[0], 2);
+		ft_fprintf(STANDARD_ERROR,
+			"minishell: command not found: %s\n", cmd_line->command[0]);
 	exit(127);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 17:32:35 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/22 08:51:49 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/06/22 22:37:12 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*allocate_cmd_path(t_cmd_line *command, char	**envp, char *cmd)
 	char	*tmp2;
 	int		i;
 
-	if (ft_strchr(cmd, '/'))
+	if (cmd && ft_strchr(cmd, '/'))
 		return (ft_strdup(cmd));
 	path = setup_path(envp);
 	if (!path)

@@ -73,7 +73,7 @@ int	check_infile(char *cmd, int *in, int *index,  int last_in)
 	*index +=skip_white_spaces(&cmd[*index], 0);
 	printf(" first %c\n ", cmd[*index]);
 	fd = open_infile(&cmd[*index]);
-		printf("after %c\n ", cmd[*index]);
+	printf("after %c\n ", cmd[*index]);
 	is_last_fd(&fd, in, last_in, INFILE);
 	return (fd);
 }

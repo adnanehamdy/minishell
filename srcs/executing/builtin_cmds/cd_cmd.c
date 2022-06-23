@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:12:05 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/16 18:45:23 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/23 01:07:54 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 int	cd_command(t_cmd_line *cmd)
 {
 	char	*home;
+	
 
 	home = getenv("HOME");
 	if (cmd->command[1])
 	{
 		if (chdir(cmd->command[1]) < 0)
-			return (0);
+			ft_fprintf(STANDARD_ERROR,
+				"minishell: cd: %s: No such file or directory\n", cmd->command[1]);
+		return (0);
 	}
 	else
 	{

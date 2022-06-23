@@ -3,20 +3,22 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+         #
+#    By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/26 14:06:32 by ahamdy            #+#    #+#              #
-#    Updated: 2022/06/22 08:51:38 by ahamdy           ###   ########.fr        #
+#    Updated: 2022/06/23 18:08:51 by nelidris         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -lreadline #-fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
 
 PARS_PATH = srcs/parsing
 
 EXEC_PATH = srcs/executing
+
+READLINE_PATH =  -lreadline -L ~/homebrew/opt/readline/lib -I ~/homebrew/opt/readline/include
 
 GNL = get_next_line/get_next_line.c
 
@@ -39,6 +41,8 @@ MAIN_SRCS = main.c
 NAME = minishell
 
 LIBFT = libft/libft.a
+
+FT_FPRINTF = ft_fprintf/libftfprintf.a
 
 GREEN = "\033[0;32m"
 
@@ -65,12 +69,17 @@ header:
 footer:
 	@echo $(BLUE)"---> type "$(PURPLE)"./minishell"$(BLUE)" to start the program."$(ENDCOLOR)
 
-$(NAME) :  $(PARS_SRCS) $(EXEC_SRCS) $(MAIN_SRCS) $(LIBFT) $(GNL) | header
+$(NAME) :  $(PARS_SRCS) $(EXEC_SRCS) $(MAIN_SRCS) $(FT_FPRINTF) $(LIBFT) $(GNL) | header
 	@echo $(BLUE)"--------------------------- $(NAME) ---------------------------"$(ENDCOLOR)
 	@echo $(YELLOW)"---> Compiling src files..."$(ENDCOLOR)
-	@$(CC) $(CFLAGS) $(PARS_SRCS) $(EXEC_SRCS) $(MAIN_SRCS) $(GNL) $(LIBFT) -o minishell
+	@$(CC) $(CFLAGS) $(READLINE_PATH) $(PARS_SRCS) $(EXEC_SRCS) $(MAIN_SRCS) $(GNL) $(LIBFT) $(FT_FPRINTF) -o minishell 
 	@echo $(GREEN)"---> All files have been compiled successfully!"$(ENDCOLOR)							
 	
+$(FT_FPRINTF): | header
+	@echo $(BLUE)"--------------------------- $(FT_FPRINTF) ---------------------------"$(ENDCOLOR)
+	@echo $(YELLOW)"---> Compiling ft_fprintf files..."$(ENDCOLOR)
+	@make -C ft_fprintf > /dev/null
+	@echo $(GREEN)"---> Ft_fprintf has been compiled successfully!"$(ENDCOLOR)
 
 $(LIBFT): | header
 	@echo $(BLUE)"--------------------------- $(LIBFT) ---------------------------"$(ENDCOLOR)
@@ -83,6 +92,9 @@ clean : | header
 	@echo $(YELLOW)"---> Cleaning libft..."$(ENDCOLOR)
 	@make fclean -C libft/ > /dev/null
 	@echo $(GREEN)"---> Libft has been cleaned successfully!"$(ENDCOLOR)
+	@echo $(YELLOW)"---> Cleaning ft_fprintf..."$(ENDCOLOR)
+	@make fclean -C ft_fprintf/ > /dev/null
+	@echo $(GREEN)"---> Ft_fprintf has been cleaned successfully!"$(ENDCOLOR)
 	
 fclean :  clean | header
 	@echo $(BLUE)"--------------------------- fclean ---------------------------"$(ENDCOLOR)
