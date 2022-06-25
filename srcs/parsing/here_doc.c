@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 10:25:24 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/16 12:11:01 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/06/25 06:19:16 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 void	read_from_stdin(char *buff, int *fd, char *file_name)
 {
@@ -102,10 +102,14 @@ int	get_last_heredoc(char *cmd)
 	index = 0;
 	last_io = check_last_io(cmd, 0);
 	if (!last_io[0])
+	{
+		free(last_io);
 		return (STANDARD_INPUT);
+	}
 	find_here_docs(cmd, &fd, last_io[1]);
 	if (last_io[1] != HERE_DOC && fd != PIPE_FAIL)
 		fd = STANDARD_INPUT;
+	free(last_io);
 	return (fd);
 }
 

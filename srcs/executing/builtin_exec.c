@@ -6,11 +6,11 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:36:01 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/21 23:57:52 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/23 23:27:58 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 int	run_builtin(t_cmd_line *command)
 {

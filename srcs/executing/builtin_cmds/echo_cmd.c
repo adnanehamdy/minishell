@@ -6,11 +6,11 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:23:52 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/23 00:23:58 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/23 23:34:13 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include <minishell.h>
 
 int	echo_command(t_cmd_line *cmd)
 {
@@ -41,18 +41,3 @@ int	echo_command(t_cmd_line *cmd)
 		ft_fprintf(cmd->out, "\n");
 	return (0);
 }
-
-// int main(void)
-// {
-// 	t_cmd_line cmd;
-
-// 	cmd.command = (char **)malloc(sizeof(char*) * 6);
-// 	cmd.command[0] = "echo";
-// 	cmd.command[1] = "-nnnnnnnnnnnj";
-// 	cmd.command[2] = "-n";
-// 	cmd.command[3] = "-n";
-// 	cmd.command[4] = "okey";
-// 	cmd.command[5] = 0;
-// 	echo_command(&cmd);
-// 	return (0);
-// }

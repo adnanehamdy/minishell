@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   io_redirections.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 12:41:11 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/21 20:34:16 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/06/25 06:12:19 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 int	open_infile(char *cmd)
 {
@@ -146,6 +146,8 @@ void find_io_redirections(char *cmd, int *in, int *out)
 		*in = fd[0];
 	else if (!fd[0])
 		close(fd[0]);
+	free(last_in);
+	free(last_out);
 }
 
 void redirections_handler(char **cmd_after_split, t_cmd_line **cmd)
@@ -175,4 +177,6 @@ void redirections_handler(char **cmd_after_split, t_cmd_line **cmd)
 			cmd[index]->out = 1;
 		index++;
 	}
+	free(last_in);
+	free(last_out);
 }

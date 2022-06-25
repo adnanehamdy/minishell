@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/23 18:43:02 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/25 06:07:22 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <stdio.h>
 # include <dirent.h>
 # include <signal.h>
-# include <termios.h>
 # include <errno.h>
 # include <fcntl.h>
 # include <sys/ioctl.h>
@@ -68,6 +67,7 @@ int     skip_white_spaces(char *prompt_cmd, int condition);
 /* 3 -> allocate memory for struct */
 int         count_cmd_number(char *prompt_cmd);
 t_cmd_line	**initialize_cmd_line(char *prompt_cmd, int cmd_number);
+void        free_cmd_args(char **cmd_path);
 
 /* sub 3 io_redirection */
 void	open_here_doc(char *cmd, int *fd, int last_io_type, int *index);
@@ -131,6 +131,9 @@ size_t	ptrlen(char	**pstr);
 
 /* executes command line */
 int	execute_cmd_line(t_cmd_line **cmd_lines);
+
+/* frees cmd_line */
+void	free_cmd_line(t_cmd_line **cmd_line);
 
 /*  ---------    env   ---------   */
 

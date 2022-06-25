@@ -6,11 +6,11 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 06:41:02 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/23 19:30:17 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/25 05:59:26 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include <minishell.h>
 
 void	ctrl_c_handler(int signal)
 {
@@ -56,7 +56,7 @@ int main(int c, char **v, char **envp)
 			exit_code_handler(POSTEXIT, execute_cmd_line(cmd_line));
 			add_history(prompt_cmd);
 		}
-		// free(prompt_cmd);
+		free(prompt_cmd);
 	}
 	return (0);
 }

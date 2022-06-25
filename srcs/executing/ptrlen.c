@@ -6,11 +6,11 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:12:43 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/16 19:11:58 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/23 23:33:49 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 size_t	ptrlen(char	**pstr)
 {

@@ -6,11 +6,11 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 09:11:52 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/16 19:09:48 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/23 23:33:44 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 char	**envp_handler(int mod, char **new_envp)
 {

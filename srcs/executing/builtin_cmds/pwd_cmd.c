@@ -6,11 +6,11 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:46:22 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/23 01:09:49 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/23 23:34:00 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include <minishell.h>
 
 int	pwd_command(t_cmd_line *cmd)
 {
@@ -21,9 +21,3 @@ int	pwd_command(t_cmd_line *cmd)
 	free(pwd);
 	return (0);
 }
-
-// int main(void)
-// {
-// 	pwd_command();
-// 	return (0);
-// }

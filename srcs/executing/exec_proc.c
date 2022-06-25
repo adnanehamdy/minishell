@@ -6,11 +6,11 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:56:16 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/23 00:21:58 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/25 10:01:31 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 size_t	structlen(t_cmd_line **cmd_line)
 {
@@ -56,7 +56,13 @@ static void	run_command(t_cmd_line *cmd_line)
 	pid_t	pid;
 
 	if (cmd_line->in < 0 || cmd_line->out < 0)
+	{
+		if (cmd_line->in > 0)
+			close(cmd_line->in);
+		if (cmd_line->out > 0)
+			close(cmd_line->out);
 		return ;
+	}
 	if (!run_builtin(cmd_line))
 		return ;
 	pid = fork();
@@ -86,5 +92,6 @@ int	execute_cmd_line(t_cmd_line **cmd_line)
 		run_command(cmd_line[index++]);
 	while (wait(&exit_code) != -1)
 		;
+	free_cmd_line(cmd_line);
 	return (exit_code);
 }

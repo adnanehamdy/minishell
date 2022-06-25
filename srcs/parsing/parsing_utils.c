@@ -6,11 +6,11 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 08:10:16 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/13 15:50:54 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/23 23:35:03 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 int	count_cmd_number(char *prompt_cmd)
 {

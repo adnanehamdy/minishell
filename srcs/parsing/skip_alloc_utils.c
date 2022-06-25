@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   skip_alloc_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 14:45:55 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/22 11:51:37 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/06/23 23:35:06 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 int	skip_io_redirection(char *sub_prompt_cmd)
 {

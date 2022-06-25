@@ -6,11 +6,11 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 09:25:47 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/13 15:50:52 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/23 23:34:57 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 static size_t	arr_count(char const *s, char c)
 {

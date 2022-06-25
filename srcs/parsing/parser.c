@@ -6,11 +6,11 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:28 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/22 02:03:48 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/23 23:34:54 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 
 static t_cmd_line	**parse_data(char *prompt_cmd)

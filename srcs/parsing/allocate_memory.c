@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   allocate_memory.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 08:04:54 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/22 11:51:59 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/06/25 06:14:04 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 int	count_arg_number(char *prompt_cmd)
 {
@@ -140,6 +140,6 @@ t_cmd_line	**initialize_cmd_line(char *prompt_cmd, int cmd_number)
 	}
 	cmd[i] = 0;
 	redirections_handler(cmd_after_split, cmd);
-	/* ------> cmd_after_split should be freed */
+	free_cmd_args(cmd_after_split);
 	return (cmd);
 }

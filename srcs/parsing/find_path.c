@@ -6,11 +6,11 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 17:32:35 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/22 22:37:12 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/23 23:34:35 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 // static char	*fd_fail_msg(char *file)
 // {

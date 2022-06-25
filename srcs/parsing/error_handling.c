@@ -6,11 +6,11 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 07:19:08 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/23 01:23:51 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/23 23:34:32 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 int	exit_code_handler(int mod, int value)
 {

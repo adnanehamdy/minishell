@@ -6,11 +6,11 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 14:49:44 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/13 15:50:59 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/23 23:35:09 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 void	sub_count_arg_number(char *prompt_cmd, int *index)
 {
