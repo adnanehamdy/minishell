@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/25 06:07:22 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/26 12:48:36 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@
 # define GETENV 0
 # define POSTENV 1
 # define PIPE_FAIL 12
+# define PERMISSION_DENIED -1
+# define NO_SUCH_FILE 1
 
 # define BUFFER_SIZE 1024
 
@@ -59,7 +61,7 @@ typedef struct s_cmd_line
 t_cmd_line	**parsing_functions(char *prompt_cmd);
 
 /* 2 -> error_handling_functions */
-void    error_checker(char *prompt_cmd);
+int    error_checker(char *prompt_cmd);
 int     exit_code_handler(int mod, int value);
 int     check_second_quote(char *sub_prompt_cmd, char quote);
 int     skip_white_spaces(char *prompt_cmd, int condition);

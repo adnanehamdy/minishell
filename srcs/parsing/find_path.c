@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 17:32:35 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/23 23:34:35 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/26 12:50:37 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,16 @@ char	*allocate_cmd_path(t_cmd_line *command, char	**envp, char *cmd)
 	int		i;
 
 	if (cmd && ft_strchr(cmd, '/'))
+	{
+		if (!(access(cmd, F_OK)))
+		{
+			if (access(cmd, X_OK) < 0)
+				command->is_executable = PERMISSION_DENIED;
+		}
+		else
+			command->is_executable = NO_SUCH_FILE;
 		return (ft_strdup(cmd));
+	}
 	path = setup_path(envp);
 	if (!path)
 		return (0);
@@ -85,9 +94,9 @@ char	*allocate_cmd_path(t_cmd_line *command, char	**envp, char *cmd)
 		if (!(access(tmp2, F_OK)))
 		{
 			if (access(tmp2, X_OK) < 0)
-				command->is_executable = 1;
+				command->is_executable = PERMISSION_DENIED;
 			else
-				command->is_executable = -1;
+				command->is_executable = NO_SUCH_FILE;
 			return (cmd_path(tmp2, path));
 		}
 		else

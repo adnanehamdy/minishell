@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:28 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/23 23:34:54 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/25 22:27:54 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,15 @@ static t_cmd_line	**parse_data(char *prompt_cmd)
 	
 t_cmd_line	**parsing_functions(char *prompt_cmd)
 {
+	int exit_status;
+
 	if (!prompt_cmd)
 		return (0);
-	error_checker(prompt_cmd);
-	/* error handling need to be fixed, when an error is occured, no more command can execute.
-		edit: fixed ! */
+	exit_status = error_checker(prompt_cmd);
 	if (!exit_code_handler(GETEXIT, 0) && prompt_cmd[0])
+	{
+		exit_code_handler(POSTEXIT, exit_status);
 		return (parse_data(prompt_cmd));
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:56:16 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/25 10:01:31 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/25 22:27:23 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	run_command(t_cmd_line *cmd_line)
 	{
 		if (cmd_line->in > 0)
 			close(cmd_line->in);
-		if (cmd_line->out > 0)
+		if (cmd_line->out > 1)
 			close(cmd_line->out);
 		return ;
 	}
@@ -93,5 +93,5 @@ int	execute_cmd_line(t_cmd_line **cmd_line)
 	while (wait(&exit_code) != -1)
 		;
 	free_cmd_line(cmd_line);
-	return (exit_code);
+	return (WEXITSTATUS(exit_code));
 }
