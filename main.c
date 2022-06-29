@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 06:41:02 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/25 22:20:31 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/29 19:36:35 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,6 @@ void	ctrl_c_handler(int signal)
 	rl_on_new_line();
 	rl_replace_line("\n", 0);
 	rl_redisplay();
-	return ;
-}
-
-void	ctrl_backslash_handler(int signal)
-{
-	(void)signal;
-	// rl_on_new_line();
-	// rl_replace_line("", 0);
-	// rl_redisplay();
-	return ;
 }
 
 int main(int c, char **v, char **envp)
@@ -41,7 +31,7 @@ int main(int c, char **v, char **envp)
 		return (1);
 	envp_handler(POSTENV, env_dup(envp));
 	signal(SIGINT, ctrl_c_handler);
-	signal(SIGQUIT, ctrl_backslash_handler);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		prompt_cmd = readline("\033[0;35mminishell> \033[0;37m");

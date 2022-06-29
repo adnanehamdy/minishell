@@ -2042,6 +2042,83 @@
               ]
             ],
             "isComplete": true
+          },
+          "53280933-aca5-4ec8-0876-595bfafa97ac": {
+            "id": "53280933-aca5-4ec8-0876-595bfafa97ac",
+            "type": "arrow",
+            "name": "Arrow",
+            "parentId": "page",
+            "childIndex": 34,
+            "point": [
+              329.5359837626635,
+              639.1320547854798,
+              0.5
+            ],
+            "rotation": 0,
+            "bend": 0,
+            "handles": {
+              "start": {
+                "id": "start",
+                "index": 0,
+                "point": [
+                  0,
+                  0
+                ],
+                "canBind": true
+              },
+              "end": {
+                "id": "end",
+                "index": 1,
+                "point": [
+                  8.62,
+                  198.48
+                ],
+                "canBind": true
+              },
+              "bend": {
+                "id": "bend",
+                "index": 2,
+                "point": [
+                  4.31,
+                  99.24
+                ]
+              }
+            },
+            "decorations": {},
+            "style": {
+              "color": "black",
+              "size": "small",
+              "isFilled": false,
+              "dash": "draw",
+              "scale": 1
+            },
+            "label": "",
+            "labelPoint": [
+              0.5,
+              0.5
+            ]
+          },
+          "9e5b0fa2-2151-46ef-188c-5d5fe93ba5a0": {
+            "id": "9e5b0fa2-2151-46ef-188c-5d5fe93ba5a0",
+            "type": "text",
+            "name": "Text",
+            "parentId": "page",
+            "childIndex": 35,
+            "point": [
+              410.33,
+              647.71
+            ],
+            "rotation": 0,
+            "text": "--> here_doc should be in another process\n \n--> here_doc ctrl + D throws segfault\n \n--> append quits unexpectedly\n \n--> builtins with pipelines",
+            "style": {
+              "color": "black",
+              "size": "small",
+              "isFilled": false,
+              "dash": "draw",
+              "scale": 1,
+              "font": "script",
+              "textAlign": "start"
+            }
           }
         },
         "bindings": {

@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:56:16 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/25 22:27:23 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/29 22:17:25 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	config_redir(t_cmd_line *cmd_line)
 		close(cmd_line->out);
 }
 
-static void	run_command(t_cmd_line *cmd_line)
+static void	run_command(t_cmd_line *cmd_line, int pipeline)
 {
 	pid_t	pid;
 
@@ -63,17 +63,21 @@ static void	run_command(t_cmd_line *cmd_line)
 			close(cmd_line->out);
 		return ;
 	}
-	if (!run_builtin(cmd_line))
+	if (!run_builtin(cmd_line) && !pipeline)
 		return ;
 	pid = fork();
 	if (pid < 0)
 		return ;
 	if (!pid)
 	{
+		signal(SIGQUIT, SIG_DFL);
+		signal(SIGINT, SIG_DFL);
 		config_redir(cmd_line);
+		if (!run_builtin(cmd_line))
+			exit(0);
 		if (execve(cmd_line->cmd_path, cmd_line->command,
 				envp_handler(GETENV, NULL)) < 0)
-			exec_error_handler(cmd_line);
+		exec_error_handler(cmd_line);
 	}
 	if (cmd_line->in != 0)
 		close(cmd_line->in);
@@ -84,12 +88,16 @@ static void	run_command(t_cmd_line *cmd_line)
 int	execute_cmd_line(t_cmd_line **cmd_line)
 {
 	size_t	index;
+	int		pipeline;
 	int		exit_code;
 
 	index = 0;
 	exit_code = 0;
+	pipeline = 0;
+	if (cmd_line[index + 1])
+		pipeline = 1;
 	while (cmd_line[index])
-		run_command(cmd_line[index++]);
+		run_command(cmd_line[index++], pipeline);
 	while (wait(&exit_code) != -1)
 		;
 	free_cmd_line(cmd_line);

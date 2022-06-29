@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:57:35 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/25 23:04:59 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/29 18:39:55 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ int	exit_command(t_cmd_line *cmd)
 			exit(ft_atoi(cmd->command[1]));
 	}
 	else
+	{
+		ft_fprintf(STANDARD_ERROR, "exit\n");		
 		exit(exit_code_handler(GETEXIT, 0));
+	}
 	return (0);
 }
 
