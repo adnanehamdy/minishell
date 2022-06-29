@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:56:16 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/29 22:21:53 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/29 22:17:25 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	run_command(t_cmd_line *cmd_line, int pipeline)
 			close(cmd_line->out);
 		return ;
 	}
-	if (!pipeline && !run_builtin(cmd_line))
+	if (!run_builtin(cmd_line) && !pipeline)
 		return ;
 	pid = fork();
 	if (pid < 0)
