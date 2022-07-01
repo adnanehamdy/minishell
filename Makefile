@@ -6,7 +6,7 @@
 #    By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/26 14:06:32 by ahamdy            #+#    #+#              #
-#    Updated: 2022/06/23 23:29:30 by nelidris         ###   ########.fr        #
+#    Updated: 2022/07/02 00:16:03 by nelidris         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ GNL = get_next_line/get_next_line.c
 
 PARS_SRCS = $(PARS_PATH)/allocate_memory.c $(PARS_PATH)/error_handling.c \
 			$(PARS_PATH)/find_path.c $(PARS_PATH)/here_doc.c \
+			$(PARS_PATH)/expand.c $(PARS_PATH)/expand_utils.c \
 			$(PARS_PATH)/io_redirections.c $(PARS_PATH)/io_utils.c \
 			$(PARS_PATH)/parser.c $(PARS_PATH)/parsing_split.c \
 			$(PARS_PATH)/parsing_utils.c $(PARS_PATH)/skip_alloc_utils.c \

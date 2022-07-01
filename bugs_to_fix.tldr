@@ -1211,144 +1211,6 @@
               "textAlign": "middle"
             }
           },
-          "e9b3f2bc-6618-4cef-1b30-0520081a83d8": {
-            "id": "e9b3f2bc-6618-4cef-1b30-0520081a83d8",
-            "type": "draw",
-            "name": "Draw",
-            "parentId": "page",
-            "childIndex": 10,
-            "point": [
-              -151.29,
-              351.19
-            ],
-            "rotation": 0,
-            "style": {
-              "color": "black",
-              "size": "small",
-              "isFilled": false,
-              "dash": "draw",
-              "scale": 1,
-              "textAlign": "start"
-            },
-            "points": [
-              [
-                0,
-                12.28,
-                0.5
-              ],
-              [
-                0,
-                12.28,
-                0.5
-              ],
-              [
-                0.07,
-                12.71,
-                0.5
-              ],
-              [
-                1.36,
-                15.12,
-                0.5
-              ],
-              [
-                2.05,
-                17.7,
-                0.5
-              ],
-              [
-                3.04,
-                20.99,
-                0.5
-              ],
-              [
-                3.69,
-                22.72,
-                0.5
-              ],
-              [
-                4.31,
-                24.17,
-                0.5
-              ],
-              [
-                4.88,
-                24.93,
-                0.5
-              ],
-              [
-                5.05,
-                25.27,
-                0.5
-              ],
-              [
-                5.96,
-                24.59,
-                0.5
-              ],
-              [
-                7.33,
-                19.87,
-                0.5
-              ],
-              [
-                8.69,
-                15.52,
-                0.5
-              ],
-              [
-                11.36,
-                9.95,
-                0.5
-              ],
-              [
-                13.2,
-                6.27,
-                0.5
-              ],
-              [
-                14.88,
-                3.61,
-                0.5
-              ],
-              [
-                15.48,
-                2.41,
-                0.5
-              ],
-              [
-                16.28,
-                1.6,
-                0.5
-              ],
-              [
-                16.47,
-                1.23,
-                0.5
-              ],
-              [
-                16.65,
-                0.69,
-                0.5
-              ],
-              [
-                16.82,
-                0.52,
-                0.5
-              ],
-              [
-                17.16,
-                0.17,
-                0.5
-              ],
-              [
-                17.32,
-                0,
-                0.5
-              ]
-            ],
-            "isComplete": true
-          },
           "65cf38f3-e86f-4a3b-17dd-9096fa5c60fa": {
             "id": "65cf38f3-e86f-4a3b-17dd-9096fa5c60fa",
             "type": "draw",
@@ -1792,7 +1654,7 @@
             "parentId": "page",
             "childIndex": 31,
             "point": [
-              -215.4,
+              -215.39999999999998,
               609.9
             ],
             "rotation": 0,
@@ -1846,11 +1708,11 @@
             "parentId": "page",
             "childIndex": 32,
             "point": [
-              -99.03,
-              645.76
+              -101.85,
+              677.07
             ],
             "rotation": 0,
-            "text": "--> exit command doesn't work properly\n \n--> minishell parsing leaks\n \n--> minishell executing leaks",
+            "text": "--> exit command doesn't work properly\n \n--> minishell parsing leaks\n \n--> minishell executing leaks\n \n--> fix history to store whatever it is",
             "style": {
               "color": "black",
               "size": "small",
@@ -1890,8 +1752,8 @@
             "parentId": "page",
             "childIndex": 10,
             "point": [
-              -163.61,
-              765.08
+              -171.23,
+              799.13
             ],
             "rotation": 0,
             "text": "fixed ",
@@ -1912,8 +1774,8 @@
             "parentId": "page",
             "childIndex": 11,
             "point": [
-              -117.13,
-              765.19
+              -124.75,
+              799.24
             ],
             "rotation": 0,
             "style": {
@@ -2050,9 +1912,8 @@
             "parentId": "page",
             "childIndex": 34,
             "point": [
-              329.5359837626635,
-              639.1320547854798,
-              0.5
+              315.22,
+              659.26
             ],
             "rotation": 0,
             "bend": 0,
@@ -2109,7 +1970,7 @@
               647.71
             ],
             "rotation": 0,
-            "text": "--> here_doc should be in another process\n \n--> here_doc ctrl + D throws segfault\n \n--> append quits unexpectedly\n \n--> builtins with pipelines",
+            "text": "--> here_doc should handle the SIGINT\n \n--> here_doc ctrl + D throws segfault\n \n--> append quits unexpectedly (some func that\ncloses stdin)\n \n--> builtins with pipelines",
             "style": {
               "color": "black",
               "size": "small",
@@ -2119,6 +1980,61 @@
               "font": "script",
               "textAlign": "start"
             }
+          },
+          "4b3630ce-fd43-4407-238d-9548bf3034dc": {
+            "id": "4b3630ce-fd43-4407-238d-9548bf3034dc",
+            "type": "arrow",
+            "name": "Arrow",
+            "parentId": "page",
+            "childIndex": 36,
+            "point": [
+              -206.89499999999998,
+              902.07
+            ],
+            "rotation": 0,
+            "bend": 0,
+            "handles": {
+              "start": {
+                "id": "start",
+                "index": 0,
+                "point": [
+                  0,
+                  5.26
+                ],
+                "canBind": true
+              },
+              "end": {
+                "id": "end",
+                "index": 1,
+                "point": [
+                  1025.08,
+                  0
+                ],
+                "canBind": true
+              },
+              "bend": {
+                "id": "bend",
+                "index": 2,
+                "point": [
+                  512.54,
+                  2.63
+                ]
+              }
+            },
+            "decorations": {},
+            "style": {
+              "color": "black",
+              "size": "small",
+              "isFilled": false,
+              "dash": "draw",
+              "scale": 1,
+              "textAlign": "start"
+            },
+            "label": "",
+            "labelPoint": [
+              0.5,
+              0.5
+            ]
           }
         },
         "bindings": {

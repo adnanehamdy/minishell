@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/26 12:48:36 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/07/02 00:18:51 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int	    skip_io_redirection(char *sub_prompt_cmd);
 char	*sub_fill_each_arg(char *cmd_arg, char *prompt_cmd, int *index);
 void	here_doc_handler(char **cmd_after_split, t_cmd_line **cmd);
 char	*allocate_cmd_path(t_cmd_line *command, char	**envp, char *cmd);
+void	expand_handler(char **prompt_cmd);
+int	    env_var_cmp(const char *s1, const char *s2);
 
 /* split with modification */
 char	**parsing_split(char const *s, char c);
