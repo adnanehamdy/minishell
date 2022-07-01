@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 06:41:02 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/29 19:36:35 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/06/30 08:36:28 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int main(int c, char **v, char **envp)
 		prompt_cmd = readline("\033[0;35mminishell> \033[0;37m");
 		if (!prompt_cmd)
 		{
-			printf("exit\n");
+			ft_fprintf(STANDARD_ERROR, "exit\n");
 			return (exit_code_handler(GETEXIT, 0));
 		}
 		cmd_line = parsing_functions(prompt_cmd);

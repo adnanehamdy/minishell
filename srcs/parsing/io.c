@@ -23,10 +23,11 @@ int	open_infile(char *cmd)
 	if (fd == -1)
 	{
 		if (!access(filename, F_OK))
-			printf("minishell : permission denied : %s\n", filename);
+			ft_fprintf(STANDARD_ERROR, "minishell : permission denied : %s\n", filename);
 		else
-			printf("minishell : no such file or directory : %s\n", filename);
+			ft_fprintf(STANDARD_ERROR, "minishell : no such file or directory : %s\n", filename);
 	}
+	free(filename);
 	return (fd);
 }
 
@@ -43,10 +44,11 @@ int	open_outfile(char *cmd, int mod)
 	if (fd == -1)
 	{
 		if (!access(filename, F_OK))
-			printf("minishell : permission denied : %s\n", filename);
+			ft_fprintf(STANDARD_ERROR, "minishell : permission denied : %s\n", filename);
 		else
-			printf("minishell : no such file or directory : %s\n", filename);
+			ft_fprintf(STANDARD_ERROR, "minishell : no such file or directory : %s\n", filename);
 	}
+	free(filename);
 	return (fd);
 }
 
@@ -71,9 +73,7 @@ int	check_infile(char *cmd, int *in, int *index,  int last_in)
 
 	fd = 0;
 	*index +=skip_white_spaces(&cmd[*index], 0);
-	printf(" first %c\n ", cmd[*index]);
 	fd = open_infile(&cmd[*index]);
-	printf("after %c\n ", cmd[*index]);
 	is_last_fd(&fd, in, last_in, INFILE);
 	return (fd);
 }
@@ -180,7 +180,6 @@ void redirections_handler(char **cmd_after_split, t_cmd_line **cmd)
 			cmd[index]->out = fd[1];
 		else if (close(fd[1]))
 			cmd[index]->out = 1;
-		printf("the in fd == %d && the out fd == %d\n", cmd[index]->in, cmd[index]->out);
 		index++;
 	}
 }
