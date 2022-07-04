@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:25:59 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/23 23:33:57 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/07/04 17:19:15 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ size_t	valid_unset_args(char **args)
 	return (valid_args);
 }
 
-static int var_is_in_envp(char	*envp_var, char **args)
+static int	var_is_in_envp(char	*envp_var, char **args)
 {
 	size_t	i;
 	size_t	j;
@@ -91,7 +91,7 @@ static int var_is_in_envp(char	*envp_var, char **args)
 		while (args[i][j])
 		{
 			if (args[i][j] != envp_var[j] || args[i][j] == '=')
-				break;
+				break ;
 			j++;
 		}
 		if (!args[i][j])
@@ -123,7 +123,7 @@ int	unset_command(t_cmd_line *cmd)
 	{
 		if (var_is_in_envp(envp[len], cmd->command))
 			new_envp[val_args++] = ft_strdup(envp[len]);
-		len++;	
+		len++;
 	}
 	new_envp[val_args] = 0;
 	envp_handler(POSTENV, new_envp);

@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/07/02 00:18:51 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/07/04 17:23:50 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@
 # define PIPE_FAIL 12
 # define PERMISSION_DENIED -1
 # define NO_SUCH_FILE 1
+# define GET_FLAG 0
+# define HERE_DOC_FLAG 1
+# define HERE_DOC_FLAG_SIGINT 2
+# define DEFAULT_FLAG 3
 
 # define BUFFER_SIZE 1024
 
@@ -89,6 +93,7 @@ void	here_doc_handler(char **cmd_after_split, t_cmd_line **cmd);
 char	*allocate_cmd_path(t_cmd_line *command, char	**envp, char *cmd);
 void	expand_handler(char **prompt_cmd);
 int	    env_var_cmp(const char *s1, const char *s2);
+int     here_doc_flag(int mod);
 
 /* split with modification */
 char	**parsing_split(char const *s, char c);
@@ -109,6 +114,17 @@ int run_builtin(t_cmd_line *command);
 
 /* changes directory */
 int cd_command(t_cmd_line *cmd);
+
+
+/*-- export utils --*/
+
+char	**find_var(char *var, char **envp);
+void	replace_var(char *var, char **target_p);
+void	add_var(char *var, char **envp);
+void	set_env_var(char *var, int *err_occ, char **envp);
+void	sort_envp(t_cmd_line *cmd, char	**envp);
+int     ft_strcmp(const char *s1, const char *s2);
+int     valid_var_name(char *var);
 
 /* exports variable to the environment */
 int export_command(t_cmd_line *cmd);

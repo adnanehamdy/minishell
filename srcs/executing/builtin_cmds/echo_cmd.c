@@ -6,20 +6,20 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:23:52 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/23 23:34:13 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/07/04 17:17:48 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	echo_command(t_cmd_line *cmd)
+static int	echo_new_line(t_cmd_line *cmd)
 {
 	int	new_line;
 	int	i;
 	int	j;
 
-	new_line = 0;
 	i = 1;
+	new_line = 0;
 	while (cmd->command[i] && cmd->command[i][0] == '-')
 	{
 		j = 1;
@@ -30,6 +30,15 @@ int	echo_command(t_cmd_line *cmd)
 		new_line++;
 		i++;
 	}
+	return (new_line);
+}
+
+int	echo_command(t_cmd_line *cmd)
+{
+	int	new_line;
+	int	i;
+
+	new_line = echo_new_line(cmd);
 	i = new_line + 1;
 	while (cmd->command[i])
 	{

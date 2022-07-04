@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:46:22 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/23 23:34:00 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/07/02 23:21:01 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,15 @@
 
 int	pwd_command(t_cmd_line *cmd)
 {
-	char	*pwd;
+	static char	*pwd;
+	char		*temp;
 
+	temp = pwd;
 	pwd = getcwd(NULL, 0);
+	if (!pwd)
+		pwd = temp;
+	else
+		free(temp);
 	ft_fprintf(cmd->out, "%s\n", pwd);
-	free(pwd);
 	return (0);
 }

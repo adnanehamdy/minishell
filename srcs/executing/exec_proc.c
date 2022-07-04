@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:56:16 by nelidris          #+#    #+#             */
-/*   Updated: 2022/07/01 07:10:40 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/07/04 17:05:58 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	exec_error_handler(t_cmd_line *cmd_line)
 	}		
 	else
 	{
-		ft_putstr_fd("minishell: command not found:", STANDARD_ERROR);
+		ft_putstr_fd("minishell: command not found: ", STANDARD_ERROR);
 		ft_putendl_fd(cmd_line->command[0], STANDARD_ERROR);
 	}
 	exit(127);
@@ -57,7 +57,7 @@ static void	config_redir(t_cmd_line *cmd_line)
 	}
 }
 
-static void	run_command(t_cmd_line *cmd_line, int pipeline)
+static void	run_command(t_cmd_line *cmd_line, int *exit_code, int pipeline)
 {
 	pid_t	pid;
 
@@ -69,8 +69,11 @@ static void	run_command(t_cmd_line *cmd_line, int pipeline)
 			close(cmd_line->out);
 		return ;
 	}
-	if (!run_builtin(cmd_line) && !pipeline)
+	if (!pipeline && !run_builtin(cmd_line))
+	{
+		*exit_code = exit_code_handler(GETEXIT, 0);
 		return ;
+	}
 	pid = fork();
 	if (pid < 0)
 		return ;
@@ -103,10 +106,12 @@ int	execute_cmd_line(t_cmd_line **cmd_line)
 	if (cmd_line[index + 1])
 		pipeline = 1;
 	while (cmd_line[index])
-		run_command(cmd_line[index++], pipeline);
+		run_command(cmd_line[index++], &exit_code, pipeline);
 	// int fd = open("fd", O_WRONLY | O_CREAT, 0644);
 	// ft_fprintf(fd, "fd num = %d\n", fd);
 	// close(fd);
+	if (exit_code > 0)
+		return (exit_code);
 	while (wait(&exit_code) != -1)
 		;
 	free_cmd_line(cmd_line);

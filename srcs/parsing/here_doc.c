@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 10:25:24 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/07/01 05:25:20 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/07/03 01:19:39 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ void	open_here_doc(char *cmd, int *fd, int last_io_type, int *index)
 void	find_here_docs(char *cmd, int *fd, int last_io_type)
 {
 	int	index;
+	int stdin_fd;
 
+	here_doc_flag(HERE_DOC_FLAG);
+	stdin_fd = dup(0);
 	index = 0;
 	while (cmd[index])
 	{
@@ -91,6 +94,10 @@ void	find_here_docs(char *cmd, int *fd, int last_io_type)
 			break ;
 		index++;
 	}
+	dup2(stdin_fd, 0);
+	close(stdin_fd);
+	if (here_doc_flag(GET_FLAG) == HERE_DOC_FLAG)
+		here_doc_flag(DEFAULT_FLAG);
 }
 
 int	get_last_heredoc(char *cmd)
