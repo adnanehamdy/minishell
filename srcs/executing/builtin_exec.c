@@ -6,13 +6,13 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:36:01 by nelidris          #+#    #+#             */
-/*   Updated: 2022/07/04 17:23:15 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/07/04 17:28:57 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int ft_strcmp(const char *s1, const char *s2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	size_t	i;
 

@@ -6,21 +6,11 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:56:16 by nelidris          #+#    #+#             */
-/*   Updated: 2022/07/04 17:05:58 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/07/04 17:31:53 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-size_t	structlen(t_cmd_line **cmd_line)
-{
-	size_t	len;
-
-	len = 0;
-	while (cmd_line[len])
-		len++;
-	return (len);
-}
 
 static void	exec_error_handler(t_cmd_line *cmd_line)
 {
@@ -57,6 +47,18 @@ static void	config_redir(t_cmd_line *cmd_line)
 	}
 }
 
+static void	run_child(t_cmd_line *cmd_line)
+{
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
+	config_redir(cmd_line);
+	if (!run_builtin(cmd_line))
+		exit(0);
+	if (execve(cmd_line->cmd_path, cmd_line->command,
+			envp_handler(GETENV, NULL)) < 0)
+		exec_error_handler(cmd_line);
+}
+
 static void	run_command(t_cmd_line *cmd_line, int *exit_code, int pipeline)
 {
 	pid_t	pid;
@@ -78,16 +80,7 @@ static void	run_command(t_cmd_line *cmd_line, int *exit_code, int pipeline)
 	if (pid < 0)
 		return ;
 	if (!pid)
-	{
-		signal(SIGQUIT, SIG_DFL);
-		signal(SIGINT, SIG_DFL);
-		config_redir(cmd_line);
-		if (!run_builtin(cmd_line))
-			exit(0);
-		if (execve(cmd_line->cmd_path, cmd_line->command,
-				envp_handler(GETENV, NULL)) < 0)
-		exec_error_handler(cmd_line);
-	}
+		run_child(cmd_line);
 	if (cmd_line->in != 0)
 		close(cmd_line->in);
 	if (cmd_line->out != 1)
@@ -107,9 +100,6 @@ int	execute_cmd_line(t_cmd_line **cmd_line)
 		pipeline = 1;
 	while (cmd_line[index])
 		run_command(cmd_line[index++], &exit_code, pipeline);
-	// int fd = open("fd", O_WRONLY | O_CREAT, 0644);
-	// ft_fprintf(fd, "fd num = %d\n", fd);
-	// close(fd);
 	if (exit_code > 0)
 		return (exit_code);
 	while (wait(&exit_code) != -1)

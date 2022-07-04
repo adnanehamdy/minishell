@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/07/04 17:23:50 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/07/04 17:35:36 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@
 # define HERE_DOC_FLAG 1
 # define HERE_DOC_FLAG_SIGINT 2
 # define DEFAULT_FLAG 3
+# define MINISHELL_IS_RUNNING 1
 
 # define BUFFER_SIZE 1024
 
