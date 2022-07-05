@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 10:25:24 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/07/03 01:19:39 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/07/05 09:39:57 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	read_from_stdin(char *buff, int *fd, char *file_name)
+
+void	read_from_stdin(char *buff, int *fd, char *file_name, int mod)
 {
 	while (buff)
 	{
@@ -23,8 +24,64 @@ void	read_from_stdin(char *buff, int *fd, char *file_name)
 		buff = get_next_line(0);
 		if (buff && ((ft_strncmp(buff, file_name, ft_strlen(file_name)))
 				&& !(ft_strlen(file_name) == (ft_strlen(buff) - 1))))
+		{
+			if (mod)
+				expand_handler(&buff);
 			write(fd[1], buff, ft_strlen(buff));
+		}
 	}
+}
+int	there_is_quote(char *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i] && (cmd[i] < 9 || cmd[i] > 13) &&
+		cmd[i] != ' ' && cmd[i] != '<' && cmd[i] != '>')
+	{
+		if (cmd[i] == '\'' || cmd[i] == '"')
+			return (0);
+	}
+	return (1);
+}
+int		limiter_len(char *cmd)
+{
+	int	index;
+
+	index = 0;
+	while (cmd[index] && (cmd[index] < 9 || cmd[index] > 13) &&
+		cmd[index] != ' ' && cmd[index] != '<' && cmd[index] != '>')
+	{
+		if (cmd[index] == '"' || cmd[index] == '\'')
+			index += check_second_quote(&cmd[index], cmd[index]);
+		index++;
+	}
+	return (index);
+	}
+}
+
+char	*get_limiter(char *cmd, int *mod)
+{
+	int	index;
+	int	len;
+	char *limiter_name;
+	int	i;
+
+	i = 0;
+	index = 0;
+	*mod = there_is_quote(cmd);
+	len = limiter_len(cmd);
+	limiter_name = (char *)malloc(sizeof(char) * (len + 1));
+	while (index < len && cmd[index])
+	{
+		if (cmd[index] == '\'' || cmd[index] == '"')
+			index = index + check_second_quote(&cmd[index], cmd[index]);
+		limiter_name[i] = cmd[index];
+		index++;
+		i++;
+	}
+	limiter_name[index] = 0;
+	return (limiter_name);
 }
 
 int	ft_limiter(char *cmd)
@@ -32,9 +89,9 @@ int	ft_limiter(char *cmd)
 	char	*buff;
 	int		fd[2];
 	char	*file_name;
+	int		mod;
 
-	//fd = (int *)malloc(2 * sizeof(int));
-	file_name = open_file(cmd);
+	file_name = get_limiter(cmd, &mod);
 	if (pipe(fd) == -1)
 	{
 		exit_code_handler(POSTEXIT, PIPE_FAIL);
@@ -44,8 +101,12 @@ int	ft_limiter(char *cmd)
 	buff = get_next_line(0);
 	if (buff && (((ft_strncmp(buff, cmd, ft_strlen(file_name)))
 				&& !(ft_strlen(file_name) == (ft_strlen(buff) - 1)))))
-		write(fd[1], buff, ft_strlen(buff));
-	read_from_stdin(buff, fd, file_name);
+		{
+			if (mod)
+				expand_handler(&buff);
+			write(fd[1], buff, ft_strlen(buff));
+		}
+	read_from_stdin(buff, fd, file_name, int mod);
 	if (buff)
 		free(buff);
 	free(file_name);
@@ -78,10 +139,7 @@ void	open_here_doc(char *cmd, int *fd, int last_io_type, int *index)
 void	find_here_docs(char *cmd, int *fd, int last_io_type)
 {
 	int	index;
-	int stdin_fd;
 
-	here_doc_flag(HERE_DOC_FLAG);
-	stdin_fd = dup(0);
 	index = 0;
 	while (cmd[index])
 	{
@@ -94,10 +152,6 @@ void	find_here_docs(char *cmd, int *fd, int last_io_type)
 			break ;
 		index++;
 	}
-	dup2(stdin_fd, 0);
-	close(stdin_fd);
-	if (here_doc_flag(GET_FLAG) == HERE_DOC_FLAG)
-		here_doc_flag(DEFAULT_FLAG);
 }
 
 int	get_last_heredoc(char *cmd)

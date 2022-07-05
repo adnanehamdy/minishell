@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/07/04 17:35:36 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/07/03 17:06:11 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,6 @@
 # define PIPE_FAIL 12
 # define PERMISSION_DENIED -1
 # define NO_SUCH_FILE 1
-# define GET_FLAG 0
-# define HERE_DOC_FLAG 1
-# define HERE_DOC_FLAG_SIGINT 2
-# define DEFAULT_FLAG 3
-# define MINISHELL_IS_RUNNING 1
 
 # define BUFFER_SIZE 1024
 
@@ -92,9 +87,7 @@ int	    skip_io_redirection(char *sub_prompt_cmd);
 char	*sub_fill_each_arg(char *cmd_arg, char *prompt_cmd, int *index);
 void	here_doc_handler(char **cmd_after_split, t_cmd_line **cmd);
 char	*allocate_cmd_path(t_cmd_line *command, char	**envp, char *cmd);
-void	expand_handler(char **prompt_cmd);
 int	    env_var_cmp(const char *s1, const char *s2);
-int     here_doc_flag(int mod);
 
 /* split with modification */
 char	**parsing_split(char const *s, char c);
@@ -105,7 +98,18 @@ int     count_io_redirection(char *prompt_cmd);
 int     count_each_arg(char *prompt_cmd,int reset);
 char    **allocate_cmd_arguments(char *prompt_cmd);
 char    *fill_each_arg(char *cmd_arg, char *prompt_cmd, int reset);
+char	*valid_content(char *prompt_cmd, int *index, char *var_content, int i);
 
+/*expand*/
+void	expand_handler(char **prompt_cmd);
+char	*check_valid_content(char *prompt_cmd, int *index, char *var_content, int i);
+char	*check_is_alpha(char *prompt_cmd, int *index);
+char	*check_exit_code(char *prompt_cmd, int *index);
+char	*check_is_digit(char *prompt_cmd, int *index);
+char	*check_is_quote(char *prompt_cmd, int *index);
+int     var_len(char *var);
+char    *get_var_name(char *prompt_cmd, int *index);
+char    *search_in_env(char *var_name);
 /* ****************** exec_functions ****************** */
 
 /*  ---------    built-in commands   ---------   */
@@ -115,17 +119,6 @@ int run_builtin(t_cmd_line *command);
 
 /* changes directory */
 int cd_command(t_cmd_line *cmd);
-
-
-/*-- export utils --*/
-
-char	**find_var(char *var, char **envp);
-void	replace_var(char *var, char **target_p);
-void	add_var(char *var, char **envp);
-void	set_env_var(char *var, int *err_occ, char **envp);
-void	sort_envp(t_cmd_line *cmd, char	**envp);
-int     ft_strcmp(const char *s1, const char *s2);
-int     valid_var_name(char *var);
 
 /* exports variable to the environment */
 int export_command(t_cmd_line *cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io_redirections.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 12:41:11 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/07/01 07:09:56 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/07/05 01:14:23 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	check_infile(char *cmd, int *in, int *index,  int last_in)
 	int	fd;
 
 	fd = 0;
+
 	*index +=skip_white_spaces(&cmd[*index], 0);
 	fd = open_infile(&cmd[*index]);
 	is_last_fd(&fd, in, last_in, INFILE);
@@ -85,7 +86,7 @@ int check_outfile(char *cmd, int *out, int *index, int last_out)
 		*index = *index + 1;
 		*index +=skip_white_spaces(&cmd[*index], 0);
 		fd = open_outfile(&cmd[*index], 2);
-		is_last_fd(&fd, out, last_out, OUTFILE_APPEND);
+		is_last_fd(&fd, out, last_out, APPEND);
 	}
 	else
 	{

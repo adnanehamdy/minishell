@@ -1,12 +1,12 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   allocate_memory.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 08:04:54 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/07/02 00:16:45 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/07/04 18:02:43 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,24 @@ char	**allocate_cmd_arguments(char *prompt_cmd)
 	return (cmd_arg);
 }
 
+void	cmd_line_handler(t_cmd_line **cmd, char **cmd_after_split, int cmd_number)
+{
+	int	i;
+
+	i = 0;
+	while (i < cmd_number)
+	{
+		expand_handler(&cmd_after_split[i]);
+		cmd[i]->command = allocate_cmd_arguments(cmd_after_split[i]);
+		if (cmd[i]->command)
+			cmd[i]->cmd_path = allocate_cmd_path(cmd[i], envp_handler(GETENV, NULL), cmd[i]->command[0]);
+		count_each_arg(NULL, 1);
+		fill_each_arg(NULL, NULL, 1);
+		i++;
+	}
+	cmd[i] = 0;
+}
+
 t_cmd_line	**initialize_cmd_line(char *prompt_cmd, int cmd_number)
 {
 	t_cmd_line	**cmd;
@@ -129,17 +147,7 @@ t_cmd_line	**initialize_cmd_line(char *prompt_cmd, int cmd_number)
 		cmd[i++] = (t_cmd_line *)malloc(sizeof(t_cmd_line));
 	here_doc_handler(cmd_after_split, cmd);
 	i = 0;
-	while (i < cmd_number)
-	{
-		expand_handler(&cmd_after_split[i]);
-		cmd[i]->command = allocate_cmd_arguments(cmd_after_split[i]);
-		if (cmd[i]->command)
-			cmd[i]->cmd_path = allocate_cmd_path(cmd[i], envp_handler(GETENV, NULL), cmd[i]->command[0]);
-		count_each_arg(NULL, 1);
-		fill_each_arg(NULL, NULL, 1);
-		i++;
-	}
-	cmd[i] = 0;
+	cmd_line_handler(cmd, cmd_after_split, cmd_number);
 	redirections_handler(cmd_after_split, cmd);
 	free_cmd_args(cmd_after_split);
 	return (cmd);

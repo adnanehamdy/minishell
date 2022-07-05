@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 07:19:08 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/25 22:27:08 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/07/05 01:30:35 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,11 @@ int	check_unexpected_token(char *prompt_cmd, int *index)
 		return (1);
 }
 
-int	check_unexpected_newline(char *prompt_cmd, int *index)
+int	check_unexpected_newline(void)
 {
-	if (prompt_cmd[(*index) - 1] == '<' || prompt_cmd[(*index) - 1] == '>' || prompt_cmd[(*index) - 1] == '|')
-	{
-		ft_fprintf(STANDARD_ERROR, "minishell: syntax error near unexpected token 'newline'\n");
-		exit_code_handler(POSTEXIT, 258);
-		return (0);
-	}
-	return (1);
+	ft_fprintf(STANDARD_ERROR, "minishell: syntax error near unexpected token 'newline'\n");
+	exit_code_handler(POSTEXIT, 258);
+	return (0);
 }
 
 int	skip_white_spaces(char *prompt_cmd, int condition)
@@ -111,7 +107,7 @@ int	skip_white_spaces(char *prompt_cmd, int condition)
 	}
 	if (!prompt_cmd[index] && condition)
 	{
-		if (!check_unexpected_newline(prompt_cmd, &index))
+		if (!check_unexpected_newline())
 		return (-1);
 	}
 	return (index);

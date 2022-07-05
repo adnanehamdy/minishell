@@ -6,11 +6,21 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:56:16 by nelidris          #+#    #+#             */
-/*   Updated: 2022/07/04 17:31:53 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/07/01 07:10:40 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+size_t	structlen(t_cmd_line **cmd_line)
+{
+	size_t	len;
+
+	len = 0;
+	while (cmd_line[len])
+		len++;
+	return (len);
+}
 
 static void	exec_error_handler(t_cmd_line *cmd_line)
 {
@@ -27,7 +37,7 @@ static void	exec_error_handler(t_cmd_line *cmd_line)
 	}		
 	else
 	{
-		ft_putstr_fd("minishell: command not found: ", STANDARD_ERROR);
+		ft_putstr_fd("minishell: command not found:", STANDARD_ERROR);
 		ft_putendl_fd(cmd_line->command[0], STANDARD_ERROR);
 	}
 	exit(127);
@@ -47,19 +57,7 @@ static void	config_redir(t_cmd_line *cmd_line)
 	}
 }
 
-static void	run_child(t_cmd_line *cmd_line)
-{
-	signal(SIGQUIT, SIG_DFL);
-	signal(SIGINT, SIG_DFL);
-	config_redir(cmd_line);
-	if (!run_builtin(cmd_line))
-		exit(0);
-	if (execve(cmd_line->cmd_path, cmd_line->command,
-			envp_handler(GETENV, NULL)) < 0)
-		exec_error_handler(cmd_line);
-}
-
-static void	run_command(t_cmd_line *cmd_line, int *exit_code, int pipeline)
+static void	run_command(t_cmd_line *cmd_line, int pipeline)
 {
 	pid_t	pid;
 
@@ -71,16 +69,22 @@ static void	run_command(t_cmd_line *cmd_line, int *exit_code, int pipeline)
 			close(cmd_line->out);
 		return ;
 	}
-	if (!pipeline && !run_builtin(cmd_line))
-	{
-		*exit_code = exit_code_handler(GETEXIT, 0);
+	if (!run_builtin(cmd_line) && !pipeline)
 		return ;
-	}
 	pid = fork();
 	if (pid < 0)
 		return ;
 	if (!pid)
-		run_child(cmd_line);
+	{
+		signal(SIGQUIT, SIG_DFL);
+		signal(SIGINT, SIG_DFL);
+		config_redir(cmd_line);
+		if (!run_builtin(cmd_line))
+			exit(0);
+		if (execve(cmd_line->cmd_path, cmd_line->command,
+				envp_handler(GETENV, NULL)) < 0)
+		exec_error_handler(cmd_line);
+	}
 	if (cmd_line->in != 0)
 		close(cmd_line->in);
 	if (cmd_line->out != 1)
@@ -99,9 +103,10 @@ int	execute_cmd_line(t_cmd_line **cmd_line)
 	if (cmd_line[index + 1])
 		pipeline = 1;
 	while (cmd_line[index])
-		run_command(cmd_line[index++], &exit_code, pipeline);
-	if (exit_code > 0)
-		return (exit_code);
+		run_command(cmd_line[index++], pipeline);
+	// int fd = open("fd", O_WRONLY | O_CREAT, 0644);
+	// ft_fprintf(fd, "fd num = %d\n", fd);
+	// close(fd);
 	while (wait(&exit_code) != -1)
 		;
 	free_cmd_line(cmd_line);
