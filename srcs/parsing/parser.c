@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:28 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/25 22:27:54 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/07/30 15:16:11 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 static t_cmd_line	**parse_data(char *prompt_cmd)
 {
 	int	cmd_number;
-	
+
 	cmd_number = count_cmd_number(prompt_cmd);
 	return (initialize_cmd_line(prompt_cmd, cmd_number));
 }

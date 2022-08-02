@@ -6,12 +6,11 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 10:25:24 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/07/05 09:39:57 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/02 15:50:46 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
 
 void	read_from_stdin(char *buff, int *fd, char *file_name, int mod)
 {
@@ -41,23 +40,61 @@ int	there_is_quote(char *cmd)
 	{
 		if (cmd[i] == '\'' || cmd[i] == '"')
 			return (0);
+		i++;
 	}
 	return (1);
 }
+
 int		limiter_len(char *cmd)
 {
-	int	index;
+	int		index;
+	char	quote;
+	int		quote_number;
 
+	quote_number = 0;
 	index = 0;
 	while (cmd[index] && (cmd[index] < 9 || cmd[index] > 13) &&
 		cmd[index] != ' ' && cmd[index] != '<' && cmd[index] != '>')
 	{
 		if (cmd[index] == '"' || cmd[index] == '\'')
-			index += check_second_quote(&cmd[index], cmd[index]);
+		{
+			quote = cmd[index];
+			index++;
+			while (cmd[index] != quote)
+				index++;
+			quote_number += 2;
+		}
 		index++;
 	}
+	index -= quote_number;
 	return (index);
+}
+
+void	store_limiter(char *cmd, char *limiter_name, int len)
+{
+	int		i;
+	int		index;
+	char	quote;
+
+	i = 0;
+	index = 0;
+	while (i < len && cmd[index])
+	{
+		if (cmd[index] == '"' || cmd[index] == '\'')
+		{
+			quote = cmd[index];
+			index++;
+			while (cmd[index] != quote)
+			{
+				limiter_name[i] = cmd[index];
+				i++;
+				index++;
+			}
+			index++;
+		}
+		limiter_name[i++] = cmd[index++];
 	}
+	limiter_name[i] = 0;
 }
 
 char	*get_limiter(char *cmd, int *mod)
@@ -72,15 +109,7 @@ char	*get_limiter(char *cmd, int *mod)
 	*mod = there_is_quote(cmd);
 	len = limiter_len(cmd);
 	limiter_name = (char *)malloc(sizeof(char) * (len + 1));
-	while (index < len && cmd[index])
-	{
-		if (cmd[index] == '\'' || cmd[index] == '"')
-			index = index + check_second_quote(&cmd[index], cmd[index]);
-		limiter_name[i] = cmd[index];
-		index++;
-		i++;
-	}
-	limiter_name[index] = 0;
+	store_limiter(cmd, limiter_name, len);
 	return (limiter_name);
 }
 
@@ -106,7 +135,7 @@ int	ft_limiter(char *cmd)
 				expand_handler(&buff);
 			write(fd[1], buff, ft_strlen(buff));
 		}
-	read_from_stdin(buff, fd, file_name, int mod);
+	read_from_stdin(buff, fd, file_name, mod);
 	if (buff)
 		free(buff);
 	free(file_name);
@@ -144,13 +173,20 @@ void	find_here_docs(char *cmd, int *fd, int last_io_type)
 	while (cmd[index])
 	{
 		if (cmd[index] == '"')
+		{
 			index = index + check_second_quote(&cmd[index], '"');
+			index++;
+		}
 		else if (cmd[index] == '\'')
+		{
 			index = index + check_second_quote(&cmd[index], '\'');
+			index++;
+		}
 		open_here_doc(cmd, fd, last_io_type, &index);
 		if (*fd == PIPE_FAIL)
 			break ;
-		index++;
+		if (cmd[index] != '"' && cmd[index] != '\'')
+			index++;
 	}
 }
 

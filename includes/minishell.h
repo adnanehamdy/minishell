@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/07/03 17:06:11 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/02 15:35:51 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,17 @@ int    error_checker(char *prompt_cmd);
 int     exit_code_handler(int mod, int value);
 int     check_second_quote(char *sub_prompt_cmd, char quote);
 int     skip_white_spaces(char *prompt_cmd, int condition);
+int     check_second_quote(char *sub_prompt_cmd, char quote);
+void	check_quotes(char *prompt_cmd);
+int     check_unexpected_token(char *prompt_cmd, int *index);
+int     check_pipe(char *prompt_cmd);
+void	check_separators(char *prompt_cmd);
 
 /* 3 -> allocate memory for struct */
 int         count_cmd_number(char *prompt_cmd);
 t_cmd_line	**initialize_cmd_line(char *prompt_cmd, int cmd_number);
 void        free_cmd_args(char **cmd_path);
-
+void        cmd_line_handler(t_cmd_line **cmd, char **cmd_after, int cmd_number);
 /* sub 3 io_redirection */
 void	open_here_doc(char *cmd, int *fd, int last_io_type, int *index);
 int     *check_last_io(char *cmd, int mod);
@@ -110,6 +115,11 @@ char	*check_is_quote(char *prompt_cmd, int *index);
 int     var_len(char *var);
 char    *get_var_name(char *prompt_cmd, int *index);
 char    *search_in_env(char *var_name);
+char	*check_is_io_alpha(char *prompt_cmd, int *index);
+char	*check_env(char *prompt_cmd, int *index, int is_redirection);
+char	*check_io_valid_content(char *cmd, int *index, char *var_content, int i);
+void	check_redirection(char **cmd, int *index, char last_char, int *vrai);
+int     expand_redirection(char **prompt_cmd, int *index, char last_char);
 /* ****************** exec_functions ****************** */
 
 /*  ---------    built-in commands   ---------   */

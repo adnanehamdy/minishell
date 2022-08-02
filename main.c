@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 06:41:02 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/07/04 03:18:42 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/02 18:50:52 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ int main(int c, char **v, char **envp)
 			ft_fprintf(STANDARD_ERROR, "exit\n");
 			return (exit_code_handler(GETEXIT, 0));
 		}
+		if (!(*prompt_cmd))
+			continue ;
 		cmd_line = parsing_functions(prompt_cmd);
-		// exit(0);
 		if (cmd_line)
 		{
 			exit_code_handler(POSTEXIT, execute_cmd_line(cmd_line));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 08:10:16 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/23 23:35:03 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/02 15:35:38 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,3 +77,10 @@ char *sub_cmd(char *prompt_cmd, int start, int len)
 	return (cmd);
 }
 
+void	check_redirection(char **cmd, int *index, char last_char, int *vrai)
+{
+	if ((*cmd)[*index] == '"' || (*cmd)[*index] == '\'')
+		index = index + check_second_quote(&(*cmd)[*index],
+				(*cmd)[*index]);
+	*vrai = expand_redirection(cmd, index, last_char);
+}

@@ -6,17 +6,17 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 16:27:53 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/07/04 17:43:00 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/02 18:42:08 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
-char	*check_valid_content(char *prompt_cmd, int *index, char *var_content, int i)
+char	*check_valid_content(char *prompt_cmd, int *index, char *var, int i)
 {
-	char *tmp;
+	char	*tmp;
 
-	if (!var_content)
+	if (!var)
 	{
 		tmp = prompt_cmd;
 		prompt_cmd[i] = 0;
@@ -27,19 +27,18 @@ char	*check_valid_content(char *prompt_cmd, int *index, char *var_content, int i
 			return (prompt_cmd);
 	}
 	else
-		return (valid_content(prompt_cmd, index, var_content, i));
+		return (valid_content(prompt_cmd, index, var, i));
 	return (NULL);
 }
 
 char	*check_is_alpha(char *prompt_cmd, int *index)
 {
-	 int	i;
-	char *tmp;
-	//char *tmp01;
-	char *var_content;
+	int		i;
+	char	*tmp;
+	char	*var_content;
 
-	 i = *index - 1;
-	if(ft_isalpha(prompt_cmd[*index]) || prompt_cmd[*index] == '_')
+	i = *index - 1;
+	if (ft_isalpha(prompt_cmd[*index]) || prompt_cmd[*index] == '_')
 	{
 		tmp = get_var_name(prompt_cmd, index);
 		var_content = search_in_env(tmp);
@@ -89,10 +88,11 @@ char	*check_is_quote(char *prompt_cmd, int *index)
 	int		i;
 
 	tmp = prompt_cmd;
+	if (prompt_cmd)
 	prompt_cmd[*index - 1] = 0;
 	i = ft_strlen(&prompt_cmd[*index - 1]);
 	prompt_cmd = ft_strjoin(prompt_cmd, prompt_cmd + *index);
 	free(tmp);
-	*index = i;
+	*index = i - 1;
 	return (prompt_cmd);
 }

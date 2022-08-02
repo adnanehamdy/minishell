@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_proc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:56:16 by nelidris          #+#    #+#             */
-/*   Updated: 2022/07/01 07:10:40 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/07/30 14:01:38 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,21 @@ static void	config_redir(t_cmd_line *cmd_line)
 	}
 }
 
-static void	run_command(t_cmd_line *cmd_line, int pipeline)
+void close_all_pipes(t_cmd_line **cmd_line)
+{
+	int i;
+
+	i = -1;
+	while (cmd_line[++i])
+	{
+		if (cmd_line[i]->in)
+			close(cmd_line[i]->in);
+		if (cmd_line[i]->out != 1)
+			close(cmd_line[i]->out);
+	} 
+}
+
+static void	run_command(t_cmd_line **cmd, t_cmd_line *cmd_line, int pipeline)
 {
 	pid_t	pid;
 
@@ -79,6 +93,7 @@ static void	run_command(t_cmd_line *cmd_line, int pipeline)
 		signal(SIGQUIT, SIG_DFL);
 		signal(SIGINT, SIG_DFL);
 		config_redir(cmd_line);
+		close_all_pipes(cmd);
 		if (!run_builtin(cmd_line))
 			exit(0);
 		if (execve(cmd_line->cmd_path, cmd_line->command,
@@ -103,7 +118,7 @@ int	execute_cmd_line(t_cmd_line **cmd_line)
 	if (cmd_line[index + 1])
 		pipeline = 1;
 	while (cmd_line[index])
-		run_command(cmd_line[index++], pipeline);
+		run_command(cmd_line, cmd_line[index++], pipeline);
 	// int fd = open("fd", O_WRONLY | O_CREAT, 0644);
 	// ft_fprintf(fd, "fd num = %d\n", fd);
 	// close(fd);

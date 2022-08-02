@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 09:25:47 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/23 23:34:57 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/07/29 17:29:08 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	count_char(const char *s, char c, char	**split)
 		while (s[i + count] && s[i + count] != c)
 		{
 			if (s[i + count] == '"' || s[i + count] == '\'')
-				count = count + check_second_quote((char *)&s[count], s[count]);
+				count = count + check_second_quote((char *)&s[i + count], s[i + count]);
 			count++;
 		}
 		split[j] = ft_substr(s, i, count);

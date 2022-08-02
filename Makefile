@@ -6,7 +6,7 @@
 #    By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/26 14:06:32 by ahamdy            #+#    #+#              #
-#    Updated: 2022/07/04 02:54:36 by ahamdy           ###   ########.fr        #
+#    Updated: 2022/08/02 05:47:20 by ahamdy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ PARS_PATH = srcs/parsing
 EXEC_PATH = srcs/executing
 
 
-TMP_READLINE_PATH =  -lreadline -L ~/homebrew/opt/readline/lib -I ~/homebrew/opt/readline/include
+#TMP_READLINE_PATH =  -lreadline -L ~/homebrew/opt/readline/lib -I ~/homebrew/opt/readline/include
 
 READLINE_PATH =  -lreadline -L ~/homebrew/opt/readline/lib -I ~/homebrew/opt/readline/include
 
@@ -31,7 +31,8 @@ PARS_SRCS = $(PARS_PATH)/allocate_memory.c $(PARS_PATH)/error_handling.c \
 			$(PARS_PATH)/io_redirections.c $(PARS_PATH)/io_utils.c \
 			$(PARS_PATH)/parser.c $(PARS_PATH)/parsing_split.c \
 			$(PARS_PATH)/parsing_utils.c $(PARS_PATH)/skip_alloc_utils.c \
-			 $(PARS_PATH)/sub_alloc_mem.c $(PARS_PATH)/expand_types.c
+			 $(PARS_PATH)/sub_alloc_mem.c $(PARS_PATH)/expand_types.c $(PARS_PATH)/allocate_memory_tool.c \
+			 $(PARS_PATH)/error_checker.c
 
 EXEC_SRCS = $(EXEC_PATH)/builtin_cmds/cd_cmd.c $(EXEC_PATH)/builtin_cmds/echo_cmd.c \
 			$(EXEC_PATH)/builtin_cmds/env_cmd.c $(EXEC_PATH)/builtin_cmds/exit_cmd.c \
@@ -77,7 +78,7 @@ $(NAME) :  $(PARS_SRCS) $(EXEC_SRCS) $(MAIN_SRCS) $(FT_FPRINTF) $(LIBFT) $(GNL) 
 	@echo $(BLUE)"--------------------------- $(NAME) ---------------------------"$(ENDCOLOR)
 	@echo $(YELLOW)"---> Compiling src files..."$(ENDCOLOR)
 	@$(CC) $(CFLAGS) $(READLINE_PATH) $(PARS_SRCS) $(EXEC_SRCS) $(MAIN_SRCS) $(GNL) $(LIBFT) $(FT_FPRINTF) -o minishell 
-	@echo $(GREEN)"---> All files have been compiled successfully!"$(ENDCOLOR)							
+	@echo $(GREEN)"---> All files have been compiled successfully!"$(ENDCOLOR)
 	
 $(FT_FPRINTF): | header
 	@echo $(BLUE)"--------------------------- $(FT_FPRINTF) ---------------------------"$(ENDCOLOR)

@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 08:04:54 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/07/04 18:02:43 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/02 05:25:31 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ int	count_arg_number(char *prompt_cmd)
 	{
 		if (prompt_cmd[index] == '<' || prompt_cmd[index] == '>')
 			skip_non_arg(prompt_cmd, &index);
-		else if ((prompt_cmd[index] < 9 || prompt_cmd[index] > 13) 
+		else if ((prompt_cmd[index] < 9 || prompt_cmd[index] > 13)
 			&& prompt_cmd[index] != ' ' && prompt_cmd[index] != '<'
 			&& prompt_cmd[index] != '>' && prompt_cmd[index] != '|')
 		{
 			sub_count_arg_number(prompt_cmd, &index);
 			number++;
 		}
-		else 
+		else
 			index++;
 	}
 	return (number);
@@ -54,10 +54,10 @@ int	count_each_arg(char *prompt_cmd, int reset)
 		else if ((prompt_cmd[index] < 9 || prompt_cmd[index] > 13)
 			&& prompt_cmd[index] != ' ' && prompt_cmd[index] != '<'
 			&& prompt_cmd[index] != '>' && prompt_cmd[index] != '|')
-			{
-				number = sub_count_each_arg(prompt_cmd, &index, &number);
-				break;
-			}
+		{
+			number = sub_count_each_arg(prompt_cmd, &index, &number);
+			break ;
+		}
 		else
 			index++;
 	}
@@ -109,46 +109,25 @@ char	**allocate_cmd_arguments(char *prompt_cmd)
 		cmd_arg[i] = fill_each_arg(cmd_arg[i], prompt_cmd, 0);
 		i++;
 	}
-	// cmd_arg[i] = (char *)malloc(1);
 	cmd_arg[i] = 0;
 	return (cmd_arg);
 }
 
-void	cmd_line_handler(t_cmd_line **cmd, char **cmd_after_split, int cmd_number)
+void	cmd_line_handler(t_cmd_line **cmd, char **cmd_after, int cmd_number)
 {
 	int	i;
 
 	i = 0;
 	while (i < cmd_number)
 	{
-		expand_handler(&cmd_after_split[i]);
-		cmd[i]->command = allocate_cmd_arguments(cmd_after_split[i]);
+		expand_handler(&cmd_after[i]);
+		cmd[i]->command = allocate_cmd_arguments(cmd_after[i]);
 		if (cmd[i]->command)
-			cmd[i]->cmd_path = allocate_cmd_path(cmd[i], envp_handler(GETENV, NULL), cmd[i]->command[0]);
+		cmd[i]->cmd_path = allocate_cmd_path(cmd[i],
+					envp_handler(GETENV, NULL), cmd[i]->command[0]);
 		count_each_arg(NULL, 1);
 		fill_each_arg(NULL, NULL, 1);
 		i++;
 	}
 	cmd[i] = 0;
-}
-
-t_cmd_line	**initialize_cmd_line(char *prompt_cmd, int cmd_number)
-{
-	t_cmd_line	**cmd;
-	int			i;
-	char		**cmd_after_split;
-
-	count_each_arg(NULL, 1);
-	fill_each_arg(NULL, NULL, 1);
-	cmd_after_split = parsing_split(prompt_cmd, '|');
-	cmd = (t_cmd_line **)malloc(sizeof(t_cmd_line*) * (cmd_number + 1));
-	i = 0;
-	while (i < cmd_number)
-		cmd[i++] = (t_cmd_line *)malloc(sizeof(t_cmd_line));
-	here_doc_handler(cmd_after_split, cmd);
-	i = 0;
-	cmd_line_handler(cmd, cmd_after_split, cmd_number);
-	redirections_handler(cmd_after_split, cmd);
-	free_cmd_args(cmd_after_split);
-	return (cmd);
 }

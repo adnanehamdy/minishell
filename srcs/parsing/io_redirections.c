@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 12:41:11 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/07/05 01:14:23 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/02 04:08:04 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ int	open_infile(char *cmd)
 	if (fd == -1)
 	{
 		if (!access(filename, F_OK))
-			printf("minishell : permission denied : %s\n", filename);
+			ft_fprintf(STANDARD_ERROR, "minishell : permission denied : %s\n", filename);
 		else
-			printf("minishell : no such file or directory : %s\n", filename);
+			ft_fprintf(STANDARD_ERROR, "minishell : no such file or directory : %s\n", filename);
 	}
+	free(filename);
 	return (fd);
 }
 
@@ -42,10 +43,11 @@ int	open_outfile(char *cmd, int mod)
 	if (fd == -1)
 	{
 		if (!access(filename, F_OK))
-			printf("minishell : permission denied : %s\n", filename);
+			ft_fprintf(STANDARD_ERROR, "minishell : permission denied : %s\n", filename);
 		else
-			printf("minishell : no such file or directory : %s\n", filename);
+			ft_fprintf(STANDARD_ERROR, "minishell : no such file or directory : %s\n", filename);
 	}
+	free(filename);
 	return (fd);
 }
 
@@ -131,11 +133,15 @@ void find_io_redirections(char *cmd, int *in, int *out)
 		if (fd[0] == -1)
 		{
 			*in = -1;
+			free(last_in);
+			free(last_out);
 			return ;
 		}
 		else if (fd[1] == -1)
 		{
 			*out = -1;
+			free(last_out);
+			free(last_out);
 			return ;
 		}
 	}
@@ -155,9 +161,8 @@ void redirections_handler(char **cmd_after_split, t_cmd_line **cmd)
 {
 	int	index;
 	int	fd[2];
-	int	*last_in;
+	int	*last_in = NULL;
 	int	*last_out = NULL;
-
 	index = 0;
 	while (cmd_after_split[index])
 	{
@@ -170,14 +175,17 @@ void redirections_handler(char **cmd_after_split, t_cmd_line **cmd)
 		find_io_redirections(cmd_after_split[index], &cmd[index]->in, &cmd[index]->out);
 		if (!last_in[0] && cmd_after_split[index + 1])
 			cmd[index + 1]->in = fd[0];
-		// else if (cmd[index]->in == STANDARD_INPUT)
-		// 	cmd[index]->in = close(fd[0]);
+		else
+			close(fd[0]);
 		if (!last_out[1] &&  cmd[index + 1] && (cmd[index]->out == STANDARD_OUTPUT))
 			cmd[index]->out = fd[1];
 		else if (!close(fd[1]) && (cmd[index]->out == STANDARD_OUTPUT))
+		{
 			cmd[index]->out = 1;
+			close(fd[1]);
+		}
 		index++;
+		free(last_in);
+		free(last_out);
 	}
-	free(last_in);
-	free(last_out);
 }
