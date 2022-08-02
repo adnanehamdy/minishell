@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 12:25:34 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/02 18:40:02 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/02 18:53:18 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ void	expand_handler(char **prompt_cmd)
 				return ;
 		}
 		last_char = (*prompt_cmd)[index];
-		printf("last %c\n", last_char);
 		index++;
 	}
 }
