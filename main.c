@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 06:41:02 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/02 18:50:52 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/03 11:12:26 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ctrl_c_handler(int signal)
 
 	(void)signal;
 	rl_on_new_line();
-	//rl_replace_line("\n", 0);
+	rl_replace_line("\n", 0);
 	rl_redisplay();
 }
 
@@ -40,7 +40,7 @@ int main(int c, char **v, char **envp)
 			ft_fprintf(STANDARD_ERROR, "exit\n");
 			return (exit_code_handler(GETEXIT, 0));
 		}
-		if (!(*prompt_cmd))
+		if (!(*prompt_cmd)) 
 			continue ;
 		cmd_line = parsing_functions(prompt_cmd);
 		if (cmd_line)

@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:25:59 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/23 23:33:57 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/04 14:20:21 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 int	unset_friendly(char *var)
 {
-	char	*end_of_name;
 	size_t	i;
 
 	if (!ft_isalpha(var[0]) && var[0] != '_')
 		return (0);
-	end_of_name = ft_strchr(var, '=');
-	if (end_of_name)
+	if (ft_strchr(var, '='))
 		return (0);
 	i = 0;
 	while (var[i])
@@ -34,13 +32,11 @@ int	unset_friendly(char *var)
 
 static int	valid_varname(char *varname)
 {
-	char	*end_of_var;
 	size_t	i;
 
 	if (!ft_isalpha(varname[0]) && varname[0] != '_')
 		return (0);
-	end_of_var = ft_strchr(varname, '=');
-	if (end_of_var)
+	if (ft_strchr(varname, '='))
 		return (0);
 	i = 0;
 	while (varname[i])
@@ -81,9 +77,7 @@ static int var_is_in_envp(char	*envp_var, char **args)
 {
 	size_t	i;
 	size_t	j;
-	char	*end_of_name;
 
-	end_of_name = ft_strchr(envp_var, '=');
 	i = 1;
 	while (args[i])
 	{
@@ -94,7 +88,7 @@ static int var_is_in_envp(char	*envp_var, char **args)
 				break;
 			j++;
 		}
-		if (!args[i][j])
+		if (!args[i][j] && envp_var[j] == '=')
 			return (0);
 		i++;
 	}

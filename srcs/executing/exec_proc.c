@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_proc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:56:16 by nelidris          #+#    #+#             */
-/*   Updated: 2022/07/30 14:01:38 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/02 19:05:49 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,9 +119,6 @@ int	execute_cmd_line(t_cmd_line **cmd_line)
 		pipeline = 1;
 	while (cmd_line[index])
 		run_command(cmd_line, cmd_line[index++], pipeline);
-	// int fd = open("fd", O_WRONLY | O_CREAT, 0644);
-	// ft_fprintf(fd, "fd num = %d\n", fd);
-	// close(fd);
 	while (wait(&exit_code) != -1)
 		;
 	free_cmd_line(cmd_line);
