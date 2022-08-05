@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:56:16 by nelidris          #+#    #+#             */
-/*   Updated: 2022/08/05 13:39:30 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/05 15:00:09 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	exec_error_handler(t_cmd_line *cmd_line)
 	}		
 	else
 	{
-		ft_putstr_fd("minishell: command not found:", STANDARD_ERROR);
+		ft_putstr_fd("minishell: command not found: ", STANDARD_ERROR);
 		ft_putendl_fd(cmd_line->command[0], STANDARD_ERROR);
 	}
 	exit(127);
@@ -83,7 +83,7 @@ static void	run_command(t_cmd_line **cmd, t_cmd_line *cmd_line, int pipeline)
 			close(cmd_line->out);
 		return ;
 	}
-	if (!run_builtin(cmd_line) && !pipeline)
+	if (!pipeline && !run_builtin(cmd_line))
 		return ;
 	pid = fork();
 	if (pid < 0)
