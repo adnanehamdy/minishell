@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 10:25:24 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/02 15:50:46 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/05 18:11:40 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,14 @@ void	read_from_stdin(char *buff, int *fd, char *file_name, int mod)
 		}
 	}
 }
+
 int	there_is_quote(char *cmd)
 {
 	int	i;
 
 	i = 0;
-	while (cmd[i] && (cmd[i] < 9 || cmd[i] > 13) &&
-		cmd[i] != ' ' && cmd[i] != '<' && cmd[i] != '>')
+	while (cmd[i] && (cmd[i] < 9 || cmd[i] > 13)
+		&& cmd[i] != ' ' && cmd[i] != '<' && cmd[i] != '>')
 	{
 		if (cmd[i] == '\'' || cmd[i] == '"')
 			return (0);
@@ -45,7 +46,7 @@ int	there_is_quote(char *cmd)
 	return (1);
 }
 
-int		limiter_len(char *cmd)
+int	limiter_len(char *cmd)
 {
 	int		index;
 	char	quote;
@@ -53,8 +54,8 @@ int		limiter_len(char *cmd)
 
 	quote_number = 0;
 	index = 0;
-	while (cmd[index] && (cmd[index] < 9 || cmd[index] > 13) &&
-		cmd[index] != ' ' && cmd[index] != '<' && cmd[index] != '>')
+	while (cmd[index] && (cmd[index] < 9 || cmd[index] > 13)
+		&& cmd[index] != ' ' && cmd[index] != '<' && cmd[index] != '>')
 	{
 		if (cmd[index] == '"' || cmd[index] == '\'')
 		{
@@ -99,10 +100,10 @@ void	store_limiter(char *cmd, char *limiter_name, int len)
 
 char	*get_limiter(char *cmd, int *mod)
 {
-	int	index;
-	int	len;
-	char *limiter_name;
-	int	i;
+	int		index;
+	int		len;
+	char	*limiter_name;
+	int		i;
 
 	i = 0;
 	index = 0;
@@ -130,11 +131,11 @@ int	ft_limiter(char *cmd)
 	buff = get_next_line(0);
 	if (buff && (((ft_strncmp(buff, cmd, ft_strlen(file_name)))
 				&& !(ft_strlen(file_name) == (ft_strlen(buff) - 1)))))
-		{
-			if (mod)
-				expand_handler(&buff);
-			write(fd[1], buff, ft_strlen(buff));
-		}
+	{
+		if (mod)
+			expand_handler(&buff);
+		write(fd[1], buff, ft_strlen(buff));
+	}
 	read_from_stdin(buff, fd, file_name, mod);
 	if (buff)
 		free(buff);

@@ -6,21 +6,11 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:56:16 by nelidris          #+#    #+#             */
-/*   Updated: 2022/08/05 15:00:09 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/05 18:09:41 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-size_t	structlen(t_cmd_line **cmd_line)
-{
-	size_t	len;
-
-	len = 0;
-	while (cmd_line[len])
-		len++;
-	return (len);
-}
 
 static void	exec_error_handler(t_cmd_line *cmd_line)
 {
@@ -43,8 +33,10 @@ static void	exec_error_handler(t_cmd_line *cmd_line)
 	exit(127);
 }
 
-static void	config_redir(t_cmd_line *cmd_line)
+static void	config_redir(t_cmd_line **cmds, t_cmd_line *cmd_line)
 {
+	int	i;
+
 	if (cmd_line->in != 0)
 	{
 		dup2(cmd_line->in, STANDARD_INPUT);
@@ -55,20 +47,26 @@ static void	config_redir(t_cmd_line *cmd_line)
 		dup2(cmd_line->out, STANDARD_OUTPUT);
 		close(cmd_line->out);
 	}
+	i = -1;
+	while (cmds[++i])
+	{
+		if (cmds[i]->in)
+			close(cmds[i]->in);
+		if (cmds[i]->out != 1)
+			close(cmds[i]->out);
+	}
 }
 
-void close_all_pipes(t_cmd_line **cmd_line)
+static void	run_child_command(t_cmd_line **cmd, t_cmd_line *cmd_line)
 {
-	int i;
-
-	i = -1;
-	while (cmd_line[++i])
-	{
-		if (cmd_line[i]->in)
-			close(cmd_line[i]->in);
-		if (cmd_line[i]->out != 1)
-			close(cmd_line[i]->out);
-	} 
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
+	config_redir(cmd, cmd_line);
+	if (!run_builtin(cmd_line))
+		exit(0);
+	if (execve(cmd_line->cmd_path, cmd_line->command,
+			envp_handler(GETENV, NULL)) < 0)
+		exec_error_handler(cmd_line);
 }
 
 static void	run_command(t_cmd_line **cmd, t_cmd_line *cmd_line, int pipeline)
@@ -89,17 +87,7 @@ static void	run_command(t_cmd_line **cmd, t_cmd_line *cmd_line, int pipeline)
 	if (pid < 0)
 		return ;
 	if (!pid)
-	{
-		signal(SIGQUIT, SIG_DFL);
-		signal(SIGINT, SIG_DFL);
-		config_redir(cmd_line);
-		close_all_pipes(cmd);
-		if (!run_builtin(cmd_line))
-			exit(0);
-		if (execve(cmd_line->cmd_path, cmd_line->command,
-				envp_handler(GETENV, NULL)) < 0)
-		exec_error_handler(cmd_line);
-	}
+		run_child_command(cmd, cmd_line);
 	if (cmd_line->in != 0)
 		close(cmd_line->in);
 	if (cmd_line->out != 1)

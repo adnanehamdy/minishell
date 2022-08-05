@@ -6,13 +6,13 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:12:05 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/24 17:26:45 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/05 17:10:57 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static char *get_home_env(void)
+static char	*get_home_env(void)
 {
 	size_t	i;
 	char	**env;
@@ -31,14 +31,14 @@ static char *get_home_env(void)
 int	cd_command(t_cmd_line *cmd)
 {
 	char	*home;
-	
 
 	home = get_home_env();
 	if (cmd->command[1])
 	{
 		if (chdir(cmd->command[1]) < 0)
 			ft_fprintf(STANDARD_ERROR,
-				"minishell: cd: %s: No such file or directory\n", cmd->command[1]);
+				"minishell: cd: %s: No such file or directory\n",
+				cmd->command[1]);
 	}
 	else
 	{

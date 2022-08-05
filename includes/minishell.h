@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/02 15:35:51 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/05 18:03:15 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@
 
 typedef struct s_cmd_line
 {
-    char    *cmd_path;
-    char    **command;
-    int     in;
-    int     out;
-    int     is_executable;
-}    t_cmd_line;
+	char	*cmd_path;
+	char	**command;
+	int		in;
+	int		out;
+	int		is_executable;
+}	t_cmd_line;
 
 /* ****************** parcer_functions ****************** */
 
@@ -61,110 +61,126 @@ typedef struct s_cmd_line
 t_cmd_line	**parsing_functions(char *prompt_cmd);
 
 /* 2 -> error_handling_functions */
-int    error_checker(char *prompt_cmd);
-int     exit_code_handler(int mod, int value);
-int     check_second_quote(char *sub_prompt_cmd, char quote);
-int     skip_white_spaces(char *prompt_cmd, int condition);
-int     check_second_quote(char *sub_prompt_cmd, char quote);
-void	check_quotes(char *prompt_cmd);
-int     check_unexpected_token(char *prompt_cmd, int *index);
-int     check_pipe(char *prompt_cmd);
-void	check_separators(char *prompt_cmd);
+int			error_checker(char *prompt_cmd);
+int			exit_code_handler(int mod, int value);
+int			check_second_quote(char *sub_prompt_cmd, char quote);
+int			skip_white_spaces(char *prompt_cmd, int condition);
+int			check_second_quote(char *sub_prompt_cmd, char quote);
+void		check_quotes(char *prompt_cmd);
+int			check_unexpected_token(char *prompt_cmd, int *index);
+int			check_pipe(char *prompt_cmd);
+void		check_separators(char *prompt_cmd);
 
 /* 3 -> allocate memory for struct */
-int         count_cmd_number(char *prompt_cmd);
+int			count_cmd_number(char *prompt_cmd);
 t_cmd_line	**initialize_cmd_line(char *prompt_cmd, int cmd_number);
-void        free_cmd_args(char **cmd_path);
-void        cmd_line_handler(t_cmd_line **cmd, char **cmd_after, int cmd_number);
+void		free_cmd_args(char **cmd_path);
+void		cmd_line_handler(t_cmd_line **cmd,
+				char **cmd_after, int cmd_number);
 /* sub 3 io_redirection */
-void	open_here_doc(char *cmd, int *fd, int last_io_type, int *index);
-int     *check_last_io(char *cmd, int mod);
-char    *open_file(char *file);
-void    redirections_handler(char **cmd_after_split, t_cmd_line **cmd);
+void		open_here_doc(char *cmd, int *fd, int last_io_type, int *index);
+int			*check_last_io(char *cmd, int mod);
+char		*open_file(char *file);
+void		redirections_handler(char **cmd_after_split, t_cmd_line **cmd);
 
 /* ********* parsing_utils.c ********* */
-void	sub_count_arg_number(char *prompt_cmd, int *index);
-char	*get_next_line(int fd);
-char	*reset_var(int *index);
-int     skip_non_arg(char *prompt_cmd, int *index);
-int	    sub_count_each_arg(char *prompt_cmd, int *index, int *number);
-int	    skip_io_redirection(char *sub_prompt_cmd);
-char	*sub_fill_each_arg(char *cmd_arg, char *prompt_cmd, int *index);
-void	here_doc_handler(char **cmd_after_split, t_cmd_line **cmd);
-char	*allocate_cmd_path(t_cmd_line *command, char	**envp, char *cmd);
-int	    env_var_cmp(const char *s1, const char *s2);
+void		sub_count_arg_number(char *prompt_cmd, int *index);
+char		*get_next_line(int fd);
+char		*reset_var(int *index);
+int			skip_non_arg(char *prompt_cmd, int *index);
+int			sub_count_each_arg(char *prompt_cmd, int *index, int *number);
+int			skip_io_redirection(char *sub_prompt_cmd);
+char		*sub_fill_each_arg(char *cmd_arg, char *prompt_cmd, int *index);
+void		here_doc_handler(char **cmd_after_split, t_cmd_line **cmd);
+char		*allocate_cmd_path(t_cmd_line *command, char	**envp, char *cmd);
+int			env_var_cmp(const char *s1, const char *s2);
 
 /* split with modification */
-char	**parsing_split(char const *s, char c);
+char		**parsing_split(char const *s, char c);
 
 /* 0-> tmp */
-int     count_arg_number(char *prompt_cmd);
-int     count_io_redirection(char *prompt_cmd);
-int     count_each_arg(char *prompt_cmd,int reset);
-char    **allocate_cmd_arguments(char *prompt_cmd);
-char    *fill_each_arg(char *cmd_arg, char *prompt_cmd, int reset);
-char	*valid_content(char *prompt_cmd, int *index, char *var_content, int i);
+int			count_arg_number(char *prompt_cmd);
+int			count_io_redirection(char *prompt_cmd);
+int			count_each_arg(char *prompt_cmd, int reset);
+char		**allocate_cmd_arguments(char *prompt_cmd);
+char		*fill_each_arg(char *cmd_arg, char *prompt_cmd, int reset);
+char		*valid_content(char *prompt_cmd, int *index,
+				char *var_content, int i);
 
 /*expand*/
-void	expand_handler(char **prompt_cmd);
-char	*check_valid_content(char *prompt_cmd, int *index, char *var_content, int i);
-char	*check_is_alpha(char *prompt_cmd, int *index);
-char	*check_exit_code(char *prompt_cmd, int *index);
-char	*check_is_digit(char *prompt_cmd, int *index);
-char	*check_is_quote(char *prompt_cmd, int *index);
-int     var_len(char *var);
-char    *get_var_name(char *prompt_cmd, int *index);
-char    *search_in_env(char *var_name);
-char	*check_is_io_alpha(char *prompt_cmd, int *index);
-char	*check_env(char *prompt_cmd, int *index, int is_redirection);
-char	*check_io_valid_content(char *cmd, int *index, char *var_content, int i);
-void	check_redirection(char **cmd, int *index, char last_char, int *vrai);
-int     expand_redirection(char **prompt_cmd, int *index, char last_char);
+void		expand_handler(char **prompt_cmd);
+char		*check_valid_content(char *prompt_cmd, int *index,
+				char *var_content, int i);
+char		*check_is_alpha(char *prompt_cmd, int *index);
+char		*check_exit_code(char *prompt_cmd, int *index);
+char		*check_is_digit(char *prompt_cmd, int *index);
+char		*check_is_quote(char *prompt_cmd, int *index);
+int			var_len(char *var);
+char		*get_var_name(char *prompt_cmd, int *index);
+char		*search_in_env(char *var_name);
+char		*check_is_io_alpha(char *prompt_cmd, int *index);
+char		*check_env(char *prompt_cmd, int *index, int is_redirection);
+char		*check_io_valid_content(char *cmd, int *index,
+				char *var_content, int i);
+void		check_redirection(char **cmd, int *index,
+				char last_char, int *vrai);
+int			expand_redirection(char **prompt_cmd, int *index, char last_char);
+
 /* ****************** exec_functions ****************** */
 
 /*  ---------    built-in commands   ---------   */
 
 /* runs built-in commands */
-int run_builtin(t_cmd_line *command);
+int			run_builtin(t_cmd_line *command);
 
 /* changes directory */
-int cd_command(t_cmd_line *cmd);
+int			cd_command(t_cmd_line *cmd);
 
 /* exports variable to the environment */
-int export_command(t_cmd_line *cmd);
+int			export_command(t_cmd_line *cmd);
+int			export_error(char *var, char *eovn, int *err_occ, char *err_m);
+int			is_var_valid(char *var, int *err_occ);
+int			var_exist(char *var, int *mod, char **envp);
+void		check_export_delimiter(size_t *j, size_t *i, size_t *k, char *var);
+void		append_env_var(char *var, char **envp);
+void		overwrite_env_var(char *var, char **envp);
+void		set_env_var(char *var, int *err_occ, char **envp);
+void		add_env_var(char *var, char **envp);
+int			ft_strcmp(const char *s1, const char *s2);
+void		display_exported_vars(t_cmd_line *cmd, char **envp);
 
 /* unsets variable from the environment */
-int	unset_command(t_cmd_line *cmd);
+int			unset_command(t_cmd_line *cmd);
 
 /* echoes arguments to stdout */
-int echo_command(t_cmd_line *cmd);
+int			echo_command(t_cmd_line *cmd);
 
 /* prints all environment variables*/
-int env_command(t_cmd_line *cmd);
+int			env_command(t_cmd_line *cmd);
 
 /* exits program */
-int exit_command(t_cmd_line *cmd);
+int			exit_command(t_cmd_line *cmd);
 
 /* prints working directory */
-int pwd_command(t_cmd_line *cmd);
+int			pwd_command(t_cmd_line *cmd);
 
 /*  ---------    tools   ---------   */
 
 /* returns len of 2d array */
-size_t	ptrlen(char	**pstr);
+size_t		ptrlen(char	**pstr);
 
 /* executes command line */
-int	execute_cmd_line(t_cmd_line **cmd_lines);
+int			execute_cmd_line(t_cmd_line **cmd_lines);
 
 /* frees cmd_line */
-void	free_cmd_line(t_cmd_line **cmd_line);
+void		free_cmd_line(t_cmd_line **cmd_line);
 
 /*  ---------    env   ---------   */
 
 /* returns environment pointer or it replaces it with new_envp */
-char	**envp_handler(int mod, char **new_envp);
+char		**envp_handler(int mod, char **new_envp);
 
 /* duplicates envp into heap */
-char	**env_dup(char	**envp);
+char		**env_dup(char	**envp);
 
 #endif

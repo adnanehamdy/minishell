@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 17:32:35 by nelidris          #+#    #+#             */
-/*   Updated: 2022/07/31 03:37:44 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/05 18:11:50 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char	**setup_path(char **envp)
 	while (envp[i])
 	{
 		if (!ft_strncmp(envp[i], "PATH", 4))
-			break;
+			break ;
 		i++;
 	}
 	if (!envp[i])

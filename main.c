@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 06:41:02 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/05 12:56:01 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/05 18:12:26 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	ctrl_c_handler(int signal)
 {
-
 	(void)signal;
 	rl_on_new_line();
 	write(1, "\n", 1);
@@ -22,7 +21,7 @@ void	ctrl_c_handler(int signal)
 	rl_redisplay();
 }
 
-int main(int c, char **v, char **envp)
+int	main(int c, char **v, char **envp)
 {
 	t_cmd_line		**cmd_line;
 	char			*prompt_cmd;
@@ -46,7 +45,7 @@ int main(int c, char **v, char **envp)
 		cmd_line = parsing_functions(prompt_cmd);
 		if (cmd_line)
 			exit_code_handler(POSTEXIT, execute_cmd_line(cmd_line));
-		add_history(prompt_cmd); 
+		add_history(prompt_cmd);
 		free(prompt_cmd);
 	}
 	return (0);
