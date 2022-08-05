@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 07:21:20 by nelidris          #+#    #+#             */
-/*   Updated: 2022/08/04 15:42:19 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/05 12:18:03 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,18 @@ static int is_var_valid(char *var, int *err_occ)
 	size_t	i;
 	char *eovn;
 
-	i = 0;
 	eovn = ft_strchr(var, '=');
-	if (!ft_isalpha(var[0]))
+	if (!ft_isalpha(var[0]) && var[0] != '_')
 		return (export_error(var, eovn, err_occ, "not an identifier:"));
 	if (!eovn)
 		return (0);
+	i = 1;
 	while (&var[i] != eovn)
 	{
 		if (var[i] == '+' && var[i + 1] == '=')
 			break ;
-		if (!ft_isalnum(var[i]))
-			return (export_error(var, eovn, err_occ, "not valid in this context:"));
+		if (!ft_isalnum(var[i]) && var[i] != '_')
+			return (export_error(var, eovn, err_occ, "not a valid identifier:"));
 		i++;
 	}
 	return (1);
