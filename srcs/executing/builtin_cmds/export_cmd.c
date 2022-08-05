@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 07:21:20 by nelidris          #+#    #+#             */
-/*   Updated: 2022/08/05 12:18:03 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/05 12:53:16 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ static void	append_env_var(char *var, char **envp)
 	size_t	i;
 	size_t	j;
 	size_t	k;
-	
 	
 	i = 0;
 	while (envp[i])

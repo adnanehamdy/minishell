@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 06:41:02 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/03 11:12:26 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/05 12:56:01 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	ctrl_c_handler(int signal)
 
 	(void)signal;
 	rl_on_new_line();
-	rl_replace_line("\n", 0);
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
 	rl_redisplay();
 }
 
@@ -40,14 +41,12 @@ int main(int c, char **v, char **envp)
 			ft_fprintf(STANDARD_ERROR, "exit\n");
 			return (exit_code_handler(GETEXIT, 0));
 		}
-		if (!(*prompt_cmd)) 
+		if (!(*prompt_cmd))
 			continue ;
 		cmd_line = parsing_functions(prompt_cmd);
 		if (cmd_line)
-		{
 			exit_code_handler(POSTEXIT, execute_cmd_line(cmd_line));
-			add_history(prompt_cmd);
-		}
+		add_history(prompt_cmd); 
 		free(prompt_cmd);
 	}
 	return (0);
