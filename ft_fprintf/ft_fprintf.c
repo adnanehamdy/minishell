@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:31:22 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/23 00:02:43 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/06 15:05:10 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_fprintf(int fd, const char *str, ...)
 	while (str[i])
 	{
 		if (str[i] == '%')
-			suwr += ft_write_sign(fd , str[++i], arg);
+			suwr += ft_write_sign(fd, str[++i], arg);
 		else
 			suwr += write(fd, &str[i], 1);
 		i++;
