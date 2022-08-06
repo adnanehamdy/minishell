@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 12:25:34 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/02 18:53:18 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/03 11:38:31 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,6 @@ void	expand_handler(char **prompt_cmd)
 	index = 0;
 	while ((*prompt_cmd)[index])
 	{
-		// if ((*prompt_cmd)[index] == '"' || (*prompt_cmd)[index] == '\'')
-		// 	index = index + check_second_quote(&(*prompt_cmd)[index],
-		// 			(*prompt_cmd)[index]);
 		vrai = expand_redirection(prompt_cmd, &index, last_char);
 		if (((*prompt_cmd)[index]) == '$'
 			&& ((*prompt_cmd)[index + 1]) && !vrai)

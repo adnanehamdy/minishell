@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 17:32:35 by nelidris          #+#    #+#             */
-/*   Updated: 2022/08/05 18:11:50 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/03 11:50:11 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-// static char	*fd_fail_msg(char *file)
-// {
-// 	char	*msg;
-
-// 	if (!access(file, F_OK))
-// 		msg = ft_strjoin("pipex : permission denied :",
-// 				file);
-// 	else
-// 	{
-// 		msg = ft_strjoin("pipex : no such file or directory :",
-// 				file);
-// 	}
-// 	return (msg);
-// }
 
 static void	exit_cmd_msg(char **path)
 {
@@ -64,27 +49,12 @@ static char	**setup_path(char **envp)
 	return (ft_split(&envp[i][5], ':'));
 }
 
-char	*allocate_cmd_path(t_cmd_line *command, char	**envp, char *cmd)
+char	*add_path(t_cmd_line *command, char **path, char *cmd)
 {
-	char	**path;
-	char	*tmp;
+ 	char	*tmp;
 	char	*tmp2;
 	int		i;
 
-	if (cmd && ft_strchr(cmd, '/'))
-	{
-		if (!(access(cmd, F_OK)))
-		{
-			if (access(cmd, X_OK) < 0)
-				command->is_executable = PERMISSION_DENIED;
-		}
-		else
-			command->is_executable = NO_SUCH_FILE;
-		return (ft_strdup(cmd));
-	}
-	path = setup_path(envp);
-	if (!path)
-		return (0);
 	i = 0;
 	while (path[i])
 	{
@@ -105,4 +75,25 @@ char	*allocate_cmd_path(t_cmd_line *command, char	**envp, char *cmd)
 	}
 	exit_cmd_msg(path);
 	return (0);
+}
+
+char	*allocate_cmd_path(t_cmd_line *command, char	**envp, char *cmd)
+{
+	char	**path;
+
+	if (cmd && ft_strchr(cmd, '/'))
+	{
+		if (!(access(cmd, F_OK)))
+		{
+			if (access(cmd, X_OK) < 0)
+				command->is_executable = PERMISSION_DENIED;
+		}
+		else
+			command->is_executable = NO_SUCH_FILE;
+		return (ft_strdup(cmd));
+	}
+	path = setup_path(envp);
+	if (!path)
+		return (0);
+	return (add_path(command, path, cmd));
 }

@@ -6,7 +6,7 @@
 #    By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/26 14:06:32 by ahamdy            #+#    #+#              #
-#    Updated: 2022/08/05 17:53:13 by nelidris         ###   ########.fr        #
+#    Updated: 2022/08/06 17:45:59 by nelidris         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,6 @@ CFLAGS = -Wall -Wextra -Werror -I./includes #-fsanitize=address -g
 PARS_PATH = srcs/parsing
 
 EXEC_PATH = srcs/executing
-
-
-#TMP_READLINE_PATH =  -lreadline -L ~/homebrew/opt/readline/lib -I ~/homebrew/opt/readline/include
 
 READLINE_PATH =  -lreadline -L ~/homebrew/opt/readline/lib -I ~/homebrew/opt/readline/include
 
@@ -32,7 +29,7 @@ PARS_SRCS = $(PARS_PATH)/allocate_memory.c $(PARS_PATH)/error_handling.c \
 			$(PARS_PATH)/parser.c $(PARS_PATH)/parsing_split.c \
 			$(PARS_PATH)/parsing_utils.c $(PARS_PATH)/skip_alloc_utils.c \
 			 $(PARS_PATH)/sub_alloc_mem.c $(PARS_PATH)/expand_types.c $(PARS_PATH)/allocate_memory_tool.c \
-			 $(PARS_PATH)/error_checker.c
+			 $(PARS_PATH)/error_checker.c $(PARS_PATH)/here_doc_util.c
 
 EXEC_SRCS = $(EXEC_PATH)/builtin_cmds/cd_cmd.c $(EXEC_PATH)/builtin_cmds/echo_cmd.c \
 			$(EXEC_PATH)/builtin_cmds/env_cmd.c $(EXEC_PATH)/builtin_cmds/exit_cmd.c \

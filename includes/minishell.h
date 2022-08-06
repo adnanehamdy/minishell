@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/05 18:03:15 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/06 17:49:30 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,15 @@ int			env_var_cmp(const char *s1, const char *s2);
 
 /* split with modification */
 char		**parsing_split(char const *s, char c);
+
+/*     here_doc    */
+int			there_is_quote(char *cmd);
+int			limiter_len(char *cmd);
+void		store_limiter(char *cmd, char *limiter_name, int len);
+char		*get_limiter(char *cmd, int *mod);
+int			get_last_heredoc(char *cmd);
+void		find_here_docs(char *cmd, int *fd, int last_io_type);
+void		free_here_doc(char *buff, char *filename);
 
 /* 0-> tmp */
 int			count_arg_number(char *prompt_cmd);

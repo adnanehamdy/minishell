@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 08:10:16 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/02 15:35:38 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/03 12:51:24 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,11 @@ void	check_redirection(char **cmd, int *index, char last_char, int *vrai)
 		index = index + check_second_quote(&(*cmd)[*index],
 				(*cmd)[*index]);
 	*vrai = expand_redirection(cmd, index, last_char);
+}
+
+void	free_here_doc(char *buff, char *filename)
+{
+	if (buff)
+		free(buff);
+	free(filename);
 }
