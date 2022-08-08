@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 10:25:24 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/03 12:52:48 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/06 19:50:07 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,17 @@ void	read_from_stdin(char *buff, int *fd, char *file_name, int mod)
 {
 	while (buff)
 	{
-		if (!(ft_strncmp(buff, file_name, ft_strlen(file_name)))
-			&& (ft_strlen(file_name) == (ft_strlen(buff) - 1)))
+		if (!(ft_strncmp(buff, file_name, ft_strlen(file_name))))
 			break ;
 		write(1, "heredoc>", 8);
 		buff = get_next_line(0);
-		if (buff && ((ft_strncmp(buff, file_name, ft_strlen(file_name)))
-				&& !(ft_strlen(file_name) == (ft_strlen(buff) - 1))))
+		if (buff && ((ft_strncmp(buff, file_name, ft_strlen(file_name)))))
 		{
 			if (mod)
 				expand_handler(&buff);
 			write(fd[1], buff, ft_strlen(buff));
 		}
+		free(buff);
 	}
 }
 

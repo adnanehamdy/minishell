@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io_redirections.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 12:41:11 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/02 04:08:04 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/08 14:20:59 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	check_infile(char *cmd, int *in, int *index,  int last_in)
 
 	fd = 0;
 
-	*index +=skip_white_spaces(&cmd[*index], 0);
+	*index += skip_white_spaces(&cmd[*index], 0);
 	fd = open_infile(&cmd[*index]);
 	is_last_fd(&fd, in, last_in, INFILE);
 	return (fd);
@@ -86,13 +86,13 @@ int check_outfile(char *cmd, int *out, int *index, int last_out)
 	if (cmd[*index + 1] == '>')
 	{
 		*index = *index + 1;
-		*index +=skip_white_spaces(&cmd[*index], 0);
+		*index += skip_white_spaces(&cmd[*index], 0);
 		fd = open_outfile(&cmd[*index], 2);
-		is_last_fd(&fd, out, last_out, APPEND);
+		is_last_fd(&fd, out, last_out, OUTFILE_APPEND);
 	}
 	else
 	{
-		*index +=skip_white_spaces(&cmd[*index], 0);
+		*index += skip_white_spaces(&cmd[*index], 0);
 		fd = open_outfile(&cmd[*index], 1);
 		is_last_fd(&fd, out, last_out, OUTFILE_WRITE);
 	}
@@ -146,12 +146,14 @@ void find_io_redirections(char *cmd, int *in, int *out)
 		}
 	}
 	if ((last_out[1] == OUTFILE_APPEND || last_out[1] == OUTFILE_WRITE) && last_out[0])
+	{
 		*out = fd[1];
-	else if (!fd[1])
+	}
+	else if (fd[1] != 1)
 		close(fd[1]);
 	if (last_in[1] == INFILE)
 		*in = fd[0];
-	else if (!fd[0])
+	else if (fd[0])
 		close(fd[0]);
 	free(last_in);
 	free(last_out);

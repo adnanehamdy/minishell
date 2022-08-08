@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:59:10 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/07/05 01:50:18 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/07 12:25:58 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	*sub_check_last_in(int *last_io, int mod, int deux)
 		if (!mod)
 			last_io[1] = HERE_DOC;
 		else
-			last_io[1] = APPEND;
+			last_io[1] = OUTFILE_APPEND;
 	}
 	else
 	{

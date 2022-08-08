@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 06:41:02 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/06 15:03:44 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/06 17:57:17 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	minishell_routine(void)
 	t_cmd_line		**cmd_line;
 	char			*prompt_cmd;
 
-	prompt_cmd = readline("\033[0;35mminishell> \033[0;37m");
+	prompt_cmd = readline("minishell> ");
 	if (!prompt_cmd)
 	{
 		ft_fprintf(STANDARD_ERROR, "exit\n");
