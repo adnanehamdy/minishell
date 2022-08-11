@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/06 17:49:30 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/09 16:09:13 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ void		store_limiter(char *cmd, char *limiter_name, int len);
 char		*get_limiter(char *cmd, int *mod);
 int			get_last_heredoc(char *cmd);
 void		find_here_docs(char *cmd, int *fd, int last_io_type);
-void		free_here_doc(char *buff, char *filename);
 
 /* 0-> tmp */
 int			count_arg_number(char *prompt_cmd);
@@ -183,6 +182,10 @@ int			execute_cmd_line(t_cmd_line **cmd_lines);
 
 /* frees cmd_line */
 void		free_cmd_line(t_cmd_line **cmd_line);
+
+/* signals behavior */
+void	ctrl_c_handler(int signal);
+void	ctrl_c_here_doc_handler(int signal);
 
 /*  ---------    env   ---------   */
 

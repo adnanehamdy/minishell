@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 06:41:02 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/06 17:57:17 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/09 12:27:44 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	ctrl_c_handler(int signal)
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_redisplay();
+	exit_code_handler(POSTEXIT, 130);
 }
 
 static void	minishell_routine(void)

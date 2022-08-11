@@ -6,7 +6,7 @@
 #    By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/26 14:06:32 by ahamdy            #+#    #+#              #
-#    Updated: 2022/08/08 14:18:27 by nelidris         ###   ########.fr        #
+#    Updated: 2022/08/09 18:39:30 by nelidris         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,50 +59,50 @@ ENDCOLOR = "\033[0;37m"
 all : $(NAME) | footer
 
 header:
-	@echo
-	@echo $(PURPLE)"███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     "$(ENDCOLOR)
-	@echo $(PURPLE)"████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     "$(ENDCOLOR)
-	@echo $(PURPLE)"██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║     "$(ENDCOLOR)
-	@echo $(PURPLE)"██║╚██╔╝██║██║██║╚██╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║     "$(ENDCOLOR)
-	@echo $(PURPLE)"██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗"$(ENDCOLOR)
-	@echo $(PURPLE)"╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝"$(ENDCOLOR)
-	@echo
+	@printf "\n"
+	@printf $(PURPLE)"███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     \n"$(ENDCOLOR)
+	@printf $(PURPLE)"████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     \n"$(ENDCOLOR)
+	@printf $(PURPLE)"██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║     \n"$(ENDCOLOR)
+	@printf $(PURPLE)"██║╚██╔╝██║██║██║╚██╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║     \n"$(ENDCOLOR)
+	@printf $(PURPLE)"██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗\n"$(ENDCOLOR)
+	@printf $(PURPLE)"╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝\n"$(ENDCOLOR)
+	@printf "\n"
 
 footer:
-	@echo $(BLUE)"---> type "$(PURPLE)"./minishell"$(BLUE)" to start the program."$(ENDCOLOR)
+	@printf $(BLUE)"---> type "$(PURPLE)"./minishell"$(BLUE)" to start the program.\n"$(ENDCOLOR)
 
 $(NAME) :  $(PARS_SRCS) $(EXEC_SRCS) $(MAIN_SRCS) $(FT_FPRINTF) $(LIBFT) $(GNL) | header
-	@echo $(BLUE)"--------------------------- $(NAME) ---------------------------"$(ENDCOLOR)
-	@echo $(YELLOW)"---> Compiling src files..."$(ENDCOLOR)
+	@printf $(BLUE)"--------------------------- $(NAME) ---------------------------\n"$(ENDCOLOR)
+	@printf $(YELLOW)"---> Compiling src files...\n"$(ENDCOLOR)
 	@$(CC) $(CFLAGS) $(READLINE_PATH) $(PARS_SRCS) $(EXEC_SRCS) $(MAIN_SRCS) $(GNL) $(LIBFT) $(FT_FPRINTF) -o minishell 
-	@echo $(GREEN)"---> All files have been compiled successfully!"$(ENDCOLOR)
+	@printf $(GREEN)"---> All files have been compiled successfully!\n"$(ENDCOLOR)
 	
 $(FT_FPRINTF): | header
-	@echo $(BLUE)"--------------------------- $(FT_FPRINTF) ---------------------------"$(ENDCOLOR)
-	@echo $(YELLOW)"---> Compiling ft_fprintf files..."$(ENDCOLOR)
+	@printf $(BLUE)"--------------------------- $(FT_FPRINTF) ---------------------------\n"$(ENDCOLOR)
+	@printf $(YELLOW)"---> Compiling ft_fprintf files...\n"$(ENDCOLOR)
 	@make -C ft_fprintf > /dev/null
-	@echo $(GREEN)"---> Ft_fprintf has been compiled successfully!"$(ENDCOLOR)
+	@printf $(GREEN)"---> Ft_fprintf has been compiled successfully!\n"$(ENDCOLOR)
 
 $(LIBFT): | header
-	@echo $(BLUE)"--------------------------- $(LIBFT) ---------------------------"$(ENDCOLOR)
-	@echo $(YELLOW)"---> Compiling Libft files..."$(ENDCOLOR)
+	@printf $(BLUE)"--------------------------- $(LIBFT) ---------------------------\n"$(ENDCOLOR)
+	@printf $(YELLOW)"---> Compiling Libft files...\n"$(ENDCOLOR)
 	@make -C libft > /dev/null
-	@echo $(GREEN)"---> Libft has been compiled successfully!"$(ENDCOLOR)
+	@printf $(GREEN)"---> Libft has been compiled successfully!\n"$(ENDCOLOR)
 
 clean : | header
-	@echo $(BLUE)"--------------------------- clean ---------------------------"$(ENDCOLOR)
-	@echo $(YELLOW)"---> Cleaning libft..."$(ENDCOLOR)
+	@printf $(BLUE)"--------------------------- clean ---------------------------\n"$(ENDCOLOR)
+	@printf $(YELLOW)"---> Cleaning libft...\n"$(ENDCOLOR)
 	@make fclean -C libft/ > /dev/null
-	@echo $(GREEN)"---> Libft has been cleaned successfully!"$(ENDCOLOR)
-	@echo $(YELLOW)"---> Cleaning ft_fprintf..."$(ENDCOLOR)
+	@printf $(GREEN)"---> Libft has been cleaned successfully!\n"$(ENDCOLOR)
+	@printf $(YELLOW)"---> Cleaning ft_fprintf...\n"$(ENDCOLOR)
 	@make fclean -C ft_fprintf/ > /dev/null
-	@echo $(GREEN)"---> Ft_fprintf has been cleaned successfully!"$(ENDCOLOR)
+	@printf $(GREEN)"---> Ft_fprintf has been cleaned successfully!\n"$(ENDCOLOR)
 	
 fclean :  clean | header
-	@echo $(BLUE)"--------------------------- fclean ---------------------------"$(ENDCOLOR)
-	@echo $(YELLOW)"---> Cleaning minishell..."$(ENDCOLOR)
+	@printf $(BLUE)"--------------------------- fclean ---------------------------\n"$(ENDCOLOR)
+	@printf $(YELLOW)"---> Cleaning minishell...\n"$(ENDCOLOR)
 	@rm -f $(NAME) > /dev/null
-	@echo $(GREEN)"---> minishell has been cleaned successfully!"$(ENDCOLOR)
+	@echo $(GREEN)"---> minishell has been cleaned successfully!\n"$(ENDCOLOR)
 
 re : fclean all
 

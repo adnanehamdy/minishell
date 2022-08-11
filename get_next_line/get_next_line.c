@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 15:43:12 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/13 17:47:23 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/09 18:26:57 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ char	*ft_read(int fd, char **save, char **read_buf)
 	while (eof && !ft_strchr(*save, '\n'))
 	{
 		eof = read(fd, *read_buf, BUFFER_SIZE);
+		if (eof < 0)
+			eof = 0;
 		(*read_buf)[eof] = 0;
 		tmp = *save;
 		*save = ft_strjoin(*save, *read_buf);
