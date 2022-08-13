@@ -17,7 +17,7 @@ void	ctrl_c_handler(int signal)
 	(void)signal;
 	rl_on_new_line();
 	write(1, "\n", 1);
-	rl_replace_line("", 0);
+	//rl_replace_line("", 0);
 	rl_redisplay();
 	exit_code_handler(POSTEXIT, 130);
 }

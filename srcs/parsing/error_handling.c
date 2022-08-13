@@ -90,5 +90,7 @@ int	error_checker(char *prompt_cmd)
 		invalid_special_character(prompt_cmd);
 	if (!exit_code_handler(GETEXIT, 0))
 		check_separators(prompt_cmd);
+	if (!exit_code_handler(GETEXIT, 0))
+		check_max_here_doc(prompt_cmd);
 	return (exit_status);
 }

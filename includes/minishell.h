@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/09 16:09:13 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/13 19:13:10 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void		check_quotes(char *prompt_cmd);
 int			check_unexpected_token(char *prompt_cmd, int *index);
 int			check_pipe(char *prompt_cmd);
 void		check_separators(char *prompt_cmd);
-
 /* 3 -> allocate memory for struct */
 int			count_cmd_number(char *prompt_cmd);
 t_cmd_line	**initialize_cmd_line(char *prompt_cmd, int cmd_number);
@@ -82,7 +81,15 @@ void		open_here_doc(char *cmd, int *fd, int last_io_type, int *index);
 int			*check_last_io(char *cmd, int mod);
 char		*open_file(char *file);
 void		redirections_handler(char **cmd_after_split, t_cmd_line **cmd);
-
+int			file_len(char *filename);
+void		last_output(t_cmd_line **cmd, int *index, int *fd, int *last);
+int			i_redirection(char *cmd, int *index, int *fd, int *in);
+void		check_last_fd(char *cmd, int *in, int *out, int *fd);
+void		find_io_redirections(char *cmd, int *in, int *out);
+int			check_infile(char *cmd, int *in, int *index);
+void		is_last_fd(int *fd, int *out, int last_out, int fd_type);
+int			open_infile(char *cmd);
+int			check_outfile(char *cmd, int *out, int *index);
 /* ********* parsing_utils.c ********* */
 void		sub_count_arg_number(char *prompt_cmd, int *index);
 char		*get_next_line(int fd);
@@ -105,7 +112,7 @@ void		store_limiter(char *cmd, char *limiter_name, int len);
 char		*get_limiter(char *cmd, int *mod);
 int			get_last_heredoc(char *cmd);
 void		find_here_docs(char *cmd, int *fd, int last_io_type);
-
+void		check_max_here_doc(char *prompt_cmd);
 /* 0-> tmp */
 int			count_arg_number(char *prompt_cmd);
 int			count_io_redirection(char *prompt_cmd);

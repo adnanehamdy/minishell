@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:59:10 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/07 12:25:58 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/13 19:04:20 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,18 @@ int	*check_last_io(char *cmd, int mod)
 		}
 	}
 	return (last_io);
+}
+
+int	check_infile(char *cmd, int *in, int *index)
+{
+	int	fd;
+	int	*last_in;
+
+	last_in = check_last_io(cmd, 0);
+	fd = 0;
+	*index += skip_white_spaces(&cmd[*index], 0);
+	fd = open_infile(&cmd[*index]);
+	is_last_fd(&fd, in, last_in[1], INFILE);
+	free(last_in);
+	return (fd);
 }
