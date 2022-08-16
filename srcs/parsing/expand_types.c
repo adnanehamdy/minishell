@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 16:27:53 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/16 09:27:21 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/16 18:03:11 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ char	*check_exit_code(char *prompt_cmd, int *index, int is_first)
 	prompt_cmd = ft_strjoin(prompt_cmd, tmp + *index + 1);
 	free(tmp);
 	free(tmp01);
+	free(var_content);
 	*index = i;
 	return (prompt_cmd);
 }

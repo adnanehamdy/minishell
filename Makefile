@@ -3,22 +3,22 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+         #
+#    By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/26 14:06:32 by ahamdy            #+#    #+#              #
-#    Updated: 2022/08/16 10:24:29 by nelidris         ###   ########.fr        #
+#    Updated: 2022/08/16 13:21:52 by ahamdy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -I./includes #-g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -I./includes -g #-fsanitize=address
 
 PARS_PATH = srcs/parsing
 
 EXEC_PATH = srcs/executing
 
-READLINE_PATH =  -lreadline -L ~/homebrew/opt/readline/lib -I ~/homebrew/opt/readline/include
+READLINE_PATH =  -lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
 
 GNL = get_next_line/get_next_line.c
 

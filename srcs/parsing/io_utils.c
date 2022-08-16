@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:59:10 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/14 09:13:57 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/16 13:43:12 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,33 @@
 int	file_len(char *filename)
 {
 	int	index;
+	int	number;
+	int	tmp;
 
+	tmp = 0;
+	number = 0;
 	index = 0;
 	while (filename[index] && (filename[index] < 9 || filename[index] > 13)
 		&& filename[index] != ' '
 		&& filename[index] != '<' && filename[index] != '>')
 	{
-		if (filename[index] == '"' || filename[index] == '\'')
-			index += check_second_quote(&filename[index], filename[index]);
+		if (filename[index] == '"')
+		{
+			tmp = index;
+			index = index + check_second_quote(&filename[index], '"');
+			number = number + (index - tmp - 1);
+		}
+		else if (filename[index] == '\'')
+		{
+			tmp = index;
+			index = index + check_second_quote(&filename[index], '\'');
+			number = number + (index - tmp - 1);
+		}
+		else
+			number++;
 		index++;
 	}
-	return (index);
+	return (number);
 }
 
 char	*open_file(char *file)
@@ -35,14 +51,11 @@ char	*open_file(char *file)
 	char	*file_name;
 
 	index = 0;
-	len = file_len(file);
+	len = 0;
+	sub_count_each_arg(file, &index, &len);
 	file_name = (char *)malloc(sizeof(char) * (len + 1));
-	while (index < len && file[index])
-	{
-		file_name[index] = file[index];
-		index++;
-	}
-	file_name[index] = 0;
+	index = 0;
+	sub_fill_each_arg(file_name, file, &index);
 	return (file_name);
 }
 

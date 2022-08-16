@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 08:10:16 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/16 10:02:22 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/16 16:09:19 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,17 @@ char	*sub_cmd(char *prompt_cmd, int start, int len)
 // 	return (expand_redirection(cmd, index, last_char, is_first));
 // }
 
-void	skip_quote(char *cmd, int *index)
+int	skip_quote(char *cmd, int *index)
 {
 	if (cmd[*index] == '"')
+	{
 		*index = *index + check_second_quote(&cmd[*index], '"');
+		return (0);
+	}
 	else if (cmd[*index] == '\'')
+	{
 		*index = *index + check_second_quote(&cmd[*index], '\'');
+		return (0);
+	}
+	return (1);
 }

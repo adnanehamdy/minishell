@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/16 10:00:13 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/16 16:26:29 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int			check_infile(char *cmd, int *in, int *index);
 void		is_last_fd(int *fd, int *out, int last_out, int fd_type);
 int			open_infile(char *cmd);
 int			check_outfile(char *cmd, int *out, int *index);
-void		skip_quote(char *cmd, int *index);
+int			skip_quote(char *cmd, int *index);
 /* ********* parsing_utils.c ********* */
 void		sub_count_arg_number(char *prompt_cmd, int *index);
 char		*get_next_line(int fd);

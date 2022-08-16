@@ -6,37 +6,21 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 12:41:11 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/16 10:04:27 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/16 17:56:54 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-// char *ft_filter(char *str)
-// {
-// 	int i;
-// 	char *ret;
-
-// 	i = 1;
-// 	int j = 0;
-// 	ret = malloc(sizeof(char) * (ft_strlen(str)));
-// 	while((unsigned long)j < ft_strlen(str) - 2)
-// 	{
-// 		ret[j] = str[i];
-// 		i++;
-// 		j++;
-// 	}
-// 	ret[j] = 0;
-// 	printf("%s <<<<<<\n", ret);
-// 	// exit(11);
-// 	return (ret);
-// }
-
 int	open_infile(char *cmd)
 {
 	char	*filename;
 	int		fd;
+	int		true;
 
+	true = 0;
+	if (cmd[0] == '$')
+		true = 1;
 	filename = open_file(cmd);
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
@@ -44,7 +28,7 @@ int	open_infile(char *cmd)
 		if (!access(filename, F_OK))
 			ft_fprintf(STANDARD_ERROR,
 				"minishell : permission denied : %s\n", filename);
-		else if (filename[0] == '$')
+		else if (true == 1)
 			ft_fprintf(STANDARD_ERROR,
 				"minishell : ambiguous redirect : %s\n", filename);
 		else
@@ -59,7 +43,11 @@ int	open_outfile(char *cmd, int mod)
 {
 	char	*filename;
 	int		fd;
+	int		true;
 
+	true = 0;
+	if (cmd[0] == '$')
+		true = 1;
 	filename = open_file(cmd);
 	if (mod == 1)
 		fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0644);
@@ -70,7 +58,7 @@ int	open_outfile(char *cmd, int mod)
 		if (!access(filename, F_OK))
 			ft_fprintf(STANDARD_ERROR,
 				"minishell : permission denied : %s\n", filename);
-		else if (filename[0] == '$')
+		else if (true == 1)
 			ft_fprintf(STANDARD_ERROR,
 				"minishell : ambiguous redirect : %s\n", filename);
 		else
@@ -133,8 +121,8 @@ void	redirections_handler(char **cmd_after_split, t_cmd_line **cmd)
 		last_in = check_last_io(cmd_after_split[index + 1], 0);
 		last_out = check_last_io(cmd_after_split[index], 1);
 		pipe(fd);
-		if (cmd[index + 1])
-			cmd[index + 1]->in = STANDARD_INPUT;
+/* 		if (cmd[index + 1] && cmd[index + 1])
+			cmd[index + 1]->in = STANDARD_INPUT; */
 		cmd[index]->out = STANDARD_OUTPUT;
 		find_io_redirections(cmd_after_split[index],
 			&cmd[index]->in, &cmd[index]->out);
