@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 06:41:02 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/16 08:47:55 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/16 10:29:51 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ static void	minishell_routine(void)
 	{
 		here_doc_signal(1, 0);
 		exit_code_handler(POSTEXIT, 1);
+		add_history(prompt_cmd);
+		free_cmd_line(cmd_line);
+		free(prompt_cmd);
 		return ;
 	}
 	if (cmd_line)

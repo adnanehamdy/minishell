@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:23:52 by nelidris          #+#    #+#             */
-/*   Updated: 2022/08/15 13:16:51 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/16 10:42:27 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	echo_option_n(t_cmd_line *cmd, int *new_line)
 	int	j;
 
 	i = 1;
-	while (cmd->command[i] && cmd->command[i][0] == '-')
+	while (cmd->command[i] && cmd->command[i][0] == '-'
+			&& cmd->command[i][1] == 'n')
 	{
 		j = 1;
 		while (cmd->command[i][j] && cmd->command[i][j] == 'n')

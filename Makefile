@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+         #
+#    By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/26 14:06:32 by ahamdy            #+#    #+#              #
-#    Updated: 2022/08/15 19:18:35 by ahamdy           ###   ########.fr        #
+#    Updated: 2022/08/16 10:24:29 by nelidris         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ PARS_PATH = srcs/parsing
 
 EXEC_PATH = srcs/executing
 
-READLINE_PATH =  -lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
+READLINE_PATH =  -lreadline -L ~/homebrew/opt/readline/lib -I ~/homebrew/opt/readline/include
 
 GNL = get_next_line/get_next_line.c
 

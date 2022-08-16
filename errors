@@ -27,7 +27,6 @@ ls | echo $?
 cat + sigquit
 
 ls || ls status:done
-
 exit -
 
 
