@@ -6,24 +6,25 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 18:57:06 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/13 20:11:05 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/16 09:54:15 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include<minishell.h>
 
-void	check_redirection_fail(int *in, int *out, int *fd)
+int	check_redirection_fail(int *in, int *out, int *fd)
 {
 	if (fd[0] == -1)
 	{
 		*in = -1;
-		return ;
+		return (1);
 	}
 	else if (fd[1] == -1)
 	{
 		*out = -1;
-		return ;
+		return (1);
 	}
+	return (0);
 }
 
 void	last_output(t_cmd_line **cmd, int *index, int *fd, int *last)
@@ -41,7 +42,7 @@ int	i_redirection(char *cmd, int *index, int *fd, int *in)
 {
 	if (cmd[*index] == '"')
 		*index = *index + check_second_quote(&cmd[*index], '"');
-	else if (cmd[*index] == '\'')
+	if (cmd[*index] == '\'')
 		*index = *index + check_second_quote(&cmd[*index], '\'');
 	if (cmd[*index] == '<' && cmd[*index] != cmd[*index + 1])
 	{
@@ -92,8 +93,8 @@ void	find_io_redirections(char *cmd, int *in, int *out)
 		else if (cmd[index] == '<' && cmd[index + 1] == cmd[index])
 			index++;
 		index++;
-		check_redirection_fail(in, out, fd);
+		if (check_redirection_fail(in, out, fd))
+			return ;
 	}
 	check_last_fd(cmd, in, out, fd);
 }
-

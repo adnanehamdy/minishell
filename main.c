@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 06:41:02 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/09 12:27:44 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/16 08:47:55 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	ctrl_c_handler(int signal)
 	(void)signal;
 	rl_on_new_line();
 	write(1, "\n", 1);
-	//rl_replace_line("", 0);
+	rl_replace_line("", 0);
 	rl_redisplay();
-	exit_code_handler(POSTEXIT, 130);
+	exit_code_handler(POSTEXIT, 1);
 }
 
 static void	minishell_routine(void)
@@ -36,6 +36,12 @@ static void	minishell_routine(void)
 	if (!(*prompt_cmd))
 		return ;
 	cmd_line = parsing_functions(prompt_cmd);
+	if (here_doc_signal(0, 0))
+	{
+		here_doc_signal(1, 0);
+		exit_code_handler(POSTEXIT, 1);
+		return ;
+	}
 	if (cmd_line)
 		exit_code_handler(POSTEXIT, execute_cmd_line(cmd_line));
 	add_history(prompt_cmd);

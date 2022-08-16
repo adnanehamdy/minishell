@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 09:25:47 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/07/29 17:29:08 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/14 09:28:03 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,17 @@ static int	ft_free(char **split, size_t j)
 	return (1);
 }
 
+void	sub_count_char(const char *s, size_t *count, size_t *i, char c)
+{
+	while (s[*i + *count] && s[*i + *count] != c)
+	{
+		if (s[*i + *count] == '"' || s[*i + *count] == '\'')
+			*count = *count + check_second_quote((char *)&s[*i + *count],
+					s[*i + *count]);
+		(*count)++;
+	}
+}
+
 static void	count_char(const char *s, char c, char	**split)
 {
 	size_t	count;
@@ -63,12 +74,7 @@ static void	count_char(const char *s, char c, char	**split)
 			i++;
 		if (!s[i])
 			break ;
-		while (s[i + count] && s[i + count] != c)
-		{
-			if (s[i + count] == '"' || s[i + count] == '\'')
-				count = count + check_second_quote((char *)&s[i + count], s[i + count]);
-			count++;
-		}
+		sub_count_char(s, &count, &i, c);
 		split[j] = ft_substr(s, i, count);
 		if (ft_free(split, j))
 			return ;

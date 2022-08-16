@@ -1,0 +1,42 @@
+echo | cat -e
+
+echo -n -
+
+
+unset PATH then do 
+{
+/bin/ls | ppo
+    echo $?
+}
+
+""
+
+echo | | echo    status:done
+
+leaks {echo $?}
+
+ls | echo $?
+
+{
+    unset 1
+    unset : 1: invalid parameter name
+    minishell> unset _1
+    minishell> unset _
+}
+
+cat + sigquit
+
+ls || ls status:done
+
+exit -
+
+
+
+
+
+parsing issues
+
+< in"file"
+
+<< here cat | cat
+>$?

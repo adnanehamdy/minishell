@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_proc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:56:16 by nelidris          #+#    #+#             */
-/*   Updated: 2022/08/05 18:09:41 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/15 18:49:06 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,21 @@ static void	config_redir(t_cmd_line **cmds, t_cmd_line *cmd_line)
 	}
 }
 
-static void	run_child_command(t_cmd_line **cmd, t_cmd_line *cmd_line)
+static void	run_child_command(t_cmd_line **cmd,
+	t_cmd_line *cmd_line, int pipeline)
 {
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGINT, SIG_DFL);
 	config_redir(cmd, cmd_line);
-	if (!run_builtin(cmd_line))
+	if (!run_builtin(cmd_line, pipeline))
 		exit(0);
 	if (execve(cmd_line->cmd_path, cmd_line->command,
 			envp_handler(GETENV, NULL)) < 0)
 		exec_error_handler(cmd_line);
 }
 
-static void	run_command(t_cmd_line **cmd, t_cmd_line *cmd_line, int pipeline)
+static pid_t	run_command(t_cmd_line **cmd,
+					t_cmd_line *cmd_line, int pipeline)
 {
 	pid_t	pid;
 
@@ -79,36 +81,49 @@ static void	run_command(t_cmd_line **cmd, t_cmd_line *cmd_line, int pipeline)
 			close(cmd_line->in);
 		if (cmd_line->out > 1)
 			close(cmd_line->out);
-		return ;
+		return (-1);
 	}
-	if (!pipeline && !run_builtin(cmd_line))
-		return ;
+	if (!pipeline && !run_builtin(cmd_line, pipeline))
+		return (-1);
 	pid = fork();
 	if (pid < 0)
-		return ;
+		return (pid);
 	if (!pid)
-		run_child_command(cmd, cmd_line);
+		run_child_command(cmd, cmd_line, pipeline);
+	signal(SIGINT, SIG_IGN);
 	if (cmd_line->in != 0)
 		close(cmd_line->in);
 	if (cmd_line->out != 1)
 		close(cmd_line->out);
+	return (pid);
 }
 
 int	execute_cmd_line(t_cmd_line **cmd_line)
 {
 	size_t	index;
-	int		pipeline;
+	int		more;
 	int		exit_code;
+	int		ret_exit;
+	pid_t	pid;
 
 	index = 0;
 	exit_code = 0;
-	pipeline = 0;
+	more = 0;
 	if (cmd_line[index + 1])
-		pipeline = 1;
+		more = 1;
 	while (cmd_line[index])
-		run_command(cmd_line, cmd_line[index++], pipeline);
-	while (wait(&exit_code) != -1)
-		;
+		pid = run_command(cmd_line, cmd_line[index++], more);
+	ret_exit = 0;
+	more = 0;
+	while (more != -1)
+	{
+		more = wait(&exit_code);
+		if (more == pid)
+			ret_exit = exit_code;
+	}
 	free_cmd_line(cmd_line);
-	return (WEXITSTATUS(exit_code));
+	signal(SIGINT, ctrl_c_handler);
+	if (WIFSIGNALED(ret_exit) == 1)
+		return (130);
+	return (WEXITSTATUS(ret_exit));
 }

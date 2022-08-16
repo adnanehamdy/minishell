@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 05:20:41 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/02 05:22:13 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/16 08:46:11 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,16 @@ t_cmd_line	**initialize_cmd_line(char *prompt_cmd, int cmd_number)
 	return (cmd);
 }
 
+void	max_here_doc(int here_doc_number, char **cmd_after_split)
+{
+	if (here_doc_number > 16)
+	{
+		ft_fprintf(2, "maximum here_document count exceeded\n");
+		free_cmd_args(cmd_after_split);
+		exit(2);
+	}
+}
+
 void	check_max_here_doc(char *prompt_cmd)
 {
 	char	**cmd_after_split;
@@ -44,8 +54,9 @@ void	check_max_here_doc(char *prompt_cmd)
 	i = 0;
 	here_doc_number = 0;
 	cmd_after_split = parsing_split(prompt_cmd, '|');
-	while(cmd_after_split[i])
+	while (cmd_after_split[i])
 	{
+		j = 0;
 		while (cmd_after_split[i][j])
 		{
 			if (cmd_after_split[i][j] == '<' && cmd_after_split[i][j] == '<')
@@ -54,10 +65,19 @@ void	check_max_here_doc(char *prompt_cmd)
 		}
 		i++;
 	}
-	if (here_doc_number >= 16)
-	{
-		ft_fprintf(2, "maximum here_document count exceeded\n");
-		exit_code_handler(POSTEXIT, 2);
-	}
+	max_here_doc(here_doc_number, cmd_after_split);
 	free_cmd_args(cmd_after_split);
+}
+
+int	skip_here_doc(char **prompt_cmd, int *index, char last_char)
+{
+	if ((*prompt_cmd)[*index] == '<'
+		&& (*prompt_cmd)[*index] == (*prompt_cmd)[*index + 1]
+			&& last_char != '"' && last_char != '\'')
+	{
+		*index += 2;
+		*index = *index + skip_io_redirection(*prompt_cmd + *index);
+		return (1);
+	}
+	return (0);
 }

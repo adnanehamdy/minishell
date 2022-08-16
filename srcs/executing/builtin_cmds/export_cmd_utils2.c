@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_cmd_utils2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 17:42:49 by nelidris          #+#    #+#             */
-/*   Updated: 2022/08/05 17:59:53 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/15 17:37:18 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ void	overwrite_env_var(char *var, char **envp)
 	while (envp[i])
 	{
 		j = 0;
-		while (var[j] != '+' && var[j] != '=')
+		while (var[j] && var[j] != '+' && var[j] != '=')
 		{
 			if (var[j] != envp[i][j])
 				break ;
 			j++;
 		}
 		if (var[j] == '+')
-			j++;
-		if (var[j] == envp[i][j])
+			j--;
+		if (j > 0 && var[j - 1] == envp[i][j - 1])
 		{
 			free(envp[i]);
 			envp[i] = ft_strdup(var);
@@ -37,6 +37,25 @@ void	overwrite_env_var(char *var, char **envp)
 		}
 		i++;
 	}
+}
+
+static char	*add_env_with_plus(char *var)
+{
+	char	*new_envp;
+	size_t	len;
+	size_t	j;
+
+	new_envp = (char *)malloc(sizeof(char) * (ft_strlen(var)));
+	len = 0;
+	j = 0;
+	while (var[len])
+	{
+		if (len > 0 && var[len] == '+' && var[len + 1] == '='
+			&& ft_strchr(var, '=') == &var[len + 1])
+			len++;
+		new_envp[j++] = var[len++];
+	}
+	return (new_envp);
 }
 
 void	add_env_var(char *var, char **envp)
@@ -47,13 +66,16 @@ void	add_env_var(char *var, char **envp)
 
 	len = ptrlen(envp);
 	new_envp = (char **)malloc(sizeof(char *) * (len + 2));
-	i = 0;
-	while (i < len)
-	{
+	i = -1;
+	while (++i < len)
 		new_envp[i] = envp[i];
+	if (ft_strchr(var, '=') && *(ft_strchr(var, '=') - 1) == '+')
+	{
+		new_envp[i] = add_env_with_plus(var);
 		i++;
 	}
-	new_envp[i++] = ft_strdup(var);
+	else
+		new_envp[i++] = ft_strdup(var);
 	new_envp[i] = 0;
 	free(envp);
 	envp_handler(POSTENV, new_envp);
@@ -68,6 +90,8 @@ void	set_env_var(char *var, int *err_occ, char **envp)
 		return ;
 	if (var_exist(var, &mod, envp))
 	{
+		if (!ft_strchr(var, '='))
+			return ;
 		if (mod == APPEND)
 			append_env_var(var, envp);
 		else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:23:52 by nelidris          #+#    #+#             */
-/*   Updated: 2022/08/05 17:58:25 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/15 13:16:51 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	echo_option_n(t_cmd_line *cmd, int *new_line)
 	int	i;
 	int	j;
 
-	i = 0;
+	i = 1;
 	while (cmd->command[i] && cmd->command[i][0] == '-')
 	{
 		j = 1;
@@ -25,7 +25,7 @@ void	echo_option_n(t_cmd_line *cmd, int *new_line)
 			j++;
 		if (cmd->command[i][j])
 			break ;
-		new_line++;
+		(*new_line)++;
 		i++;
 	}
 }

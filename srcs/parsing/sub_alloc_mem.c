@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sub_alloc_mem.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 14:49:44 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/06/23 23:35:09 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/15 10:53:36 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	sub_count_arg_number(char *prompt_cmd, int *index)
 {
 	while (prompt_cmd[*index]
 		&& ((prompt_cmd[*index] < 9 || prompt_cmd[*index] > 13)
-		&& prompt_cmd[*index] != ' ') && prompt_cmd[*index] != '<'
+			&& prompt_cmd[*index] != ' ') && prompt_cmd[*index] != '<'
 		&& prompt_cmd[*index] != '>' && prompt_cmd[*index] != '|')
 	{
 		if (prompt_cmd[*index] == '"')
@@ -26,9 +26,10 @@ void	sub_count_arg_number(char *prompt_cmd, int *index)
 		(*index)++;
 	}
 }
+
 int	sub_count_each_arg(char *prompt_cmd, int *index, int *number)
 {
-	int tmp;
+	int	tmp;
 
 	tmp = 0;
 	while (prompt_cmd[*index]
@@ -57,7 +58,7 @@ int	sub_count_each_arg(char *prompt_cmd, int *index, int *number)
 
 void	second_sub_fill_arg(char *cmd_arg, char *cmd, int *index, int *i)
 {
-	char quote;
+	char	quote;
 
 	quote = cmd[*index];
 	(*index)++;

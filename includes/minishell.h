@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/13 19:13:10 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/16 10:00:13 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int			check_infile(char *cmd, int *in, int *index);
 void		is_last_fd(int *fd, int *out, int last_out, int fd_type);
 int			open_infile(char *cmd);
 int			check_outfile(char *cmd, int *out, int *index);
+void		skip_quote(char *cmd, int *index);
 /* ********* parsing_utils.c ********* */
 void		sub_count_arg_number(char *prompt_cmd, int *index);
 char		*get_next_line(int fd);
@@ -113,6 +114,8 @@ char		*get_limiter(char *cmd, int *mod);
 int			get_last_heredoc(char *cmd);
 void		find_here_docs(char *cmd, int *fd, int last_io_type);
 void		check_max_here_doc(char *prompt_cmd);
+void		quote_skip(char *cmd, int *index);
+int			skip_here_doc(char **prompt_cmd, int *index, char last_char);
 /* 0-> tmp */
 int			count_arg_number(char *prompt_cmd);
 int			count_io_redirection(char *prompt_cmd);
@@ -123,30 +126,32 @@ char		*valid_content(char *prompt_cmd, int *index,
 				char *var_content, int i);
 
 /*expand*/
-void		expand_handler(char **prompt_cmd);
+void		expand_handler(char **prompt_cmd, int i);
 char		*check_valid_content(char *prompt_cmd, int *index,
 				char *var_content, int i);
 char		*check_is_alpha(char *prompt_cmd, int *index);
-char		*check_exit_code(char *prompt_cmd, int *index);
+char		*check_exit_code(char *prompt_cmd, int *index, int is_first);
 char		*check_is_digit(char *prompt_cmd, int *index);
 char		*check_is_quote(char *prompt_cmd, int *index);
 int			var_len(char *var);
 char		*get_var_name(char *prompt_cmd, int *index);
 char		*search_in_env(char *var_name);
 char		*check_is_io_alpha(char *prompt_cmd, int *index);
-char		*check_env(char *prompt_cmd, int *index, int is_redirection);
+char		*check_env(char *prompt_cmd, int *index,
+				int is_redirection, int is_first);
 char		*check_io_valid_content(char *cmd, int *index,
 				char *var_content, int i);
-void		check_redirection(char **cmd, int *index,
-				char last_char, int *vrai);
-int			expand_redirection(char **prompt_cmd, int *index, char last_char);
+int			check_redirection(char **cmd, int *index,
+				char last_char, int is_first);
+int			expand_redirection(char **prompt_cmd, int *index,
+				char last_char, int is_first);
 
 /* ****************** exec_functions ****************** */
 
 /*  ---------    built-in commands   ---------   */
 
 /* runs built-in commands */
-int			run_builtin(t_cmd_line *command);
+int			run_builtin(t_cmd_line *command, int pipeline);
 
 /* changes directory */
 int			cd_command(t_cmd_line *cmd);
@@ -174,7 +179,7 @@ int			echo_command(t_cmd_line *cmd);
 int			env_command(t_cmd_line *cmd);
 
 /* exits program */
-int			exit_command(t_cmd_line *cmd);
+int			exit_command(t_cmd_line *cmd, int pipeline);
 
 /* prints working directory */
 int			pwd_command(t_cmd_line *cmd);
@@ -191,8 +196,9 @@ int			execute_cmd_line(t_cmd_line **cmd_lines);
 void		free_cmd_line(t_cmd_line **cmd_line);
 
 /* signals behavior */
-void	ctrl_c_handler(int signal);
-void	ctrl_c_here_doc_handler(int signal);
+void		ctrl_c_handler(int signal);
+void		ctrl_c_here_doc_handler(int signal);
+int			here_doc_signal(int mod, int value);
 
 /*  ---------    env   ---------   */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:36:01 by nelidris          #+#    #+#             */
-/*   Updated: 2022/08/05 18:01:50 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/15 18:51:54 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,30 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-int	run_builtin(t_cmd_line *command)
+int	run_builtin(t_cmd_line *command, int pipeline)
 {
+	int	exit_built;
+
 	if (!command->command[0])
 		return (0);
 	if (!ft_strcmp(command->command[0], "cd"))
-		return (cd_command(command));
+		exit_built = cd_command(command);
 	else if (!ft_strcmp(command->command[0], "echo"))
-		return (echo_command(command));
+		exit_built = echo_command(command);
 	else if (!ft_strcmp(command->command[0], "env"))
-		return (env_command(command));
+		exit_built = env_command(command);
 	else if (!ft_strcmp(command->command[0], "exit"))
-		return (exit_command(command));
+		exit_built = exit_command(command, pipeline);
 	else if (!ft_strcmp(command->command[0], "export"))
-		return (export_command(command));
+		exit_built = export_command(command);
 	else if (!ft_strcmp(command->command[0], "pwd"))
-		return (pwd_command(command));
+		exit_built = pwd_command(command);
 	else if (!ft_strcmp(command->command[0], "unset"))
-		return (unset_command(command));
-	return (1);
+		exit_built = unset_command(command);
+	else
+		return (1);
+	if (pipeline)
+		exit(exit_built);
+	exit_code_handler(POSTEXIT, exit_built);
+	return (0);
 }

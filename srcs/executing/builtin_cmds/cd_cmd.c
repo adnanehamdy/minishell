@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_cmd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:12:05 by nelidris          #+#    #+#             */
-/*   Updated: 2022/08/05 17:10:57 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/15 18:44:09 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,20 @@ int	cd_command(t_cmd_line *cmd)
 	if (cmd->command[1])
 	{
 		if (chdir(cmd->command[1]) < 0)
+		{
 			ft_fprintf(STANDARD_ERROR,
 				"minishell: cd: %s: No such file or directory\n",
 				cmd->command[1]);
+			return (1);
+		}
 	}
 	else
 	{
 		if (chdir(&home[5]) < 0)
+		{
 			ft_fprintf(STANDARD_ERROR, "minishell: cd: HOME not set\n");
+			return (1);
+		}
 	}
 	return (0);
 }

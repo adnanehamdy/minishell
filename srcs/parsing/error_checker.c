@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 05:44:35 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/02 05:47:59 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/16 08:15:15 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	check_quotes(char *prompt_cmd)
 	int	i;
 
 	i = 0;
-	while (i != -1 && prompt_cmd[i])
+	while (prompt_cmd[i])
 	{
 		if (prompt_cmd[i] == '"')
 		{
@@ -88,7 +88,7 @@ int	check_pipe(char *prompt_cmd)
 	while (prompt_cmd[index] && ((prompt_cmd[index] >= 9
 				&& prompt_cmd[index] <= 13) || (prompt_cmd[index] == ' ')))
 			index++;
-	if (prompt_cmd[index] == '|')
+	if (prompt_cmd[index] == '|' || prompt_cmd[0] == '|')
 	{
 		ft_fprintf(STANDARD_ERROR,
 			"minishell: syntax error near unexpected token '%c'\n",
@@ -104,6 +104,9 @@ void	check_separators(char *prompt_cmd)
 	int	index;
 
 	index = 0;
+	check_pipe(prompt_cmd);
+	if (exit_code_handler(GETENV, 0))
+		return ;
 	while (prompt_cmd[index])
 	{
 		if (prompt_cmd[index] == '"')
@@ -122,6 +125,4 @@ void	check_separators(char *prompt_cmd)
 		}
 		index++;
 	}
-	if (!exit_code_handler(GETENV, 0))
-		check_pipe(prompt_cmd);
 }

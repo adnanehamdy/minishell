@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 08:19:32 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/02 18:43:42 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/16 08:57:12 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ char	*check_is_io_alpha(char *prompt_cmd, int *index)
 	return (NULL);
 }
 
-char	*check_env(char *prompt_cmd, int *index, int is_redirection)
+char	*check_env(char *prompt_cmd, int *index,
+			int is_redirection, int is_first)
 {
 	char	*tmp;
 	int		i;
@@ -69,7 +70,7 @@ char	*check_env(char *prompt_cmd, int *index, int is_redirection)
 	else if (ft_isdigit(prompt_cmd[*index]))
 		return (check_is_digit(prompt_cmd, index));
 	else if (prompt_cmd[*index] == '?')
-		return (check_exit_code(prompt_cmd, index));
+		return (check_exit_code(prompt_cmd, index, is_first));
 	else if ((prompt_cmd[*index] == '\'' || prompt_cmd[*index] == '"')
 		&& prompt_cmd[*index + 1] != prompt_cmd[*index])
 		return (check_is_quote(prompt_cmd, index));

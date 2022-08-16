@@ -6,11 +6,31 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 12:41:11 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/13 18:59:36 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/16 10:04:27 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+// char *ft_filter(char *str)
+// {
+// 	int i;
+// 	char *ret;
+
+// 	i = 1;
+// 	int j = 0;
+// 	ret = malloc(sizeof(char) * (ft_strlen(str)));
+// 	while((unsigned long)j < ft_strlen(str) - 2)
+// 	{
+// 		ret[j] = str[i];
+// 		i++;
+// 		j++;
+// 	}
+// 	ret[j] = 0;
+// 	printf("%s <<<<<<\n", ret);
+// 	// exit(11);
+// 	return (ret);
+// }
 
 int	open_infile(char *cmd)
 {
@@ -24,6 +44,9 @@ int	open_infile(char *cmd)
 		if (!access(filename, F_OK))
 			ft_fprintf(STANDARD_ERROR,
 				"minishell : permission denied : %s\n", filename);
+		else if (filename[0] == '$')
+			ft_fprintf(STANDARD_ERROR,
+				"minishell : ambiguous redirect : %s\n", filename);
 		else
 			ft_fprintf(STANDARD_ERROR,
 				"minishell : no such file or directory : %s\n", filename);
@@ -47,6 +70,9 @@ int	open_outfile(char *cmd, int mod)
 		if (!access(filename, F_OK))
 			ft_fprintf(STANDARD_ERROR,
 				"minishell : permission denied : %s\n", filename);
+		else if (filename[0] == '$')
+			ft_fprintf(STANDARD_ERROR,
+				"minishell : ambiguous redirect : %s\n", filename);
 		else
 			ft_fprintf(STANDARD_ERROR,
 				"minishell : no such file or directory : %s\n", filename);
@@ -90,6 +116,7 @@ int	check_outfile(char *cmd, int *out, int *index)
 		fd = open_outfile(&cmd[*index], 1);
 		is_last_fd(&fd, out, last_out[1], OUTFILE_WRITE);
 	}
+	free(last_out);
 	return (fd);
 }
 

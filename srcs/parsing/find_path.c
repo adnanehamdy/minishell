@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 17:32:35 by nelidris          #+#    #+#             */
-/*   Updated: 2022/08/03 11:50:11 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/14 09:28:52 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	**setup_path(char **envp)
 
 char	*add_path(t_cmd_line *command, char **path, char *cmd)
 {
- 	char	*tmp;
+	char	*tmp;
 	char	*tmp2;
 	int		i;
 

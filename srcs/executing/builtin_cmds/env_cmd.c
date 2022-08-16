@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:52:49 by nelidris          #+#    #+#             */
-/*   Updated: 2022/06/23 23:34:11 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/15 14:49:48 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ int	env_command(t_cmd_line *cmd)
 	envp = envp_handler(GETENV, NULL);
 	i = 0;
 	while (envp[i])
-		ft_fprintf(cmd->out, "%s\n", envp[i++]);
+	{
+		if (ft_strchr(envp[i], '='))
+			ft_fprintf(cmd->out, "%s\n", envp[i]);
+		i++;
+	}
 	return (0);
 }

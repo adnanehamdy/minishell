@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:25:59 by nelidris          #+#    #+#             */
-/*   Updated: 2022/08/05 18:10:11 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/15 15:11:02 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	var_is_in_envp(char	*envp_var, char **args)
 				break ;
 			j++;
 		}
-		if (!args[i][j] && envp_var[j] == '=')
+		if (!args[i][j] && (envp_var[j] == '=' || !envp_var[j]))
 			return (0);
 		i++;
 	}
@@ -103,10 +103,7 @@ int	unset_command(t_cmd_line *cmd)
 	char	**new_envp;
 
 	if (!cmd->command[1])
-	{
-		ft_putendl_fd("unset: not enough arguments", 2);
 		return (0);
-	}
 	val_args = valid_unset_args(cmd->command);
 	envp = envp_handler(GETENV, NULL);
 	len = ptrlen(envp);
@@ -120,6 +117,7 @@ int	unset_command(t_cmd_line *cmd)
 		len++;
 	}
 	new_envp[val_args] = 0;
+	free_cmd_args(envp);
 	envp_handler(POSTENV, new_envp);
 	return (0);
 }

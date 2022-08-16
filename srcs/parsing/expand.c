@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 12:25:34 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/03 11:38:31 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/16 10:02:02 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,16 @@ char	*valid_content(char *prompt_cmd, int *index, char *var_content, int i)
 	return (prompt_cmd);
 }
 
-int	expand_redirection(char **prompt_cmd, int *index, char last_char)
+int	expand_redirection(char **prompt_cmd, int *index,
+		char last_char, int is_first)
 {
-	if ((*prompt_cmd)[*index] == '<'
-		&& (*prompt_cmd)[*index] == (*prompt_cmd)[*index + 1])
-	{
-		*index += 2;
-		*index = *index + skip_io_redirection(*prompt_cmd + *index);
+	if (skip_here_doc(prompt_cmd, index, last_char))
 		return (1);
-	}
 	else if ((*prompt_cmd)[*index] == '<' || (*prompt_cmd)[*index] == '>')
 	{
 		if (((*prompt_cmd)[*index + 1]) == '>')
 			(*index)++;
+		*index = *index + skip_white_spaces(*prompt_cmd, 0);
 		if (((*prompt_cmd)[*index]) == '$' && ((*prompt_cmd)[*index + 1]))
 		{
 			if ((last_char == '\'' || last_char == '"')
@@ -89,7 +86,7 @@ int	expand_redirection(char **prompt_cmd, int *index, char last_char)
 				*index = *index + 1;
 				return (1);
 			}
-			*prompt_cmd = check_env(*prompt_cmd, index, 1);
+			*prompt_cmd = check_env(*prompt_cmd, index, 1, is_first);
 			if (!(*prompt_cmd[0]))
 				return (1);
 		}
@@ -97,7 +94,7 @@ int	expand_redirection(char **prompt_cmd, int *index, char last_char)
 	return (0);
 }
 
-void	expand_handler(char **prompt_cmd)
+void	expand_handler(char **prompt_cmd, int is_first)
 {
 	int		index;
 	char	last_char;
@@ -107,7 +104,7 @@ void	expand_handler(char **prompt_cmd)
 	index = 0;
 	while ((*prompt_cmd)[index])
 	{
-		vrai = expand_redirection(prompt_cmd, &index, last_char);
+		vrai = expand_redirection(prompt_cmd, &index, last_char, is_first);
 		if (((*prompt_cmd)[index]) == '$'
 			&& ((*prompt_cmd)[index + 1]) && !vrai)
 		{
@@ -117,7 +114,7 @@ void	expand_handler(char **prompt_cmd)
 				index++;
 				continue ;
 			}
-			*prompt_cmd = check_env(*prompt_cmd, &index, 0);
+			*prompt_cmd = check_env(*prompt_cmd, &index, 0, is_first);
 			if (!(*prompt_cmd[0]))
 				return ;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:57:35 by nelidris          #+#    #+#             */
-/*   Updated: 2022/08/05 17:59:12 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/15 18:52:25 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	exit_status_check(t_cmd_line *cmd)
 		&& (cmd->command[1][0] != '-' && cmd->command[1][0] != '+'))
 	{
 		ft_fprintf(STANDARD_ERROR,
-			"minishell: exit: %s: numeric argument required\n",
+			"exit\nminishell: exit: %s: numeric argument required\n",
 			cmd->command[1]);
 		exit(255);
 	}
@@ -32,7 +32,7 @@ void	exit_status_check(t_cmd_line *cmd)
 		if (!ft_isdigit(cmd->command[1][i]))
 		{
 			ft_fprintf(STANDARD_ERROR,
-				"minishell: exit: %s: numeric argument required\n",
+				"exit\nminishell: exit: %s: numeric argument required\n",
 				cmd->command[1]);
 			exit(255);
 		}
@@ -40,7 +40,7 @@ void	exit_status_check(t_cmd_line *cmd)
 	}
 }
 
-int	exit_command(t_cmd_line *cmd)
+int	exit_command(t_cmd_line *cmd, int pipeline)
 {
 	if (cmd->command[1])
 	{
@@ -48,14 +48,19 @@ int	exit_command(t_cmd_line *cmd)
 		if (ptrlen(cmd->command) > 2)
 		{
 			ft_fprintf(STANDARD_ERROR,
-				"exit\nminishell: exit: too many arguments\n");
+				"minishell: exit: too many arguments\n");
 		}
 		else
+		{
 			exit(ft_atoi(cmd->command[1]));
+			if (!pipeline)
+				ft_fprintf(STANDARD_ERROR, "exit\n");
+		}
 	}
 	else
 	{
-		ft_fprintf(STANDARD_ERROR, "exit\n");
+		if (!pipeline)
+			ft_fprintf(STANDARD_ERROR, "exit\n");
 		exit(exit_code_handler(GETEXIT, 0));
 	}
 	exit_code_handler(POSTEXIT, 1);

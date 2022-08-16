@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:59:10 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/13 19:04:20 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/14 09:13:57 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ int	file_len(char *filename)
 	int	index;
 
 	index = 0;
-	while (filename[index] && (filename[index] < 9 || filename[index] > 13) &&
-		filename[index] != ' ' && filename[index] != '<' && filename[index] != '>')
+	while (filename[index] && (filename[index] < 9 || filename[index] > 13)
+		&& filename[index] != ' '
+		&& filename[index] != '<' && filename[index] != '>')
 	{
 		if (filename[index] == '"' || filename[index] == '\'')
 			index += check_second_quote(&filename[index], filename[index]);
@@ -29,9 +30,9 @@ int	file_len(char *filename)
 
 char	*open_file(char *file)
 {
-	int	index;
-	int	len;
-	char *file_name;
+	int		index;
+	int		len;
+	char	*file_name;
 
 	index = 0;
 	len = file_len(file);
@@ -61,7 +62,7 @@ int	*sub_check_last_in(int *last_io, int mod, int deux)
 		else
 			last_io[1] = OUTFILE_WRITE;
 	}
-	return (last_io);			
+	return (last_io);
 }
 
 int	*check_last_io(char *cmd, int mod)
@@ -77,19 +78,16 @@ int	*check_last_io(char *cmd, int mod)
 		return (last_io);
 	while (cmd[++index])
 	{
-		if (cmd[index] == '"')
-			index = index + check_second_quote(&cmd[index], '"');
-		else if (cmd[index] == '\'')
-			index = index + check_second_quote(&cmd[index], '\'');
+		skip_quote(cmd, &index);
 		if ((cmd[index] == '<' && !mod) || (cmd[index] == '>' && mod))
 		{
 			if (cmd[index] == cmd[index + 1])
 			{	
 				index += 1;
-				/* last_io[1] =  */ sub_check_last_in(last_io, mod, 1);
+				sub_check_last_in(last_io, mod, 1);
 			}
 			else
-				/* last_io[1] = */ sub_check_last_in (last_io, mod, 0);
+				sub_check_last_in (last_io, mod, 0);
 			last_io[0]++;
 		}
 	}

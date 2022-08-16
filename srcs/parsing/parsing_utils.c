@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 08:10:16 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/09 13:18:42 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/16 10:02:22 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	cmd_len(char *prompt_cmd)
 	return (number);
 }
 
-char *sub_cmd(char *prompt_cmd, int start, int len)
+char	*sub_cmd(char *prompt_cmd, int start, int len)
 {
 	char	*cmd;
 	size_t	i;
@@ -77,10 +77,18 @@ char *sub_cmd(char *prompt_cmd, int start, int len)
 	return (cmd);
 }
 
-void	check_redirection(char **cmd, int *index, char last_char, int *vrai)
+// int	check_redirection(char **cmd, int *index, char last_char, int is_first)
+// {
+// 	if ((*cmd)[*index] == '"' || (*cmd)[*index] == '\'')
+// 		index = index + check_second_quote(&(*cmd)[*index],
+// 				(*cmd)[*index]);
+// 	return (expand_redirection(cmd, index, last_char, is_first));
+// }
+
+void	skip_quote(char *cmd, int *index)
 {
-	if ((*cmd)[*index] == '"' || (*cmd)[*index] == '\'')
-		index = index + check_second_quote(&(*cmd)[*index],
-				(*cmd)[*index]);
-	*vrai = expand_redirection(cmd, index, last_char);
+	if (cmd[*index] == '"')
+		*index = *index + check_second_quote(&cmd[*index], '"');
+	else if (cmd[*index] == '\'')
+		*index = *index + check_second_quote(&cmd[*index], '\'');
 }

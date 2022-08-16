@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_cmd_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 23:27:02 by nelidris          #+#    #+#             */
-/*   Updated: 2022/08/05 18:10:25 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/15 10:26:42 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ void	free_cmd_args(char **cmd_path)
 
 	i = 0;
 	while (cmd_path[i])
-		free(cmd_path[i++]);
+	{
+		free(cmd_path[i]);
+		i++;
+	}
 	free(cmd_path);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 07:19:08 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/02 05:46:02 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/16 09:29:04 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,7 @@ void	invalid_special_character(char *prompt_cmd)
 			index = index + check_second_quote(&prompt_cmd[index], '"');
 		else if (prompt_cmd[index] == '\'')
 			index = index + check_second_quote(&prompt_cmd[index], '\'');
-		if (prompt_cmd[index] == ';'
-			|| prompt_cmd[index] == '&' || prompt_cmd[index] == '\\')
+		if (prompt_cmd[index] == '&')
 		{
 			ft_fprintf(STANDARD_ERROR,
 				"minishell: syntax error near unexpected token '%c'\n",

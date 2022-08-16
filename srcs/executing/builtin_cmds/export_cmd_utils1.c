@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_cmd_utils1.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 17:42:58 by nelidris          #+#    #+#             */
-/*   Updated: 2022/08/05 17:53:36 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/15 17:55:17 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,8 @@ int	is_var_valid(char *var, int *err_occ)
 	eovn = ft_strchr(var, '=');
 	if (!ft_isalpha(var[0]) && var[0] != '_')
 		return (export_error(var, eovn, err_occ, "not an identifier:"));
-	if (!eovn)
-		return (0);
 	i = 1;
-	while (&var[i] != eovn)
+	while (var[i] && &var[i] != eovn)
 	{
 		if (var[i] == '+' && var[i + 1] == '=')
 			break ;
@@ -66,23 +64,21 @@ int	var_exist(char *var, int *mod, char **envp)
 	size_t	j;
 	size_t	k;
 
-	if (*(ft_strchr(var, '=') - 1) == '+')
+	if (ft_strchr(var, '=') && (*(ft_strchr(var, '=') - 1)) == '+')
 		*mod = APPEND;
 	i = 0;
 	while (envp[i])
 	{
 		j = 0;
 		k = 0;
-		while (var[j] != '+' && var[j] != '=')
+		while (var[j] && var[j] != '+' && var[j] != '=')
 		{
 			if (var[j] != envp[i][k])
 				break ;
 			j++;
 			k++;
 		}
-		if (var[j] == '+')
-			j++;
-		if (var[j] == envp[i][k])
+		if (j > 0 && k > 0 && var[j - 1] == envp[i][k - 1])
 			return (1);
 		i++;
 	}
@@ -118,10 +114,12 @@ void	append_env_var(char *var, char **envp)
 		check_export_delimiter(&j, &i, &k, var);
 		if (var[j] == '+')
 			j++;
-		if (var[j] == envp[i][k])
+		if (var[j] == envp[i][k] || !envp[i][k])
 		{
 			eovn = envp[i];
-			envp[i] = ft_strjoin(envp[i], &var[j + 1]);
+			if (envp[i][k])
+				j++;
+			envp[i] = ft_strjoin(envp[i], &var[j]);
 			free(eovn);
 			return ;
 		}
