@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/17 11:15:34 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/17 17:51:53 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,7 @@ int			exit_command(t_cmd_line *cmd, int pipeline);
 
 /* prints working directory */
 int			pwd_command(t_cmd_line *cmd);
+char		**get_env_var(char *keyword, char **envp, int first);
 
 /*  ---------    tools   ---------   */
 

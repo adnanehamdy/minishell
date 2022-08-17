@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 18:57:06 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/16 16:06:30 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/17 20:34:43 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,15 @@ void	last_output(t_cmd_line **cmd, int *index, int *fd, int *last)
 int	i_redirection(char *cmd, int *index, int *fd, int *in)
 {
 	if (cmd[*index] == '"')
+	{
 		*index = *index + check_second_quote(&cmd[*index], '"');
+		(*index)++;
+	}
 	if (cmd[*index] == '\'')
+	{
 		*index = *index + check_second_quote(&cmd[*index], '\'');
+		(*index)++;
+	}
 	if (cmd[*index] == '<' && cmd[*index] != cmd[*index + 1])
 	{
 		if (fd[0])
@@ -92,7 +98,8 @@ void	find_io_redirections(char *cmd, int *in, int *out)
 		}
 		else if (cmd[index] == '<' && cmd[index + 1] == cmd[index])
 			index++;
-		index++;
+		if (cmd[index] && cmd[index] != '"' && cmd[index] != '\'')
+			index++;
 		if (check_redirection_fail(in, out, fd))
 			return ;
 	}

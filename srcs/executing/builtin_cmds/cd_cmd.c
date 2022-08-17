@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:12:05 by nelidris          #+#    #+#             */
-/*   Updated: 2022/08/15 18:44:09 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/17 17:53:04 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,8 @@ static char	*get_home_env(void)
 	return (0);
 }
 
-int	cd_command(t_cmd_line *cmd)
+static int	change_directory(t_cmd_line *cmd, char *home)
 {
-	char	*home;
-
-	home = get_home_env();
 	if (cmd->command[1])
 	{
 		if (chdir(cmd->command[1]) < 0)
@@ -45,11 +42,44 @@ int	cd_command(t_cmd_line *cmd)
 	}
 	else
 	{
-		if (chdir(&home[5]) < 0)
+		if (!home || chdir(&home[5]) < 0)
 		{
 			ft_fprintf(STANDARD_ERROR, "minishell: cd: HOME not set\n");
 			return (1);
 		}
 	}
+	return (0);
+}
+
+static void	setup_pwd_var(char *keyword, char **envp, int first)
+{
+	char	**pwd_var;
+	char	*tmp;
+	char	*work_dir;
+
+	work_dir = getcwd(NULL, 0);
+	pwd_var = get_env_var(keyword, envp, first);
+	if (work_dir && pwd_var)
+	{
+		free(*pwd_var);
+		tmp = ft_strjoin(keyword, "=");
+		*pwd_var = ft_strjoin(tmp, work_dir);
+		free(tmp);
+	}
+	if (work_dir)
+		free(work_dir);
+}
+
+int	cd_command(t_cmd_line *cmd)
+{
+	char		*home;
+	static int	first;
+
+	home = get_home_env();
+	setup_pwd_var("OLDPWD", envp_handler(GETENV, NULL), first);
+	first = 1;
+	if (change_directory(cmd, home))
+		return (1);
+	setup_pwd_var("PWD", envp_handler(GETENV, NULL), 1);
 	return (0);
 }

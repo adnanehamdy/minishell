@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 17:42:58 by nelidris          #+#    #+#             */
-/*   Updated: 2022/08/15 17:55:17 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/17 14:54:51 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int	export_error(char *var, char *eovn, int *err_occ, char *err_m)
 {
 	int	plus_sign;
 
-	if (*err_occ)
-		return (0);
 	plus_sign = 0;
 	if (eovn)
 	{
@@ -33,7 +31,8 @@ int	export_error(char *var, char *eovn, int *err_occ, char *err_m)
 		else
 			*eovn = '=';
 	}
-	(*err_occ)++;
+	if (!(*err_occ))
+		(*err_occ)++;
 	return (0);
 }
 

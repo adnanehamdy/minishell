@@ -40,3 +40,5 @@
 
 # << here cat | cat
 # >$?
+
+> "$HOME"

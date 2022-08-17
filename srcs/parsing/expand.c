@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 12:25:34 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/16 16:08:33 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/17 21:20:18 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,16 @@ int	expand_redirection(char **prompt_cmd, int *index,
 				return (1);
 			}
 			*prompt_cmd = check_env(*prompt_cmd, index, 1, is_first);
+			if ((*prompt_cmd)[*index] == '<' || (*prompt_cmd)[*index] == '>')
+			{
+				*index = *index + skip_white_spaces(&(*prompt_cmd)[*index], 0);
+				*index = *index + skip_io_redirection(&(*prompt_cmd)[*index]);
+			}
 			if (!(*prompt_cmd[0]))
 				return (1);
 		}
-		else
+		else if (((*prompt_cmd)[*index]
+			&& ((*prompt_cmd)[*index] != '"' && (*prompt_cmd)[*index] != '\'')))
 			*index = *index + skip_io_redirection(&(*prompt_cmd)[*index]);
 	}
 	return (0);
@@ -122,6 +128,7 @@ void	expand_handler(char **prompt_cmd, int is_first)
 				return ;
 		}
 		last_char = (*prompt_cmd)[index];
-		index++;
+		if ((*prompt_cmd)[index])
+			index++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 16:27:53 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/16 18:03:11 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/17 20:55:31 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,9 @@ char	*check_is_quote(char *prompt_cmd, int *index)
 	i = ft_strlen(&prompt_cmd[*index - 1]);
 	prompt_cmd = ft_strjoin(prompt_cmd, prompt_cmd + *index);
 	free(tmp);
-	*index = i - 1;
+	if (i)
+		*index = i - 1;
+	else
+		*index = i;
 	return (prompt_cmd);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:25:59 by nelidris          #+#    #+#             */
-/*   Updated: 2022/08/17 10:08:50 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/17 14:58:13 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,25 +47,24 @@ static size_t	add_var_or_not(char *arg, char **envp)
 	return (0);
 }
 
-size_t	valid_unset_args(char **args, char **envp)
+size_t	valid_unset_args(char **args, char **envp, int *err_occ)
 {
 	size_t	i;
 	size_t	valid_args;
-	int		err_occ;
 
 	i = 1;
 	valid_args = 0;
-	err_occ = 0;
 	while (args[i])
 	{
 		if (!ft_strchr(args[i], '=') && valid_varname(args[i]))
 			valid_args += add_var_or_not(args[i], envp);
-		else if (!err_occ)
+		else
 		{
 			ft_putstr_fd("unset: ", 2);
 			ft_putstr_fd(args[i], 2);
 			ft_putendl_fd(": invalid parameter name", 2);
-			err_occ++;
+			if (!(*err_occ))
+				(*err_occ)++;
 		}
 		i++;
 	}
@@ -98,13 +97,15 @@ int	unset_command(t_cmd_line *cmd)
 {
 	size_t	len;
 	size_t	val_args;
+	int		err_occ;
 	char	**envp;
 	char	**new_envp;
 
 	if (!cmd->command[1])
 		return (0);
 	envp = envp_handler(GETENV, NULL);
-	val_args = valid_unset_args(cmd->command, envp);
+	err_occ = 0;
+	val_args = valid_unset_args(cmd->command, envp, &err_occ);
 	len = ptrlen(envp);
 	new_envp = (char **)malloc(sizeof(char *) * (len - val_args + 1));
 	len = 0;
@@ -118,5 +119,5 @@ int	unset_command(t_cmd_line *cmd)
 	new_envp[val_args] = 0;
 	free_cmd_args(envp);
 	envp_handler(POSTENV, new_envp);
-	return (0);
+	return (err_occ);
 }

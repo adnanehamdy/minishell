@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 10:25:24 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/16 20:32:36 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/17 18:19:52 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,13 @@ void	find_here_docs(char *cmd, int *fd, int last_io_type)
 	index = 0;
 	fd_in = dup(0);
 	signal(SIGINT, ctrl_c_here_doc_handler);
-	while (!here_doc_signal(0, 0) && cmd[index])
+	while (cmd[index] && !here_doc_signal(0, 0))
 	{
 		quote_skip(cmd, &index);
 		open_here_doc(cmd, fd, last_io_type, &index);
 		if (*fd == PIPE_FAIL)
 			break ;
-		if (cmd[index] != '"' && cmd[index] != '\'')
+		if (cmd[index] && cmd[index] != '"' && cmd[index] != '\'')
 			index++;
 	}
 	signal(SIGINT, ctrl_c_handler);
