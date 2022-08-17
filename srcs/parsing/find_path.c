@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 17:32:35 by nelidris          #+#    #+#             */
-/*   Updated: 2022/08/14 09:28:52 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/17 09:06:39 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ char	*allocate_cmd_path(t_cmd_line *command, char	**envp, char *cmd)
 			command->is_executable = NO_SUCH_FILE;
 		return (ft_strdup(cmd));
 	}
+	if (cmd && !(*cmd))
+		return (0);
 	path = setup_path(envp);
 	if (!path)
 		return (0);

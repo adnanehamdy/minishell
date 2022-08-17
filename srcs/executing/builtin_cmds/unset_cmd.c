@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   unset_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:25:59 by nelidris          #+#    #+#             */
-/*   Updated: 2022/08/15 15:11:02 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/17 10:08:50 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-int	unset_friendly(char *var)
-{
-	size_t	i;
-
-	if (!ft_isalpha(var[0]) && var[0] != '_')
-		return (0);
-	if (ft_strchr(var, '='))
-		return (0);
-	i = 0;
-	while (var[i])
-	{
-		if (!ft_isalpha(var[i]) && var[i] != '_')
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 static int	valid_varname(char *varname)
 {
@@ -48,7 +30,24 @@ static int	valid_varname(char *varname)
 	return (1);
 }
 
-size_t	valid_unset_args(char **args)
+static size_t	add_var_or_not(char *arg, char **envp)
+{
+	size_t	j;
+
+	j = 0;
+	while (envp[j])
+	{
+		if (!ft_strncmp(envp[j], arg, ft_strlen(arg))
+			&& envp[j][ft_strlen(arg)] == '=')
+			break ;
+		j++;
+	}
+	if (envp[j])
+		return (1);
+	return (0);
+}
+
+size_t	valid_unset_args(char **args, char **envp)
 {
 	size_t	i;
 	size_t	valid_args;
@@ -60,7 +59,7 @@ size_t	valid_unset_args(char **args)
 	while (args[i])
 	{
 		if (!ft_strchr(args[i], '=') && valid_varname(args[i]))
-			valid_args++;
+			valid_args += add_var_or_not(args[i], envp);
 		else if (!err_occ)
 		{
 			ft_putstr_fd("unset: ", 2);
@@ -104,8 +103,8 @@ int	unset_command(t_cmd_line *cmd)
 
 	if (!cmd->command[1])
 		return (0);
-	val_args = valid_unset_args(cmd->command);
 	envp = envp_handler(GETENV, NULL);
+	val_args = valid_unset_args(cmd->command, envp);
 	len = ptrlen(envp);
 	new_envp = (char **)malloc(sizeof(char *) * (len - val_args + 1));
 	len = 0;

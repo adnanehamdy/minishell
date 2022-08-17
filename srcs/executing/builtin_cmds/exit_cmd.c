@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:57:35 by nelidris          #+#    #+#             */
-/*   Updated: 2022/08/16 11:01:06 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/17 10:19:21 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,7 @@ void	exit_status_check(t_cmd_line *cmd)
 
 	if (!ft_strcmp("--", cmd->command[1]))
 		exit(exit_code_handler(GETEXIT, 0));
-	if (!ft_isdigit(cmd->command[1][0])
-		&& (cmd->command[1][0] != '-' && cmd->command[1][0] != '+'))
-	{
-		ft_fprintf(STANDARD_ERROR,
-			"exit\nminishell: exit: %s: numeric argument required\n",
-			cmd->command[1]);
-		exit(255);
-	}
-	i = 1;
+	i = 0;
 	while (cmd->command[1][i])
 	{
 		if (!ft_isdigit(cmd->command[1][i]) || !ft_strcmp(cmd->command[1], "-"))
@@ -52,9 +44,9 @@ int	exit_command(t_cmd_line *cmd, int pipeline)
 		}
 		else
 		{
-			exit(ft_atoi(cmd->command[1]));
 			if (!pipeline)
 				ft_fprintf(STANDARD_ERROR, "exit\n");
+			exit(ft_atoi(cmd->command[1]));
 		}
 	}
 	else

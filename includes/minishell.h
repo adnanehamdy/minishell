@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/16 16:26:29 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/17 10:08:40 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ void		display_exported_vars(t_cmd_line *cmd, char **envp);
 
 /* unsets variable from the environment */
 int			unset_command(t_cmd_line *cmd);
+int			unset_friendly(char *var);
 
 /* echoes arguments to stdout */
 int			echo_command(t_cmd_line *cmd);
@@ -199,6 +200,9 @@ void		free_cmd_line(t_cmd_line **cmd_line);
 void		ctrl_c_handler(int signal);
 void		ctrl_c_here_doc_handler(int signal);
 int			here_doc_signal(int mod, int value);
+
+/* exec_error_handler */
+void		exec_error_handler(t_cmd_line *cmd_line);
 
 /*  ---------    env   ---------   */
 

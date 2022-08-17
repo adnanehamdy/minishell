@@ -3,22 +3,22 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+         #
+#    By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/26 14:06:32 by ahamdy            #+#    #+#              #
-#    Updated: 2022/08/16 13:21:52 by ahamdy           ###   ########.fr        #
+#    Updated: 2022/08/17 10:09:41 by nelidris         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -I./includes -g #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -I./includes #-g -fsanitize=address
 
 PARS_PATH = srcs/parsing
 
 EXEC_PATH = srcs/executing
 
-READLINE_PATH =  -lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
+READLINE_PATH =  -lreadline -L ~/homebrew/opt/readline/lib -I ~/homebrew/opt/readline/include
 
 GNL = get_next_line/get_next_line.c
 
@@ -35,8 +35,9 @@ EXEC_SRCS = $(EXEC_PATH)/builtin_cmds/cd_cmd.c $(EXEC_PATH)/builtin_cmds/echo_cm
 			$(EXEC_PATH)/builtin_cmds/env_cmd.c $(EXEC_PATH)/builtin_cmds/exit_cmd.c \
 			$(EXEC_PATH)/builtin_cmds/export_cmd.c $(EXEC_PATH)/builtin_cmds/pwd_cmd.c \
 			$(EXEC_PATH)/builtin_cmds/export_cmd_utils1.c $(EXEC_PATH)/builtin_cmds/export_cmd_utils2.c \
-			$(EXEC_PATH)/builtin_cmds/unset_cmd.c $(EXEC_PATH)/ptrlen.c \
-			$(EXEC_PATH)/env_handler.c $(EXEC_PATH)/free_cmd_line.c $(EXEC_PATH)/builtin_exec.c $(EXEC_PATH)/exec_proc.c \
+			$(EXEC_PATH)/builtin_cmds/unset_cmd.c $(EXEC_PATH)/builtin_cmds/unset_cmd_utils.c \
+			$(EXEC_PATH)/ptrlen.c $(EXEC_PATH)/error_handler.c $(EXEC_PATH)/env_handler.c $(EXEC_PATH)/free_cmd_line.c \
+			$(EXEC_PATH)/builtin_exec.c $(EXEC_PATH)/exec_proc.c \
 
 MAIN_SRCS = main.c
 

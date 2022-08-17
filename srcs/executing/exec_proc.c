@@ -3,50 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   exec_proc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:56:16 by nelidris          #+#    #+#             */
-/*   Updated: 2022/08/16 18:00:57 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/17 09:18:33 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-static void	exec_error_handler(t_cmd_line *cmd_line)
-{
-	if (cmd_line->is_executable == PERMISSION_DENIED)
-	{
-		ft_putstr_fd("minishell: permission denied: ", STANDARD_ERROR);
-		ft_putendl_fd(cmd_line->command[0], STANDARD_ERROR);
-		exit(126);
-	}
-	else if (cmd_line->is_executable == NO_SUCH_FILE)
-	{
-		ft_putstr_fd("minishell: no such file or directory: ", STANDARD_ERROR);
-		ft_putendl_fd(cmd_line->command[0], STANDARD_ERROR);
-	}		
-	else
-	{
-		ft_putstr_fd("minishell: command not found: ", STANDARD_ERROR);
-		ft_putendl_fd(cmd_line->command[0], STANDARD_ERROR);
-	}
-	exit(127);
-}
 
 static void	config_redir(t_cmd_line **cmds, t_cmd_line *cmd_line)
 {
 	int	i;
 
 	if (cmd_line->in != 0)
-	{
 		dup2(cmd_line->in, STANDARD_INPUT);
-		close(cmd_line->in);
-	}
 	if (cmd_line->out != 1)
-	{
 		dup2(cmd_line->out, STANDARD_OUTPUT);
-		close(cmd_line->out);
-	}
 	i = -1;
 	while (cmds[++i])
 	{
@@ -62,9 +35,9 @@ static void	run_child_command(t_cmd_line **cmd,
 {
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGINT, SIG_DFL);
-	config_redir(cmd, cmd_line);
 	if (!run_builtin(cmd_line, pipeline))
 		exit(0);
+	config_redir(cmd, cmd_line);
 	if (execve(cmd_line->cmd_path, cmd_line->command,
 			envp_handler(GETENV, NULL)) < 0)
 		exec_error_handler(cmd_line);
@@ -98,6 +71,18 @@ static pid_t	run_command(t_cmd_line **cmd,
 	return (pid);
 }
 
+static int	convert_signal_to_exit_code(int ret_exit)
+{
+	if (WIFSIGNALED(ret_exit))
+	{
+		if (WTERMSIG(ret_exit) == 2)
+			return (130);
+		if (WTERMSIG(ret_exit) == 3)
+			return (131);
+	}
+	return (WEXITSTATUS(ret_exit));
+}
+
 int	execute_cmd_line(t_cmd_line **cmd_line)
 {
 	size_t	index;
@@ -123,7 +108,5 @@ int	execute_cmd_line(t_cmd_line **cmd_line)
 	}
 	free_cmd_line(cmd_line);
 	signal(SIGINT, ctrl_c_handler);
-	if (WIFSIGNALED(ret_exit) == 1)
-		return (130);
-	return (WEXITSTATUS(ret_exit));
+	return (convert_signal_to_exit_code(ret_exit));
 }
