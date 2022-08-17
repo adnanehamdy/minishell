@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:36:01 by nelidris          #+#    #+#             */
-/*   Updated: 2022/08/15 18:51:54 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/17 11:30:51 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,17 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-int	run_builtin(t_cmd_line *command, int pipeline)
+static void	run_builtin_exit_status(int pipeline,
+			int exit_built, int *exit_code)
+{
+	if (pipeline)
+		exit(exit_built);
+	if (exit_code)
+		*exit_code = exit_built * 256;
+	exit_code_handler(POSTEXIT, exit_built);
+}
+
+int	run_builtin(t_cmd_line *command, int pipeline, int *exit_code)
 {
 	int	exit_built;
 
@@ -44,8 +54,6 @@ int	run_builtin(t_cmd_line *command, int pipeline)
 		exit_built = unset_command(command);
 	else
 		return (1);
-	if (pipeline)
-		exit(exit_built);
-	exit_code_handler(POSTEXIT, exit_built);
+	run_builtin_exit_status(pipeline, exit_built, exit_code);
 	return (0);
 }

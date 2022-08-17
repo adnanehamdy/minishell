@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/17 10:08:40 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/17 11:15:34 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int			expand_redirection(char **prompt_cmd, int *index,
 /*  ---------    built-in commands   ---------   */
 
 /* runs built-in commands */
-int			run_builtin(t_cmd_line *command, int pipeline);
+int			run_builtin(t_cmd_line *command, int pipeline, int *exit_code);
 
 /* changes directory */
 int			cd_command(t_cmd_line *cmd);
