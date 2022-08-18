@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:59:10 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/16 13:43:12 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/18 09:38:35 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,14 @@ int	file_len(char *filename)
 {
 	int	index;
 	int	number;
-	int	tmp;
 
-	tmp = 0;
 	number = 0;
 	index = 0;
 	while (filename[index] && (filename[index] < 9 || filename[index] > 13)
 		&& filename[index] != ' '
 		&& filename[index] != '<' && filename[index] != '>')
 	{
-		if (filename[index] == '"')
-		{
-			tmp = index;
-			index = index + check_second_quote(&filename[index], '"');
-			number = number + (index - tmp - 1);
-		}
-		else if (filename[index] == '\'')
-		{
-			tmp = index;
-			index = index + check_second_quote(&filename[index], '\'');
-			number = number + (index - tmp - 1);
-		}
-		else
+		if (sub_file_len(filename, &index, &number))
 			number++;
 		index++;
 	}
@@ -83,13 +69,12 @@ int	*check_last_io(char *cmd, int mod)
 	int	index;
 	int	*last_io;
 
-	index = -1;
+	index = 0;
 	last_io = (int *)malloc(sizeof(int) * 2);
-	last_io[0] = 0;
-	last_io[1] = 0;
+	initialize_last_io(last_io);
 	if (!cmd)
 		return (last_io);
-	while (cmd[++index])
+	while (cmd[index])
 	{
 		skip_quote(cmd, &index);
 		if ((cmd[index] == '<' && !mod) || (cmd[index] == '>' && mod))
@@ -103,6 +88,7 @@ int	*check_last_io(char *cmd, int mod)
 				sub_check_last_in (last_io, mod, 0);
 			last_io[0]++;
 		}
+		index++;
 	}
 	return (last_io);
 }

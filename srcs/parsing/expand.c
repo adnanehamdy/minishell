@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 12:25:34 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/17 21:20:18 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/18 09:08:33 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,23 +78,8 @@ int	expand_redirection(char **prompt_cmd, int *index,
 		if (((*prompt_cmd)[*index + 1]) == '>')
 			(*index)++;
 		*index = *index + skip_white_spaces(*prompt_cmd, 0);
-		if (((*prompt_cmd)[*index]) == '$' && ((*prompt_cmd)[*index + 1]))
-		{
-			if ((last_char == '\'' || last_char == '"')
-				&& (*prompt_cmd)[*index + 1] == last_char)
-			{
-				*index = *index + 1;
-				return (1);
-			}
-			*prompt_cmd = check_env(*prompt_cmd, index, 1, is_first);
-			if ((*prompt_cmd)[*index] == '<' || (*prompt_cmd)[*index] == '>')
-			{
-				*index = *index + skip_white_spaces(&(*prompt_cmd)[*index], 0);
-				*index = *index + skip_io_redirection(&(*prompt_cmd)[*index]);
-			}
-			if (!(*prompt_cmd[0]))
-				return (1);
-		}
+		if (sub_expand_redirection(prompt_cmd, index, last_char, is_first))
+			return (1);
 		else if (((*prompt_cmd)[*index]
 			&& ((*prompt_cmd)[*index] != '"' && (*prompt_cmd)[*index] != '\'')))
 			*index = *index + skip_io_redirection(&(*prompt_cmd)[*index]);
@@ -127,8 +112,6 @@ void	expand_handler(char **prompt_cmd, int is_first)
 			if (!(*prompt_cmd[0]))
 				return ;
 		}
-		last_char = (*prompt_cmd)[index];
-		if ((*prompt_cmd)[index])
-			index++;
+		sub_expand(prompt_cmd, &index, &last_char);
 	}
 }

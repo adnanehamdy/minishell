@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 12:41:11 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/16 17:56:54 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/18 09:29:12 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,7 @@ int	open_outfile(char *cmd, int mod)
 		fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	else
 		fd = open(filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
-	if (fd == -1)
-	{
-		if (!access(filename, F_OK))
-			ft_fprintf(STANDARD_ERROR,
-				"minishell : permission denied : %s\n", filename);
-		else if (true == 1)
-			ft_fprintf(STANDARD_ERROR,
-				"minishell : ambiguous redirect : %s\n", filename);
-		else
-			ft_fprintf(STANDARD_ERROR,
-				"minishell : no such file or directory : %s\n", filename);
-	}
+	sub_open_outfile(fd, filename, true);
 	free(filename);
 	return (fd);
 }
@@ -121,8 +110,6 @@ void	redirections_handler(char **cmd_after_split, t_cmd_line **cmd)
 		last_in = check_last_io(cmd_after_split[index + 1], 0);
 		last_out = check_last_io(cmd_after_split[index], 1);
 		pipe(fd);
-/* 		if (cmd[index + 1] && cmd[index + 1])
-			cmd[index + 1]->in = STANDARD_INPUT; */
 		cmd[index]->out = STANDARD_OUTPUT;
 		find_io_redirections(cmd_after_split[index],
 			&cmd[index]->in, &cmd[index]->out);

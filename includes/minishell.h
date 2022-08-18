@@ -6,7 +6,7 @@
 /*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/17 17:51:53 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/18 09:38:10 by ahamdy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,12 @@ int			check_redirection(char **cmd, int *index,
 				char last_char, int is_first);
 int			expand_redirection(char **prompt_cmd, int *index,
 				char last_char, int is_first);
-
+int			sub_expand_redirection(char **prompt_cmd, int *index,
+				char last_char, int is_first);
+void		sub_expand(char **prompt_cmd, int *index, char *last_char);
+void		sub_open_outfile(int fd, char *filename, int true);
+int			sub_file_len(char *filename, int *index, int *number);
+void		initialize_last_io(int *last_io);
 /* ****************** exec_functions ****************** */
 
 /*  ---------    built-in commands   ---------   */

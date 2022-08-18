@@ -6,13 +6,13 @@
 #    By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/26 14:06:32 by ahamdy            #+#    #+#              #
-#    Updated: 2022/08/17 21:20:29 by ahamdy           ###   ########.fr        #
+#    Updated: 2022/08/18 10:09:57 by ahamdy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -I./includes -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -I./includes
 
 PARS_PATH = srcs/parsing
 
@@ -29,7 +29,8 @@ PARS_SRCS = $(PARS_PATH)/allocate_memory.c $(PARS_PATH)/error_handling.c \
 			$(PARS_PATH)/parser.c $(PARS_PATH)/parsing_split.c \
 			$(PARS_PATH)/parsing_utils.c $(PARS_PATH)/skip_alloc_utils.c \
 			 $(PARS_PATH)/sub_alloc_mem.c $(PARS_PATH)/expand_types.c $(PARS_PATH)/allocate_memory_tool.c \
-			 $(PARS_PATH)/error_checker.c $(PARS_PATH)/here_doc_util.c $(PARS_PATH)/io_redirection_utils.c
+			 $(PARS_PATH)/error_checker.c $(PARS_PATH)/here_doc_util.c $(PARS_PATH)/io_redirection_utils.c \
+			 $(PARS_PATH)/parsing_norm.c
 
 EXEC_SRCS = $(EXEC_PATH)/builtin_cmds/cd_cmd.c $(EXEC_PATH)/builtin_cmds/echo_cmd.c \
 			$(EXEC_PATH)/builtin_cmds/env_cmd.c $(EXEC_PATH)/builtin_cmds/exit_cmd.c \
