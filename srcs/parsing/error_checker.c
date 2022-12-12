@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   error_checker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 05:44:35 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/16 08:15:15 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/22 10:49:04 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include<minishell.h>
 
-int	check_second_quote(char *sub_prompt_cmd, char quote)
+int	check_second_quote(char *sub_prompt_cmd, char quote, int mod)
 {
 	int	index;
 
@@ -23,9 +23,13 @@ int	check_second_quote(char *sub_prompt_cmd, char quote)
 			return (index);
 		index++;
 	}
-	ft_fprintf(STANDARD_ERROR, "unclosed quote\n");
-	exit_code_handler(POSTEXIT, 1);
-	return (-1);
+	if (mod)
+	{
+		ft_fprintf(STANDARD_ERROR, "unclosed quote\n");
+		exit_code_handler(POSTEXIT, 1);
+		return (-1);
+	}
+	return (index);
 }
 
 void	check_quotes(char *prompt_cmd)
@@ -37,15 +41,15 @@ void	check_quotes(char *prompt_cmd)
 	{
 		if (prompt_cmd[i] == '"')
 		{
-			if (check_second_quote(&prompt_cmd[i], '"') == -1)
+			if (check_second_quote(&prompt_cmd[i], '"', 1) == -1)
 				break ;
-			i = i + check_second_quote(&prompt_cmd[i], '"');
+			i = i + check_second_quote(&prompt_cmd[i], '"', 1);
 		}
 		else if (prompt_cmd[i] == '\'')
 		{
-			if (check_second_quote(&prompt_cmd[i], '\'') == -1)
+			if (check_second_quote(&prompt_cmd[i], '\'', 1) == -1)
 				break ;
-			i = i + check_second_quote(&prompt_cmd[i], '\'');
+			i = i + check_second_quote(&prompt_cmd[i], '\'', 1);
 		}
 		i++;
 	}
@@ -110,9 +114,9 @@ void	check_separators(char *prompt_cmd)
 	while (prompt_cmd[index])
 	{
 		if (prompt_cmd[index] == '"')
-			index = index + check_second_quote(&prompt_cmd[index], '"');
+			index = index + check_second_quote(&prompt_cmd[index], '"', 0);
 		else if (prompt_cmd[index] == '\'')
-			index = index + check_second_quote(&prompt_cmd[index], '\'');
+			index = index + check_second_quote(&prompt_cmd[index], '\'', 0);
 		if (prompt_cmd[index] == '<'
 			|| prompt_cmd[index] == '>' || prompt_cmd[index] == '|')
 		{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 09:25:47 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/14 09:28:03 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/22 10:47:49 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static size_t	arr_count(char const *s, char c)
 		while (s[i] && s[i] != c)
 		{
 			if (s[i] == '"' || s[i] == '\'')
-				i = i + check_second_quote((char *)&s[i], s[i]);
+				i = i + check_second_quote((char *)&s[i], s[i], 0);
 			i++;
 		}
 	count++;
@@ -53,7 +53,7 @@ void	sub_count_char(const char *s, size_t *count, size_t *i, char c)
 	{
 		if (s[*i + *count] == '"' || s[*i + *count] == '\'')
 			*count = *count + check_second_quote((char *)&s[*i + *count],
-					s[*i + *count]);
+					s[*i + *count], 0);
 		(*count)++;
 	}
 }

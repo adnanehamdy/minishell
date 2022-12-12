@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:51 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/18 09:38:10 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/22 10:46:26 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,8 @@ t_cmd_line	**parsing_functions(char *prompt_cmd);
 /* 2 -> error_handling_functions */
 int			error_checker(char *prompt_cmd);
 int			exit_code_handler(int mod, int value);
-int			check_second_quote(char *sub_prompt_cmd, char quote);
+int			check_second_quote(char *sub_prompt_cmd, char quote, int mod);
 int			skip_white_spaces(char *prompt_cmd, int condition);
-int			check_second_quote(char *sub_prompt_cmd, char quote);
 void		check_quotes(char *prompt_cmd);
 int			check_unexpected_token(char *prompt_cmd, int *index);
 int			check_pipe(char *prompt_cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 08:19:32 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/16 14:25:00 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/22 07:50:48 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*check_env(char *prompt_cmd, int *index,
 	else if ((prompt_cmd[*index] == '\'' || prompt_cmd[*index] == '"')
 		&& prompt_cmd[*index + 1] != prompt_cmd[*index])
 		return (check_is_quote(prompt_cmd, index));
-	else
+	else if (prompt_cmd[*index] != '$')
 		*index = *index + 1;
 	return (prompt_cmd);
 }

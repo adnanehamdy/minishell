@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 07:19:08 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/16 09:29:04 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/22 10:47:01 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ void	invalid_special_character(char *prompt_cmd)
 	while (prompt_cmd[index])
 	{
 		if (prompt_cmd[index] == '"')
-			index = index + check_second_quote(&prompt_cmd[index], '"');
+			index = index + check_second_quote(&prompt_cmd[index], '"', 0);
 		else if (prompt_cmd[index] == '\'')
-			index = index + check_second_quote(&prompt_cmd[index], '\'');
+			index = index + check_second_quote(&prompt_cmd[index], '\'', 0);
 		if (prompt_cmd[index] == '&')
 		{
 			ft_fprintf(STANDARD_ERROR,

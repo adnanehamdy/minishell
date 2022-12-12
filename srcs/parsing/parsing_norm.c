@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_norm.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:54:57 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/18 09:37:51 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/22 11:30:28 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,14 @@ int	sub_file_len(char *filename, int *index, int *number)
 	if (filename[*index] == '"')
 	{
 		tmp = *index;
-		*index = *index + check_second_quote(&filename[*index], '"');
+		*index = *index + check_second_quote(&filename[*index], '"', 0);
 		*number = *number + (*index - tmp - 1);
 		return (0);
 	}
 	else if (filename[*index] == '\'')
 	{
 		tmp = *index;
-		*index = *index + check_second_quote(&filename[*index], '\'');
+		*index = *index + check_second_quote(&filename[*index], '\'', 0);
 		*number = *number + (*index - tmp - 1);
 		return (0);
 	}

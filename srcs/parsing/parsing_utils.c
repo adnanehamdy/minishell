@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 08:10:16 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/17 21:04:02 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/22 10:48:07 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	count_cmd_number(char *prompt_cmd)
 	while (prompt_cmd[index])
 	{
 		if (prompt_cmd[index] == '"')
-			index = index + check_second_quote(&prompt_cmd[index], '"');
+			index = index + check_second_quote(&prompt_cmd[index], '"', 0);
 		else if (prompt_cmd[index] == '\'')
-			index = index + check_second_quote(&prompt_cmd[index], '\'');
+			index = index + check_second_quote(&prompt_cmd[index], '\'', 0);
 		if (prompt_cmd[index] == '|')
 			number++;
 		index++;
@@ -89,7 +89,7 @@ int	skip_quote(char *cmd, int *index)
 {
 	if (cmd && cmd[*index] && cmd[*index] == '\'')
 	{
-		*index = *index + check_second_quote(&cmd[*index], '\'');
+		*index = *index + check_second_quote(&cmd[*index], '\'', 0);
 		(*index)++;
 		return (0);
 	}

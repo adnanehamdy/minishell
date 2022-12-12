@@ -6,7 +6,7 @@
 /*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 06:41:02 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/17 11:09:08 by nelidris         ###   ########.fr       */
+/*   Updated: 2022/08/22 11:28:56 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,15 @@ void	ctrl_c_handler(int signal)
 	exit_code_handler(POSTEXIT, 1);
 }
 
+static void	here_doc_edit_exit(char *prompt_cmd, t_cmd_line **cmd_line)
+{
+	here_doc_signal(1, 0);
+	exit_code_handler(POSTEXIT, 1);
+	add_history(prompt_cmd);
+	free_cmd_line(cmd_line);
+	free(prompt_cmd);
+}
+
 static void	minishell_routine(void)
 {
 	t_cmd_line		**cmd_line;
@@ -34,15 +43,14 @@ static void	minishell_routine(void)
 		exit(exit_code_handler(GETEXIT, 0));
 	}
 	if (!(*prompt_cmd))
+	{
+		free(prompt_cmd);
 		return ;
+	}
 	cmd_line = parsing_functions(prompt_cmd);
 	if (here_doc_signal(0, 0))
 	{
-		here_doc_signal(1, 0);
-		exit_code_handler(POSTEXIT, 1);
-		add_history(prompt_cmd);
-		free_cmd_line(cmd_line);
-		free(prompt_cmd);
+		here_doc_edit_exit(prompt_cmd, cmd_line);
 		return ;
 	}
 	if (cmd_line)

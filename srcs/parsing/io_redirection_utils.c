@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io_redirection_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 18:57:06 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/17 20:34:43 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/22 10:47:16 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ int	i_redirection(char *cmd, int *index, int *fd, int *in)
 {
 	if (cmd[*index] == '"')
 	{
-		*index = *index + check_second_quote(&cmd[*index], '"');
+		*index = *index + check_second_quote(&cmd[*index], '"', 0);
 		(*index)++;
 	}
 	if (cmd[*index] == '\'')
 	{
-		*index = *index + check_second_quote(&cmd[*index], '\'');
+		*index = *index + check_second_quote(&cmd[*index], '\'', 0);
 		(*index)++;
 	}
 	if (cmd[*index] == '<' && cmd[*index] != cmd[*index + 1])

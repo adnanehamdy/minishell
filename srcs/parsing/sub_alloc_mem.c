@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sub_alloc_mem.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 14:49:44 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/16 13:12:36 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/22 10:48:42 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	sub_count_arg_number(char *prompt_cmd, int *index)
 		&& prompt_cmd[*index] != '>' && prompt_cmd[*index] != '|')
 	{
 		if (prompt_cmd[*index] == '"')
-			*index = *index + check_second_quote(&prompt_cmd[*index], '"');
+			*index = *index + check_second_quote(&prompt_cmd[*index], '"', 0);
 		else if (prompt_cmd[*index] == '\'')
-			*index = *index + check_second_quote(&prompt_cmd[*index], '\'');
+			*index = *index + check_second_quote(&prompt_cmd[*index], '\'', 0);
 		(*index)++;
 	}
 }
@@ -40,13 +40,13 @@ int	sub_count_each_arg(char *prompt_cmd, int *index, int *number)
 		if (prompt_cmd[*index] == '"')
 		{
 			tmp = *index;
-			*index = *index + check_second_quote(&prompt_cmd[*index], '"');
+			*index = *index + check_second_quote(&prompt_cmd[*index], '"', 0);
 			*number = *number + (*index - tmp - 1);
 		}
 		else if (prompt_cmd[*index] == '\'')
 		{
 			tmp = *index;
-			*index = *index + check_second_quote(&prompt_cmd[*index], '\'');
+			*index = *index + check_second_quote(&prompt_cmd[*index], '\'', 0);
 			*number = *number + (*index - tmp - 1);
 		}
 		else

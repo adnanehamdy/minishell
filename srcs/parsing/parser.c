@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:37:28 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/14 14:36:39 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/22 10:47:28 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ void	quote_skip(char *cmd, int *index)
 {
 	if (cmd[*index] == '"')
 	{
-		*index = *index + check_second_quote(&cmd[*index], '"');
+		*index = *index + check_second_quote(&cmd[*index], '"', 0);
 		*index = *index + 1;
 	}
 	else if (cmd[*index] == '\'')
 	{
-		*index = *index + check_second_quote(&cmd[*index], '\'');
+		*index = *index + check_second_quote(&cmd[*index], '\'', 0);
 		*index = *index + 1;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   skip_alloc_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahamdy <ahamdy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nelidris <nelidris@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 14:45:55 by ahamdy            #+#    #+#             */
-/*   Updated: 2022/08/15 10:19:07 by ahamdy           ###   ########.fr       */
+/*   Updated: 2022/08/22 10:48:17 by nelidris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	skip_io_redirection(char *sub_prompt_cmd)
 			|| sub_prompt_cmd[index] == '>')
 			break ;
 		if (sub_prompt_cmd[index] == '"')
-			index = index + check_second_quote(&sub_prompt_cmd[index], '"');
+			index = index + check_second_quote(&sub_prompt_cmd[index], '"', 0);
 		else if (sub_prompt_cmd[index] == '\'')
-			index = index + check_second_quote(&sub_prompt_cmd[index], '\'');
+			index = index + check_second_quote(&sub_prompt_cmd[index], '\'', 0);
 		index++;
 	}
 	return (index);
